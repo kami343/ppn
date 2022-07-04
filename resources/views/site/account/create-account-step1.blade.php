@@ -1,0 +1,910 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>PPN</title>
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="assets/css/plugins.css">
+    <link rel="stylesheet" href="assets/css/all.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/green.css">
+    <link rel="stylesheet" href="assets/fonts/stylesheet.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    {{--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />--}}
+    <link rel="stylesheet" href="{{asset('css/admin/plugins/selectpicker/bootstrap-select.css')}}">
+    <!-- Custom -->
+    <script src="{{asset('js/site/custom.js')}}"></script>
+    <!-- Sweetalert -->
+    <script src="{{ asset('js/admin/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+    <title>Create Account</title>
+</head>
+
+<body>
+<section class="container-fluid fullcontent">
+    <div class="row fullcontent">
+        <div class="col-lg-3 blacksecpadd">
+            <div class="acc-leftblacksec">
+                <a href="#" class="logo"><img src="assets/img/logo-white.png" alt="" width="100%"></a>
+
+                <h3 class="leftmaintttl">Get started today!</h3>
+                <p class="p-font-size">Join PPN to register for leagues</p>
+
+                <ul class="accpointsec list-unstyled">
+                    <li>
+                        <div class="accleftpoint"><i class="fa-solid fa-check"></i></div>
+                        <h4>Get started fast with our free tier</h4>
+                        <p>Every product has a meaningful free tier so you can build without friction.</p>
+                    </li>
+                    <li>
+                        <div class="accleftpoint"><i class="fa-solid fa-check"></i></div>
+                        <h4>Access all Mapbox services</h4>
+                        <p>Use our design and development tools for apps, navigation, AR, data visualization, and
+                            more!</p>
+                    </li>
+                    <li>
+                        <div class="accleftpoint"><i class="fa-solid fa-check"></i></div>
+                        <h4>Trusted by top industry leaders</h4>
+                        <p>Join over 2.7 million registered developers building with Mapbox SDKs and APIs</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 position-relative">
+            <div class="mainpadd">
+                <div class="row">
+                    <div class="col-lg-8 m-auto">
+                        <div class="stepsec">
+                            <div class="stepline"></div>
+                            <ul class="nav nav-tabs nav-fill navtop cust-step">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="one-tab" data-toggle="tab">1</a>
+                                    <p>Login Details</p>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="two-tab" data-toggle="tab">2</a>
+                                    <p>Account Details</p>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="three-tab" data-toggle="tab">3</a>
+                                    <p>Player Details</p>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="four-tab" data-toggle="tab">4</a>
+                                    <p>Waiver</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <h1 class="loginttl">Create your PPN account</h1>
+                        <h3 class="loginttl-size">Already have an account? <a href="#" class="lnklogin">Login <i
+                                    class="fa-solid fa-chevron-right"></i></a></h3>
+                                                {{ Form::open([
+                                                     'method'=> 'POST',
+                                                     'class' => '',
+                                                     'route' => ['site.ajax-registration-submit'],
+                                                     'name'  => 'createNewLeagueForm',
+                                                     'id'    => 'createNewLeagueForm',
+                                                     'files' => true,
+                                                     'novalidate' => true ]) }}
+
+                        <form action="" method="post" id="register-form" novalidate="novalidate">
+
+                            <div id="step1">
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>First Name <span style="color: red;">*</span></label>
+                                            <input type="text" id="first_name" name="first_name" class="form-control"
+                                                   placeholder="Enter first name">
+                                            <small id="first_name_error" class="d-none text-danger">first name is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Last Name <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                                   placeholder="Enter last name">
+                                            <small id="last_name_error" class="d-none text-danger">last name is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Email <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                   placeholder="Enter email">
+                                            <small id="email_error" class="d-none text-danger">email is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Password <span style="color: red;">*</span></label>
+                                            <div class="input-group tgpass">
+                                                <input type="password" id="password" name="password"
+                                                       class="form-control pwd"
+                                                       placeholder="Enter password" value="">
+                                                <span class="input-group-btn">
+												<button class="btn-default reveal" type="button"><i
+                                                        class="fa-solid fa-eye"></i></button>
+											  </span>
+                                            </div>
+                                            <small id="password_error" class="d-none text-danger">password is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Confirm Password <span style="color: red;">*</span></label>
+                                            <div class="input-group tgpass">
+                                                <input type="password" id="confirm_password" name="confirm_password"
+                                                       class="form-control pwd"
+                                                       placeholder="Enter confirm password" value="">
+                                                <span class="input-group-btn">
+												<button class="btn-default reveal" type="button"><i
+                                                        class="fa-solid fa-eye"></i></button>
+											  </span>
+                                            </div>
+                                            <small id="confirm_password_error" class="d-none text-danger">confirm password is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group mt-3">
+                                            <a id="btn-2" class="btn-next-step">Next Step</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="d-none" id="step2">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address Line 1 <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="address_line_1"
+                                                   name="address_line_1" placeholder="Enter Address Line 1">
+                                            <small id="address_line_1_error" class="d-none text-danger">address 1 is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>Address Line 2 <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="address_line_2"
+                                                   name="address_line_2" placeholder="Enter Address Line 2">
+                                            <small id="address_line_2_error" class="d-none text-danger">address 2 is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>City <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="city" name="city"
+                                                   placeholder="Enter City">
+                                            <small id="city_error" class="d-none text-danger">city is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label>State <span style="color: red;">*</span></label>
+                                            <div class="selectgroup">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <select id="state" name="state" class="form-control">
+                                                    <option value="" selected>Select State</option>
+                                                    @foreach ($states as $state)
+                                                        <option value="{{ $state->id }}">{!! $state->title !!}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <small id="state_error" class="d-none text-danger">state is required</small>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Phone <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" id="phone_no" name="phone_no"
+                                                   placeholder="Enter Phone">
+                                            <small id="phone_no_error" class="d-none text-danger">phone no is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <label class="form-group-date">Date Of Birth <span
+                                                    style="color: red;">*</span></label>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <div class="selectgroup">
+                                                        <i class="fa-solid fa-chevron-down"></i>
+                                                        <select id="month" name="month" class="form-control">
+                                                            <option value="" selected>MM</option>
+                                                            <option>Jan</option>
+                                                            <option>Feb</option>
+                                                            <option>March</option>
+                                                        </select>
+                                                        <small id="month_error" class="d-none text-danger">month is required</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <div class="selectgroup">
+                                                        <i class="fa-solid fa-chevron-down"></i>
+                                                        <select id="day" name="day" class="form-control">
+                                                            <option value="" selected>DD</option>
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                        </select>
+                                                        <small id="day_error" class="d-none text-danger">day is required</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <div class="selectgroup">
+                                                        <i class="fa-solid fa-chevron-down"></i>
+                                                        <select id="year" name="year" class="form-control">
+                                                            <option value="" selected>year</option>
+                                                            <option>YYYY</option>
+                                                            <option>1990</option>
+                                                            <option>1991</option>
+                                                            <option>1992</option>
+                                                        </select>
+                                                        <small id="year_error" class="d-none text-danger">year is required</small>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Gender <span style="color: red;">*</span></label>
+
+                                            <div>
+                                                <div class="form-check-inline radio">
+                                                    <ul style="padding-left: 0px;margin-bottom: 0px;">
+                                                        <li class="list-inline-item">
+                                                            <label class="customradio"><span
+                                                                    class="radiotextsty">Female</span>
+                                                                <input type="radio" checked="checked" value="female"
+                                                                       name="gender">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <label class="customradio"><span
+                                                                    class="radiotextsty">Male</span>
+                                                                <input type="radio" checked="checked" value="male"
+                                                                       name="gender">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <label class="customradio"><span
+                                                                    class="radiotextsty">Other</span>
+                                                                <input type="radio" checked="checked" value="gender"
+                                                                       name="gender">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                    <small id="gender_error" class="d-none text-danger">gender is required</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group mt-3">
+                                            <a id="btn-3" class="btn-next-step">Next Step</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-none" id="step3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Player Rating <span style="color: red;">*</span></label>
+                                            <div class="selectgroup">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <select id="player_rating" name="player_rating" class="form-control">
+                                                    <option value="">Select</option>
+
+                                                    @for ($playerRating = 2.0; $playerRating <= 5.5; $playerRating += 0.25)
+                                                        <option
+                                                            value="{{ formatToTwoDecimalPlaces($playerRating) }}">{{ formatToTwoDecimalPlaces($playerRating)}}@if ($playerRating == 5.50)
+                                                                + @endif</option>
+                                                    @endfor
+                                                </select>
+                                                <small id="player_rating_error" class="d-none text-danger">player rating is required</small>
+                                            </div>
+                                            <label><a
+                                                    href="{{ asset('images/uploads/USAPA-Skill-Rating-Definitions-2020.pdf') }}"
+                                                    class="inpt-lnk" target="_blank">Help Me Choose My
+                                                    Rating</a></label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <div id="home-court-div">
+                                                <div class="holder-inner">
+                                                    <label class="placeholder-label-selectpicker" id="pref-home-court">Preferred
+                                                        Home Court<span class="text-red">*</span></label>
+                                                    <select name="home_court" id="home_court"
+                                                            class="selectpicker text-dark form-control bg_transparent"
+                                                            data-live-search="true"
+                                                            data-live-search-placeholder="Search"
+                                                            data-actions-box="true" data-placeholder="">
+                                                        <option value="" selected>Select</option>
+
+                                                        @foreach ($homeCourts as $homeCourt)
+                                                            <option
+                                                                value="{{ $homeCourt->id }}">{!! $homeCourt->title.' ('.$homeCourt->city.', '.$homeCourt->stateDetails->code.')' !!}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="home_court_error" class="d-none text-danger">home court is required</small>
+
+                                                    <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                       data-bs-target="#pickleballCourtModal"><img
+                                                            src="{{ asset("images/site/plus-circle.png") }}"
+                                                            style="width: 18px;"/> Can’t find your court, click here to
+                                                        add it</a>
+
+                                                </div>
+                                            </div>
+                                            <label><a href="{{ route('site.local-court') }}"
+                                                      target="_blank">@lang('custom.label_find_a_local_court')</a></label>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            @if ($availabilities && $availabilities->count())
+                                                <div class="col-lg-12 form-group">
+                                                    <label class=""><strong>Playing Time Availability<span
+                                                                class="text-red">*</span></strong> <i
+                                                            class="fa fa-question-circle cursor-pointer"
+                                                            aria-hidden="true" data-toggle="tooltip"
+                                                            title="To best facilitate league play, please specify your playing time availability. You will have the opportunity to change this as needed"></i>
+                                                        <i>(Select all that apply)</i></label>
+                                                    <div class="row" id="availability">
+                                                        @foreach ($availabilities as $availability)
+                                                            <div>
+                                                                <div class="form-check display-inline-block">
+                                                                    <input
+                                                                        class="form-check-input available error-checkbox"
+                                                                        type="checkbox"
+                                                                        value="{!! $availability->id !!}"
+                                                                        id="availability_{{ $availability->id }}"
+                                                                        name="availability[]">
+                                                                    <label class="form-check-label text-uppercase"
+                                                                           for="availability_{{ $availability->id }}">{!! $availability->title !!}</label>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <small id="availability_error" class="d-none text-danger">availability is required</small>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>How Did You Hear About Us? <span
+                                                    style="color: red;">*</span></label>
+                                            <div class="selectgroup">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                                <select id="how_did_you_find_us" name="how_did_you_find_us" class="form-control">
+                                                    <option value="">Select</option>
+                                                    @foreach (config('global.HOW_DID_YOU_HEAR_ABOUT_US') as $key => $item)
+                                                        <option value="{!! $key !!}">{!! $item !!}</option>
+                                                    @endforeach
+                                                </select>
+                                                <small id="how_did_you_find_us_error" class="d-none text-danger">field is required</small>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group mt-3">
+                                            <a id="btn-4" class="btn-next-step">Proceed
+                                                to Waiver</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-none" id="step4">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label>Waiver</label>
+                                            <div class="terms-scroll">
+                                                <p>Lorem Ipsum is simply dummy text of the printing and
+                                                    typesetting industry. Lorem Ipsum has been the
+                                                    industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book Lorem Ipsum is
+                                                    simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has</p>
+                                                <p>Been the industry's standard dummy text ever since the
+                                                    1500s, when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book Lorem Ipsum is
+                                                    simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has</p>
+                                                <p>Been the industry's standard dummy text ever since the
+                                                    1500s, when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book</p>
+                                                <p>Lorem Ipsum is simply dummy text of the printing and
+                                                    typesetting industry. Lorem Ipsum has been the
+                                                    industry's standard dummy text ever since the 1500s,
+                                                    when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book Lorem Ipsum is
+                                                    simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has</p>
+                                                <p>Been the industry's standard dummy text ever since the
+                                                    1500s, when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book Lorem Ipsum is
+                                                    simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has</p>
+                                                <p>Been the industry's standard dummy text ever since the
+                                                    1500s, when an unknown printer took a galley of type and
+                                                    scrambled it to make a type specimen book</p>
+                                            </div>
+                                            <label class="customcheck" style="font-weight: 400;">By clicking
+                                                this checkbox, I acknowledge that I have read, understand
+                                                and agree to the above waiver and <a href="#"
+                                                                                     class="lnklogin">Terms
+                                                    of Use</a>.<span style="color: red;">*</span>
+                                                <input type="checkbox" id="agree" name="agree" value="1"
+                                                       checked="checked">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <small id="agree_error" class="text-danger d-none">it is required</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <button type="submit" id="submit" name="submit" class="btn-next-step">
+                                                Complete Registration
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </form>
+
+
+                                                {{ Form::close() }}
+
+
+                        <div id="pickleBallCourt">
+                            <div class="modal fade loginModal" id="pickleballCourtModal" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add A Pickleball Court</h5>
+                                            <button type="button" class="btn-sm btn-danger rounded-3"
+                                                    data-bs-dismiss="modal" aria-label="Close">X
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="loginForm">
+                                                <form name="pickleballCourtForm">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">Court Name<span
+                                                                        class="text-red">*</span></label>
+                                                                {{ Form::text('court_name', null, [
+                                                                                'placeholder' => '',
+                                                                                'class' => 'placeholder-input form-control',
+                                                                                '' => true,
+                                                                            ]) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">City<span
+                                                                        class="text-red">*</span></label>
+                                                                {{ Form::text('city', null, [
+                                                                            'placeholder' => '',
+                                                                            'class' => 'placeholder-input form-control',
+                                                                            '' => true,
+                                                                        ]) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">State<span
+                                                                        class="text-red">*</span></label>
+                                                                <select name="state_id"
+                                                                        class="placeholder-input form-control">
+                                                                    <option value=""></option>
+                                                                    {{--                                                                    @foreach ($states as $item)--}}
+                                                                    {{--                                                                        <option value="{{ $item->id }}">{!! $item->title !!}</option>--}}
+                                                                    {{--                                                                    @endforeach--}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">Address</label>
+                                                                {{ Form::text('address', null, [
+                                                                                'placeholder' => '',
+                                                                                'class' => 'placeholder-input form-control',
+                                                                            ]) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">Zip</label>
+                                                                {{ Form::text('zip', null, [
+                                                                                'placeholder' => '',
+                                                                                'class' => 'placeholder-input form-control',
+                                                                            ]) }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label class="placeholder-label-popup">Number of
+                                                                    Courts</label>
+                                                                <select name="number_of_courts" id="number_of_courts"
+                                                                        class="placeholder-input form-control">
+                                                                    <option value=""></option>
+                                                                    {{--                                                                    @for ($courts = 1; $courts <= 30; $courts++)--}}
+                                                                    {{--                                                                        <option value="{{$courts}}">{{$courts}}</option>--}}
+                                                                    {{--                                                                    @endfor--}}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label
+                                                                    class="placeholder-label-popup">Accessibility</label>
+                                                                <select name="accessibility"
+                                                                        class="placeholder-input form-control">
+                                                                    <option value=""></option>
+                                                                    <option value="PR">Private</option>
+                                                                    <option value="PL">Public</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 form-group">
+                                                            <div class="holder-inner">
+                                                                <label
+                                                                    class="placeholder-label-popup">Indoor/Outdoor</label>
+                                                                <select name="indoor_outdoor"
+                                                                        class="placeholder-input form-control">
+                                                                    <option value=""></option>
+                                                                    <option value="ID">Indoor</option>
+                                                                    <option value="OD">Outdoor</option>
+                                                                    <option value="B">Both</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="-fields-position">
+                                                        <span
+                                                            class="text-red">*</span> {{config('global._FIELD')}}
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+
+                                                        <button class="btn btn-success" type="submit">Submit</button>
+                                                    </div>
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="well col-md-offset-3 col-md-6">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row footer">
+                <div class="col-lg-6 col-md-6">
+                    <h5>© Pickleball Players Network</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <ul class="footlink">
+                        <li class="list-inline-item"><a href="#">Terms</a></li>
+                        <li class="list-inline-item"><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section class="container-fluid foot">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="leftblack"></div>
+        </div>
+        <div class="col-lg-9 bg-white">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <h5>© Pickleball Players Network</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <ul class="footlink">
+                        <li class="list-inline-item"><a href="#">Terms</a></li>
+                        <li class="list-inline-item"><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="assets/js/plugins.js"></script>
+<script src="assets/js/theme.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{asset('js/site/bootstrap-select.min.js')}}"></script>
+
+<script src="{{asset('js/admin/plugins/selectpicker/bootstrap-select.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".reveal").on('click', function () {
+            var $pwd = $(".pwd");
+            if ($pwd.attr('type') === 'password') {
+                $pwd.attr('type', 'text');
+            } else {
+                $pwd.attr('type', 'password');
+            }
+        });
+
+
+        $('#one-tab').click(function () {
+            $('#one-tab').addClass("active");
+            $('#two-tab').removeClass("active");
+            $('#three-tab').removeClass("active");
+            $('#four-tab').removeClass("active");
+
+
+            $('#step1').removeClass("d-none");
+            $('#step1').addClass("d-block");
+
+            $('#step2').addClass("d-none");
+            $('#step2').removeClass("d-block");
+
+            $('#step3').addClass("d-none");
+            $('#step3').removeClass("d-block");
+
+            $('#step4').addClass("d-none");
+            $('#step4').removeClass("d-block");
+        })
+        $('#two-tab,#btn-2').click(function () {
+
+           if($('#first_name').val()==''){
+               $('#first_name_error').removeClass('d-none');
+               $('#first_name_error').addClass('d-block');
+           }
+           else if ($('#last_name').val()==''){
+               $('#last_name_error').removeClass('d-none');
+               $('#last_name_error').addClass('d-block');
+           }
+           else if ($('#email').val()==''){
+               $('#email_error').removeClass('d-none');
+               $('#email_error').addClass('d-block');
+           }
+           else if ($('#password').val()==''){
+               $('#password').removeClass('d-none');
+               $('#password').addClass('d-block');
+           }
+           else if ($('#confirm_password').val()==''){
+               $('#confirm_password_error').removeClass('d-none');
+               $('#confirm_password_error').addClass('d-block');
+           }
+           else{
+               $('#two-tab').addClass("active");
+               $('#one-tab').removeClass("active");
+               $('#three-tab').removeClass("active");
+               $('#four-tab').removeClass("active");
+
+               $('#step1').removeClass("d-block");
+               $('#step1').addClass("d-none");
+
+               $('#step2').addClass("d-block");
+               $('#step2').removeClass("d-none");
+
+               $('#step3').addClass("d-none");
+               $('#step3').removeClass("d-block");
+
+               $('#step4').addClass("d-none");
+               $('#step4').removeClass("d-block");
+
+           }
+        })
+        $('#three-tab,#btn-3').click(function (e) {
+            if($('#address_line_1').val()==''){
+                $('#address_line_1_error').removeClass('d-none');
+                $('#address_line_1_error').addClass('d-block');
+            }
+            else if ($('#address_line_2').val()==''){
+                $('#address_line_2_error').removeClass('d-none');
+                $('#address_line_2_error').addClass('d-block');
+            }
+            else if ($('#city').val()==''){
+                $('#city_error').removeClass('d-none');
+                $('#city_error').addClass('d-block');
+            }
+            else if ($('#state').val()==''){
+                $('#state_error').removeClass('d-none');
+                $('#state_error').addClass('d-block');
+            }
+            else if ($('#phone_no').val()==''){
+                $('#phone_no_error').removeClass('d-none');
+                $('#phone_no_error').addClass('d-block');
+            }  else if ($('#month').val()==''){
+                $('#month_error').removeClass('d-none');
+                $('#month_error').addClass('d-block');
+            }
+            else if ($('#day').val()==''){
+                $('#day_error').removeClass('d-none');
+                $('#day_error').addClass('d-block');
+            } else if ($('#year').val()==''){
+                $('#year_error').removeClass('d-none');
+                $('#year_error').addClass('d-block');
+            }
+
+          else{
+                $('#three-tab').addClass("active");
+                $('#two-tab').removeClass("active");
+                $('#one-tab').removeClass("active");
+                $('#four-tab').removeClass("active");
+
+
+                $('#step1').removeClass("d-block");
+                $('#step1').addClass("d-none");
+
+                $('#step2').addClass("d-none");
+                $('#step2').removeClass("d-block");
+
+                $('#step3').addClass("d-block");
+                $('#step3').removeClass("d-none");
+
+                $('#step4').addClass("d-none");
+                $('#step4').removeClass("d-block");
+            }
+
+        })
+        $('#four-tab,#btn-4').click(function () {
+
+            if($('#player_rating').val()==''){
+                $('#player_rating_error').removeClass('d-none');
+                $('#player_rating_error').addClass('d-block');
+            }
+            else if ($('#home_court').val()==''){
+                $('#home_court_error').removeClass('d-none');
+                $('#home_court_error').addClass('d-block');
+                $('#availability_error').removeClass('d-none');
+                $('#availability_error').addClass('d-block');
+            }
+            else if ($('#how_did_you_find_us').val()==''){
+                $('#how_did_you_find_us_error').removeClass('d-none');
+                $('#how_did_you_find_us_error').addClass('d-block');
+                $('#availability_error').removeClass('d-none');
+                $('#availability_error').addClass('d-block');
+            }
+            else {
+                $('#four-tab').addClass("active");
+                $('#two-tab').removeClass("active");
+                $('#three-tab').removeClass("active");
+                $('#one-tab').removeClass("active");
+
+
+                $('#step1').removeClass("d-block");
+                $('#step1').addClass("d-none");
+
+                $('#step2').addClass("d-none");
+                $('#step2').removeClass("d-block");
+
+                $('#step3').addClass("d-none");
+                $('#step3').removeClass("d-block");
+
+                $('#step4').addClass("d-block");
+                $('#step4').removeClass("d-none");
+            }
+        })
+
+        $('#submit').click(function (e) {
+            if(!$('input[name="agree"]').is(':checked'))
+            {
+                e.preventDefault()
+                $('#agree_error').removeClass('d-none');
+                $('#agree_error').addClass('d-block');
+            }
+        })
+    })
+
+    // $(document).ready(function ($) {
+    //
+    //     $("#register-form").validate({
+    //         rules: {
+    //             first_name: "required",
+    //             last_name: "required",
+    //             email: "required",
+    //             password: {
+    //                 required: true,
+    //                 minlength: 6
+    //             },
+    //             confirm_password: {
+    //                 required: true,
+    //                 minlength: 6
+    //             },
+    //             city: "required",
+    //             gender: "required"
+    //
+    //         },
+    //         messages: {
+    //             first_name: "Please enter your First Name",
+    //             last_name: "Please enter your Last Name",
+    //             email: "Please enter your email",
+    //             password: {
+    //                 required: "Please provide a password",
+    //                 minlength: "Your password must be at least 6 characters long"
+    //             },
+    //             confirm_password: {
+    //                 required: "Please confirm your password",
+    //                 minlength: "Your password must be at least 6 characters long"
+    //             },
+    //             city: "Please enter your city",
+    //             gender: "This field is required"
+    //         },
+    //         errorPlacement: function (error, element) {
+    //             if (element.is(":radio")) {
+    //                 error.appendTo(element.parents('.form-group'));
+    //             } else { // This is the default behavior
+    //                 error.insertAfter(element);
+    //             }
+    //         },
+    //         submitHandler: function (form) {
+    //             form.submit();
+    //         }
+    //
+    //     });
+    // });
+
+</script>
+</body>
+</html>
