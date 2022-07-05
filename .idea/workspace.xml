@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="" />
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/site/league/leaguelist.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/SendResetPasswordLinkToUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendResetPasswordLinkToUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/newLeague/scripts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/newLeague/scripts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/includes/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/user/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/user/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +51,9 @@
         <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -158,6 +195,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/storage/logs/laravel.log" />
+    <property name="ignore_missing_gitignore" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Models" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -184,25 +223,51 @@
       <updated>1656829578801</updated>
       <workItem from="1656829581331" duration="2698000" />
       <workItem from="1656832320736" duration="22532000" />
-      <workItem from="1656907652647" duration="6746000" />
+      <workItem from="1656907652647" duration="19944000" />
+      <workItem from="1656947908706" duration="8233000" />
+      <workItem from="1656996337760" duration="9064000" />
+      <workItem from="1657006542583" duration="7534000" />
+      <workItem from="1657029708136" duration="6372000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1657030305301">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.720@0.0.1366.720" timestamp="1657030305301" />
     <state x="413" y="107" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1656831056975">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="413" y="107" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.720@0.0.1366.720" timestamp="1656831056975" />
-    <state x="390" y="93" width="585" height="534" key="find.popup" timestamp="1656851799984">
+    <state x="390" y="93" width="585" height="534" key="find.popup" timestamp="1657018359234">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="390" y="93" width="585" height="534" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1656851799984" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1656861570705">
+    <state x="390" y="93" width="585" height="534" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1657018359234" />
+    <state x="390" y="93" width="585" height="534" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1657008477719" />
+    <state x="339" y="160" key="run.anything.popup" timestamp="1656996854305">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1656861570705" />
+    <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1657035124643">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1657018373865" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1657035124643" />
   </component>
 </project>

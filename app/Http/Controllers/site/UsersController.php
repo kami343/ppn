@@ -10,6 +10,7 @@
 namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
+use App\Models\NewLeague;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
@@ -213,6 +214,8 @@ class UsersController extends Controller
                     $title = trans('custom.message_error');
                     $message = trans('custom.error_already_registered');
                     $type = 'error';
+                    return redirect('/registration')->with('errstatus', $message);
+
                 }
 
         } catch (Exception $e) {
@@ -220,7 +223,7 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-        return response()->json(['title' => $title, 'message' => $message, 'type' => $type, 'loginId' => $loginId]);
+        return redirect('/registration')->with('status', $message);
     }
 
     /*
@@ -260,45 +263,29 @@ class UsersController extends Controller
     */
     public function ajaxLoginSubmit(Request $request)
     {
-        $title = trans('custom.message_error');
-        $message = trans('custom.error_something_went_wrong');
-        $type = 'error';
-        $redirectTo = '';
-
+        $message="Login Successfully..";
+        $messageError="Credential is not valid";
+        $redirectTo="join-a-league";
+        $type="error";
         try {
             if ($request->ajax()) {
-                $validationCondition = array(
-                    'email' => 'required|regex:' . config('global.EMAIL_REGEX'),
-                    'password' => 'required',
-                );
-                $validationMessages = array(
-                    'email.required' => trans('custom.error_email'),
-                    'email.regex' => trans('custom.error_email_valid'),
-                    'password.required' => trans('custom.error_password')
-                );
-                $validator = Validator::make($request->all(), $validationCondition, $validationMessages);
-                if ($validator->fails()) {
-                    $message = validationMessageBeautifier($validator->messages()->getMessages());
-                    $type = 'validation';
-                } else {
-                    if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], true)) {
-                        $user = Auth::user();
-                        if ($user->type != 'U') {
-                            $message = trans('custom.error_not_authorized');
-                            Auth::guard('web')->logout();
-                        } else {
-                            $userData = Auth::user();
-                            $userData->lastlogintime = strtotime(date('Y-m-d H:i:s'));
-                            $userData->save();
-
-                            $title = trans('custom.message_success');
-                            $message = trans('custom.message_login_successful');
-                            $type = 'success';
-                            $redirectTo = $request->redirect_to ?? '';
-                        }
+                if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], true)) {
+                    $user = Auth::user();
+                    if ($user->type != 'U') {
+                        $message = trans('custom.error_not_authorized');
+                        Auth::guard('web')->logout();
                     } else {
-                        $message = trans('custom.error_invalid_credentials_inactive_user');
+                        $userData = Auth::user();
+                        $userData->lastlogintime = strtotime(date('Y-m-d H:i:s'));
+                        $userData->save();
+                        $redirectTo = 'login-new';
+                        $message = trans('custom.message_login_successful');
                     }
+                    $type="success";
+                } else {
+                    $redirectTo = 'login-new';
+
+                    $message = trans('custom.error_invalid_credentials_inactive_user');
                 }
             }
         } catch (Exception $e) {
@@ -306,7 +293,8 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-        return response()->json(['title' => $title, 'message' => $message, 'type' => $type, 'redirectTo' => $redirectTo]);
+     return response()->json([ 'message' => $message,'type'=>$type,'redirectTo' => $redirectTo]);
+
     }
 
     /*
@@ -325,6 +313,8 @@ class UsersController extends Controller
         $assignedLeagues = [];
         $lastTenMatchLists = [];
 
+        $leaguesData= NewLeague::all();
+        Log::info($leaguesData);
         return view('site.user.profile', [
             'title' => $getMetaDetails['title'],
             'metaKeywords' => $getMetaDetails['metaKeywords'],
@@ -332,7 +322,8 @@ class UsersController extends Controller
             'details' => $details,
             'assignedLeagues' => $assignedLeagues,
             'lastTenMatchLists' => $lastTenMatchLists,
-        ]);
+
+        ],compact('leaguesData'));
     }
 
     /*
@@ -573,53 +564,44 @@ class UsersController extends Controller
     */
     public function ajaxForgotPasswordSubmit(Request $request)
     {
+
         $title = trans('custom.message_error');
         $message = trans('custom.error_something_went_wrong');
         $type = 'error';
 
         try {
             if ($request->ajax()) {
-                $validationCondition = array(
-                    'email' => 'required|regex:' . config('global.EMAIL_REGEX'),
-                );
-                $validationMessages = array(
-                    'email.required' => trans('custom.error_email'),
-                    'email.regex' => trans('custom.error_email_valid'),
-                );
+                $userData = $this->userModel->select('id', 'first_name', 'email', 'role_id', 'remember_token', 'status')
+                    ->where('email', $request->email)
+                    ->first();
 
-                $validator = Validator::make($request->all(), $validationCondition, $validationMessages);
-                if ($validator->fails()) {
-                    $message = validationMessageBeautifier($validator->messages()->getMessages());
-                    $type = 'validation';
-                } else {
-                    $userData = $this->userModel->select('id', 'first_name', 'email', 'role_id', 'remember_token', 'status')
-                        ->where('email', $request->email)
-                        ->first();
-                    if ($userData) {
-                        if ($userData->role_id != null) {
-                            $message = trans('custom.error_not_authorized');
-                        } else if ($userData->status == '0') {
-                            $message = trans('custom.error_inactive_user');
-                        } else {
-                            $rememberToken = $this->OTP();
-                            $userData->remember_token = $rememberToken;
+                if ($userData) {
 
-                            if ($userData->save()) {
-                                // Mail to user
-                                $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line']);
-                                dispatch(new SendResetPasswordLinkToUser($userData->toArray(), $rememberToken, $siteSettings));
+                    if ($userData->role_id != null) {
+                        $message = trans('custom.error_not_authorized');
+                    } else if ($userData->status == '0') {
+                        $message = trans('custom.error_inactive_user');
 
-                                $title = trans('custom.message_success');
-                                $message = trans('custom.message_reset_password_link_for_email');
-                                $type = 'success';
-                            }
-                        }
                     } else {
-                        $message = trans('custom.error_email_not_found');
+                        $rememberToken = $this->OTP();
+                        $userData->remember_token = $rememberToken;
+
+                        if ($userData->save()) {
+                            // Mail to user
+                            $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line']);
+                            dispatch(new SendResetPasswordLinkToUser($userData->toArray(), $rememberToken, $siteSettings));
+
+                            $title = trans('custom.message_success');
+                            $message = trans('custom.message_reset_password_link_for_email');
+                            $type = 'success';
+                        }
                     }
+                } else {
+                    $message = trans('custom.error_email_not_found');
                 }
             }
         } catch (Exception $e) {
+
             $message = $e->getMessage();
         } catch (\Throwable $e) {
             $message = $e->getMessage();
@@ -689,6 +671,7 @@ class UsersController extends Controller
         } catch (Exception $e) {
             $message = $e->getMessage();
         } catch (\Throwable $e) {
+
             $message = $e->getMessage();
         }
 
@@ -987,71 +970,50 @@ class UsersController extends Controller
     */
     public function ajaxPickleballCourtSubmit(Request $request)
     {
-        $title = trans('custom.message_error');
-        $message = trans('custom.error_something_went_wrong');
-        $type = 'error';
-        $options = '<option value=""></option>';
 
+        $message="";
         try {
             if ($request->ajax()) {
-                $validationCondition = array(
-                    'court_name' => 'required',
-                    'state_id' => 'required',
-                    'city' => 'required',
-                );
-                $validationMessages = array(
-                    'court_name.required' => 'Please enter court name.',
-                    'state_id.required' => 'Please select state.',
-                    'city.required' => 'Please enter city.',
-                );
-                $validator = Validator::make($request->all(), $validationCondition, $validationMessages);
-                if ($validator->fails()) {
-                    $message = validationMessageBeautifier($validator->messages()->getMessages());
-                    $type = 'validation';
-                } else {
-                    $isExist = PickleballCourt::where(['title' => $request->court_name, 'state_id' => $request->state_id])->count();
-                    if ($isExist) {
-                        $title = trans('custom.message_error');
-                        $message = trans('custom.message_court_name_exist');
-                        $type = 'error';
-                    } else {
-                        $newPickleballCourt = new PickleballCourt();
-                        $newPickleballCourt->title = $request->court_name ?? null;
-                        $newPickleballCourt->slug = generateUniqueSlug($newPickleballCourt, trim($request->court_name, ' '));
-                        $newPickleballCourt->state_id = $request->state_id ?? null;
-                        $newPickleballCourt->city = $request->city ?? null;
-                        $newPickleballCourt->address = $request->address ?? null;
-                        $newPickleballCourt->zip = $request->zip ?? null;
-                        $newPickleballCourt->number_of_courts = $request->number_of_courts ?? null;
-                        $newPickleballCourt->accessibility = $request->accessibility ?? null;
-                        $newPickleballCourt->indoor_outdoor = $request->indoor_outdoor ?? null;
-                        $newPickleballCourt->sort = generateSortNumber($newPickleballCourt);
-                        $save = $newPickleballCourt->save();
+                $isExist = PickleballCourt::where(['title' => $request->court_name, 'state_id' => $request->state_id])->count();
+                if ($isExist) {
+                    $message = trans('custom.message_court_name_exist');
 
-                        if ($save) {
-                            $title = trans('custom.message_success');
-                            $message = trans('custom.message_court_added_successfully');
-                            $type = 'success';
+                }
+                else {
+                    $newPickleballCourt = new PickleballCourt();
+                    $newPickleballCourt->title = $request->court_name ?? null;
+                    $newPickleballCourt->slug = generateUniqueSlug($newPickleballCourt, trim($request->court_name, ' '));
+                    $newPickleballCourt->state_id = $request->state_id ?? null;
+                    $newPickleballCourt->city = $request->city ?? null;
+                    $newPickleballCourt->address = $request->address ?? null;
+                    $newPickleballCourt->zip = $request->zip ?? null;
+                    $newPickleballCourt->number_of_courts = $request->number_of_courts ?? null;
+                    $newPickleballCourt->accessibility = $request->accessibility ?? null;
+                    $newPickleballCourt->indoor_outdoor = $request->indoor_outdoor ?? null;
+                    $newPickleballCourt->sort = generateSortNumber($newPickleballCourt);
+                    $save = $newPickleballCourt->save();
 
-                            $stateName = '';
-                            $stateDetails = State::select('id', 'title')->where(['id' => $newPickleballCourt->state_id])->first();
-                            if ($stateDetails) {
-                                $stateName = $stateDetails->title;
-                            }
+                    if ($save) {
+                        $message = trans('custom.message_court_added_successfully');
 
-                            $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
-                            // Mail to Admin
-                            dispatch(new SendPickleballCourtRegistrationToAdmin($newPickleballCourt->toArray(), $stateName, $siteSettings));
+                        $stateName = '';
+                        $stateDetails = State::select('id', 'title')->where(['id' => $newPickleballCourt->state_id])->first();
+                        if ($stateDetails) {
+                            $stateName = $stateDetails->title;
+                        }
 
-                            $pickleballCourts = PickleballCourt::select('id', 'title', 'city', 'state_id')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('title', 'ASC')->get();
-                            if ($pickleballCourts) {
-                                foreach ($pickleballCourts as $pickleballCourt) {
-                                    $selected = '';
-                                    if ($newPickleballCourt->id == $pickleballCourt->id) {
-                                        $selected = 'selected';
-                                    }
-                                    $options .= '<option value="' . $pickleballCourt->id . '" ' . $selected . '>' . $pickleballCourt->title . ' (' . $pickleballCourt->city . ', ' . $pickleballCourt->stateDetails->code . ')' . '</option>';
+                        $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+                        // Mail to Admin
+                        dispatch(new SendPickleballCourtRegistrationToAdmin($newPickleballCourt->toArray(), $stateName, $siteSettings));
+
+                        $pickleballCourts = PickleballCourt::select('id', 'title', 'city', 'state_id')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('title', 'ASC')->get();
+                        if ($pickleballCourts) {
+                            foreach ($pickleballCourts as $pickleballCourt) {
+                                $selected = '';
+                                if ($newPickleballCourt->id == $pickleballCourt->id) {
+                                    $selected = 'selected';
                                 }
+                                $options .= '<option value="' . $pickleballCourt->id . '" ' . $selected . '>' . $pickleballCourt->title . ' (' . $pickleballCourt->city . ', ' . $pickleballCourt->stateDetails->code . ')' . '</option>';
                             }
                         }
                     }
@@ -1063,7 +1025,7 @@ class UsersController extends Controller
             $message = $e->getMessage();
         }
 
-        return response()->json(['title' => $title, 'message' => $message, 'type' => $type, 'options' => $options]);
+       return response()->json(['message' => $message]);
     }
 
 
@@ -1095,6 +1057,10 @@ class UsersController extends Controller
             $this->generateToastMessage('error', 'Invalid url.', false);
             return redirect()->route('site.home');
         }
+    }
+
+    public function LoginNew(){
+        return view('site.includes.login');
     }
 
 }

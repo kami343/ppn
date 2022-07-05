@@ -16,7 +16,8 @@
                 <div class="topButtonsGrp">
                     {{-- Start :: If NOT logged in --}}
                     @if (!Auth::user())
-                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#loginModal" class="btnlogin">@lang('custom.label_login')</a>
+{{--                    <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#loginModal" class="btnlogin">@lang('custom.label_login')</a>--}}
+                    <a href="{{ route('site.login-new') }}" class="btnlogin">@lang('custom.label_login')</a>
                     <a href="{{ route('site.registration') }}" class="btnMain">@lang('custom.label_join_now')</a>
                     {{-- End :: If NOT logged in --}}
                     {{-- Start :: If logged in --}}

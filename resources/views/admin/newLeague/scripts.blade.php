@@ -31,7 +31,6 @@
                 url: getListDataUrl,
                 type: 'POST',
                 data: function (data) {
-                    console.log(data)
                 },
             },
             columns: [

@@ -25,17 +25,21 @@
     <script src="{{asset('js/site/custom.js')}}"></script>
     <!-- Sweetalert -->
     <script src="{{ asset('js/admin/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
-
+{{--    Toastr--}}
+    <link href="{{ asset('css/admin/plugins/toastr/toastr.min.css') }}" rel="stylesheet" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .error {
             color: red;
         }
+
     </style>
     <title>Create Account</title>
 </head>
 
 <body>
 <section class="container-fluid fullcontent">
+    <input type="hidden" name="website_link" id="website_link" value="{{ url('/') }}" />
     <div class="row fullcontent">
         <div class="col-lg-3 blacksecpadd">
             <div class="acc-leftblacksec">
@@ -68,8 +72,19 @@
             <div class="mainpadd">
                 <div class="row">
                     <div class="col-lg-8 m-auto">
-                        <div class="stepsec">
+                        @if(session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @if(session('errstatus'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('errstatus') }}
+                            </div>
+                        @endif
+                        <div class="stepsec mt-1">
                             <div class="stepline"></div>
+
                             <ul class="nav nav-tabs nav-fill navtop cust-step">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="one-tab" data-toggle="tab">1</a>
@@ -93,14 +108,14 @@
                         <h1 class="loginttl">Create your PPN account</h1>
                         <h3 class="loginttl-size">Already have an account? <a href="#" class="lnklogin">Login <i
                                     class="fa-solid fa-chevron-right"></i></a></h3>
-                                                {{ Form::open([
-                                                     'method'=> 'POST',
-                                                     'class' => '',
-                                                     'route' => ['site.ajax-registration-submit'],
-                                                     'name'  => 'createNewLeagueForm',
-                                                     'id'    => 'createNewLeagueForm',
-                                                     'files' => true,
-                                                     'novalidate' => true ]) }}
+                        {{ Form::open([
+                             'method'=> 'POST',
+                             'class' => '',
+                             'route' => ['site.ajax-registration-submit'],
+                             'name'  => 'createNewLeagueForm',
+                             'id'    => 'createNewLeagueForm',
+                             'files' => true,
+                             'novalidate' => true ]) }}
 
                         <form action="" method="post" id="register-form" novalidate="novalidate">
 
@@ -112,7 +127,8 @@
                                             <label>First Name <span style="color: red;">*</span></label>
                                             <input type="text" id="first_name" name="first_name" class="form-control"
                                                    placeholder="Enter first name">
-                                            <small id="first_name_error" class="d-none text-danger">first name is required</small>
+                                            <small id="first_name_error" class="d-none text-danger">first name is
+                                                required</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -120,7 +136,8 @@
                                             <label>Last Name <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="last_name" name="last_name"
                                                    placeholder="Enter last name">
-                                            <small id="last_name_error" class="d-none text-danger">last name is required</small>
+                                            <small id="last_name_error" class="d-none text-danger">last name is
+                                                required</small>
 
                                         </div>
                                     </div>
@@ -145,7 +162,8 @@
                                                         class="fa-solid fa-eye"></i></button>
 											  </span>
                                             </div>
-                                            <small id="password_error" class="d-none text-danger">password is required</small>
+                                            <small id="password_error" class="d-none text-danger">password is
+                                                required</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -160,7 +178,8 @@
                                                         class="fa-solid fa-eye"></i></button>
 											  </span>
                                             </div>
-                                            <small id="confirm_password_error" class="d-none text-danger">confirm password is required</small>
+                                            <small id="confirm_password_error" class="d-none text-danger">confirm
+                                                password is required</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -179,7 +198,8 @@
                                             <label>Address Line 1 <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="address_line_1"
                                                    name="address_line_1" placeholder="Enter Address Line 1">
-                                            <small id="address_line_1_error" class="d-none text-danger">address 1 is required</small>
+                                            <small id="address_line_1_error" class="d-none text-danger">address 1 is
+                                                required</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -187,7 +207,8 @@
                                             <label>Address Line 2 <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="address_line_2"
                                                    name="address_line_2" placeholder="Enter Address Line 2">
-                                            <small id="address_line_2_error" class="d-none text-danger">address 2 is required</small>
+                                            <small id="address_line_2_error" class="d-none text-danger">address 2 is
+                                                required</small>
 
                                         </div>
                                     </div>
@@ -221,7 +242,8 @@
                                             <label>Phone <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="phone_no" name="phone_no"
                                                    placeholder="Enter Phone">
-                                            <small id="phone_no_error" class="d-none text-danger">phone no is required</small>
+                                            <small id="phone_no_error" class="d-none text-danger">phone no is
+                                                required</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -235,11 +257,12 @@
                                                         <i class="fa-solid fa-chevron-down"></i>
                                                         <select id="month" name="month" class="form-control">
                                                             <option value="" selected>MM</option>
-                                                            <option>Jan</option>
-                                                            <option>Feb</option>
-                                                            <option>March</option>
+                                                            @for ($month = 1; $month <= 12; $month++)
+                                                            <option value="{{ sprintf("%02d", $month) }}">{{ sprintf("%02d", $month) }}</option>
+                                                            @endfor
                                                         </select>
-                                                        <small id="month_error" class="d-none text-danger">month is required</small>
+                                                        <small id="month_error" class="d-none text-danger">month is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -249,11 +272,12 @@
                                                         <i class="fa-solid fa-chevron-down"></i>
                                                         <select id="day" name="day" class="form-control">
                                                             <option value="" selected>DD</option>
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
+                                                            @for ($day = 1; $day <= 31; $day++)
+                                                                <option value="{{sprintf("%02d", $day)}}">{{sprintf("%02d", $day)}}</option>
+                                                            @endfor
                                                         </select>
-                                                        <small id="day_error" class="d-none text-danger">day is required</small>
+                                                        <small id="day_error" class="d-none text-danger">day is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -263,12 +287,12 @@
                                                         <i class="fa-solid fa-chevron-down"></i>
                                                         <select id="year" name="year" class="form-control">
                                                             <option value="" selected>year</option>
-                                                            <option>YYYY</option>
-                                                            <option>1990</option>
-                                                            <option>1991</option>
-                                                            <option>1992</option>
+                                                            @for ($year = (date('Y') - 18); $year >= 1900; $year--)
+                                                            <option value="{{ $year }}">{{ $year }}</option>
+                                                            @endfor
                                                         </select>
-                                                        <small id="year_error" class="d-none text-danger">year is required</small>
+                                                        <small id="year_error" class="d-none text-danger">year is
+                                                            required</small>
 
                                                     </div>
                                                 </div>
@@ -308,7 +332,8 @@
                                                             </label>
                                                         </li>
                                                     </ul>
-                                                    <small id="gender_error" class="d-none text-danger">gender is required</small>
+                                                    <small id="gender_error" class="d-none text-danger">gender is
+                                                        required</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -336,7 +361,8 @@
                                                                 + @endif</option>
                                                     @endfor
                                                 </select>
-                                                <small id="player_rating_error" class="d-none text-danger">player rating is required</small>
+                                                <small id="player_rating_error" class="d-none text-danger">player rating
+                                                    is required</small>
                                             </div>
                                             <label><a
                                                     href="{{ asset('images/uploads/USAPA-Skill-Rating-Definitions-2020.pdf') }}"
@@ -363,7 +389,8 @@
                                                                 value="{{ $homeCourt->id }}">{!! $homeCourt->title.' ('.$homeCourt->city.', '.$homeCourt->stateDetails->code.')' !!}</option>
                                                         @endforeach
                                                     </select>
-                                                    <small id="home_court_error" class="d-none text-danger">home court is required</small>
+                                                    <small id="home_court_error" class="d-none text-danger">home court
+                                                        is required</small>
 
                                                     <a href="javascript:void(0);" data-bs-toggle="modal"
                                                        data-bs-target="#pickleballCourtModal"><img
@@ -404,7 +431,8 @@
                                                             </div>
                                                         @endforeach
                                                     </div>
-                                                    <small id="availability_error" class="d-none text-danger">availability is required</small>
+                                                    <small id="availability_error" class="d-none text-danger">availability
+                                                        is required</small>
                                                 </div>
                                             @endif
                                         </div>
@@ -415,13 +443,15 @@
                                                     style="color: red;">*</span></label>
                                             <div class="selectgroup">
                                                 <i class="fa-solid fa-chevron-down"></i>
-                                                <select id="how_did_you_find_us" name="how_did_you_find_us" class="form-control">
+                                                <select id="how_did_you_find_us" name="how_did_you_find_us"
+                                                        class="form-control">
                                                     <option value="">Select</option>
                                                     @foreach (config('global.HOW_DID_YOU_HEAR_ABOUT_US') as $key => $item)
                                                         <option value="{!! $key !!}">{!! $item !!}</option>
                                                     @endforeach
                                                 </select>
-                                                <small id="how_did_you_find_us_error" class="d-none text-danger">field is required</small>
+                                                <small id="how_did_you_find_us_error" class="d-none text-danger">field
+                                                    is required</small>
 
                                             </div>
                                         </div>
@@ -498,7 +528,7 @@
                         </form>
 
 
-                                                {{ Form::close() }}
+                        {{ Form::close() }}
 
 
                         <div id="pickleBallCourt">
@@ -506,36 +536,30 @@
                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header pt-3">
                                             <h5 class="modal-title" id="exampleModalLabel">Add A Pickleball Court</h5>
                                             <button type="button" class="btn-sm btn-danger rounded-3"
                                                     data-bs-dismiss="modal" aria-label="Close">X
                                             </button>
                                         </div>
-                                        <div class="modal-body">
+                                        <div class="modal-body pt-0">
                                             <div class="loginForm">
-                                                <form name="pickleballCourtForm">
+                                                <form id="modal-form" name="modal-form">
                                                     <div class="row">
                                                         <div class="col-lg-12 form-group">
                                                             <div class="holder-inner">
                                                                 <label class="placeholder-label-popup">Court Name<span
                                                                         class="text-red">*</span></label>
-                                                                {{ Form::text('court_name', null, [
-                                                                                'placeholder' => '',
-                                                                                'class' => 'placeholder-input form-control',
-                                                                                '' => true,
-                                                                            ]) }}
+                                                                <input type="text" id="court_name" name="court_name" class="form-control placeholder-input">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 form-group">
                                                             <div class="holder-inner">
                                                                 <label class="placeholder-label-popup">City<span
                                                                         class="text-red">*</span></label>
-                                                                {{ Form::text('city', null, [
-                                                                            'placeholder' => '',
-                                                                            'class' => 'placeholder-input form-control',
-                                                                            '' => true,
-                                                                        ]) }}
+
+                                                                <input type="text" id="city" name="city" class="form-control placeholder-input">
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 form-group">
@@ -545,28 +569,28 @@
                                                                 <select name="state_id"
                                                                         class="placeholder-input form-control">
                                                                     <option value=""></option>
-                                                                    {{--                                                                    @foreach ($states as $item)--}}
-                                                                    {{--                                                                        <option value="{{ $item->id }}">{!! $item->title !!}</option>--}}
-                                                                    {{--                                                                    @endforeach--}}
+                                                                                                                                        @foreach ($states as $item)
+                                                                                                                                            <option value="{{ $item->id }}">{!! $item->title !!}</option>
+                                                                                                                                        @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 form-group">
                                                             <div class="holder-inner">
                                                                 <label class="placeholder-label-popup">Address</label>
-                                                                {{ Form::text('address', null, [
-                                                                                'placeholder' => '',
-                                                                                'class' => 'placeholder-input form-control',
-                                                                            ]) }}
+
+
+                                                                <input type="text" id="address" name="address" class="form-control placeholder-input">
+
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 form-group">
                                                             <div class="holder-inner">
                                                                 <label class="placeholder-label-popup">Zip</label>
-                                                                {{ Form::text('zip', null, [
-                                                                                'placeholder' => '',
-                                                                                'class' => 'placeholder-input form-control',
-                                                                            ]) }}
+
+                                                                <input type="text" id="zip" name="zip" class="form-control placeholder-input">
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 form-group">
@@ -576,9 +600,9 @@
                                                                 <select name="number_of_courts" id="number_of_courts"
                                                                         class="placeholder-input form-control">
                                                                     <option value=""></option>
-                                                                    {{--                                                                    @for ($courts = 1; $courts <= 30; $courts++)--}}
-                                                                    {{--                                                                        <option value="{{$courts}}">{{$courts}}</option>--}}
-                                                                    {{--                                                                    @endfor--}}
+                                                                                                                                        @for ($courts = 1; $courts <= 30; $courts++)
+                                                                                                                                            <option value="{{$courts}}">{{$courts}}</option>
+                                                                                                                                        @endfor
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -615,6 +639,14 @@
                                                     <div class="d-flex justify-content-center">
 
                                                         <button class="btn btn-success" type="submit">Submit</button>
+
+                                                        <div class="alert alert-success alert-dismissible d-none mt-2 fade show" id="modal-alert" role="alert">
+                                                            Record Stored <strong>Successfully..</strong> mail sent!!
+                                                            <button type="button" class="btn btn-sm btn-white text-black close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+
                                                     </div>
 
 
@@ -715,79 +747,67 @@
         })
         $('#two-tab,#btn-2').click(function () {
 
-           if($('#first_name').val()==''){
-               $('#first_name_error').removeClass('d-none');
-               $('#first_name_error').addClass('d-block');
-           }
-           else if ($('#last_name').val()==''){
-               $('#last_name_error').removeClass('d-none');
-               $('#last_name_error').addClass('d-block');
-           }
-           else if ($('#email').val()==''){
-               $('#email_error').removeClass('d-none');
-               $('#email_error').addClass('d-block');
-           }
-           else if ($('#password').val()==''){
-               $('#password').removeClass('d-none');
-               $('#password').addClass('d-block');
-           }
-           else if ($('#confirm_password').val()==''){
-               $('#confirm_password_error').removeClass('d-none');
-               $('#confirm_password_error').addClass('d-block');
-           }
-           else{
-               $('#two-tab').addClass("active");
-               $('#one-tab').removeClass("active");
-               $('#three-tab').removeClass("active");
-               $('#four-tab').removeClass("active");
+            if ($('#first_name').val() == '') {
+                $('#first_name_error').removeClass('d-none');
+                $('#first_name_error').addClass('d-block');
+            } else if ($('#last_name').val() == '') {
+                $('#last_name_error').removeClass('d-none');
+                $('#last_name_error').addClass('d-block');
+            } else if ($('#email').val() == '') {
+                $('#email_error').removeClass('d-none');
+                $('#email_error').addClass('d-block');
+            } else if ($('#password').val() == '') {
+                $('#password').removeClass('d-none');
+                $('#password').addClass('d-block');
+            } else if ($('#confirm_password').val() == '') {
+                $('#confirm_password_error').removeClass('d-none');
+                $('#confirm_password_error').addClass('d-block');
+            } else {
+                $('#two-tab').addClass("active");
+                $('#one-tab').removeClass("active");
+                $('#three-tab').removeClass("active");
+                $('#four-tab').removeClass("active");
 
-               $('#step1').removeClass("d-block");
-               $('#step1').addClass("d-none");
+                $('#step1').removeClass("d-block");
+                $('#step1').addClass("d-none");
 
-               $('#step2').addClass("d-block");
-               $('#step2').removeClass("d-none");
+                $('#step2').addClass("d-block");
+                $('#step2').removeClass("d-none");
 
-               $('#step3').addClass("d-none");
-               $('#step3').removeClass("d-block");
+                $('#step3').addClass("d-none");
+                $('#step3').removeClass("d-block");
 
-               $('#step4').addClass("d-none");
-               $('#step4').removeClass("d-block");
+                $('#step4').addClass("d-none");
+                $('#step4').removeClass("d-block");
 
-           }
+            }
         })
         $('#three-tab,#btn-3').click(function (e) {
-            if($('#address_line_1').val()==''){
+            if ($('#address_line_1').val() == '') {
                 $('#address_line_1_error').removeClass('d-none');
                 $('#address_line_1_error').addClass('d-block');
-            }
-            else if ($('#address_line_2').val()==''){
+            } else if ($('#address_line_2').val() == '') {
                 $('#address_line_2_error').removeClass('d-none');
                 $('#address_line_2_error').addClass('d-block');
-            }
-            else if ($('#city').val()==''){
+            } else if ($('#city').val() == '') {
                 $('#city_error').removeClass('d-none');
                 $('#city_error').addClass('d-block');
-            }
-            else if ($('#state').val()==''){
+            } else if ($('#state').val() == '') {
                 $('#state_error').removeClass('d-none');
                 $('#state_error').addClass('d-block');
-            }
-            else if ($('#phone_no').val()==''){
+            } else if ($('#phone_no').val() == '') {
                 $('#phone_no_error').removeClass('d-none');
                 $('#phone_no_error').addClass('d-block');
-            }  else if ($('#month').val()==''){
+            } else if ($('#month').val() == '') {
                 $('#month_error').removeClass('d-none');
                 $('#month_error').addClass('d-block');
-            }
-            else if ($('#day').val()==''){
+            } else if ($('#day').val() == '') {
                 $('#day_error').removeClass('d-none');
                 $('#day_error').addClass('d-block');
-            } else if ($('#year').val()==''){
+            } else if ($('#year').val() == '') {
                 $('#year_error').removeClass('d-none');
                 $('#year_error').addClass('d-block');
-            }
-
-          else{
+            } else {
                 $('#three-tab').addClass("active");
                 $('#two-tab').removeClass("active");
                 $('#one-tab').removeClass("active");
@@ -810,23 +830,20 @@
         })
         $('#four-tab,#btn-4').click(function () {
 
-            if($('#player_rating').val()==''){
+            if ($('#player_rating').val() == '') {
                 $('#player_rating_error').removeClass('d-none');
                 $('#player_rating_error').addClass('d-block');
-            }
-            else if ($('#home_court').val()==''){
+            } else if ($('#home_court').val() == '') {
                 $('#home_court_error').removeClass('d-none');
                 $('#home_court_error').addClass('d-block');
                 $('#availability_error').removeClass('d-none');
                 $('#availability_error').addClass('d-block');
-            }
-            else if ($('#how_did_you_find_us').val()==''){
+            } else if ($('#how_did_you_find_us').val() == '') {
                 $('#how_did_you_find_us_error').removeClass('d-none');
                 $('#how_did_you_find_us_error').addClass('d-block');
                 $('#availability_error').removeClass('d-none');
                 $('#availability_error').addClass('d-block');
-            }
-            else {
+            } else {
                 $('#four-tab').addClass("active");
                 $('#two-tab').removeClass("active");
                 $('#three-tab').removeClass("active");
@@ -848,8 +865,7 @@
         })
 
         $('#submit').click(function (e) {
-            if(!$('input[name="agree"]').is(':checked'))
-            {
+            if (!$('input[name="agree"]').is(':checked')) {
                 e.preventDefault()
                 $('#agree_error').removeClass('d-none');
                 $('#agree_error').addClass('d-block');
@@ -857,53 +873,64 @@
         })
     })
 
-    // $(document).ready(function ($) {
-    //
-    //     $("#register-form").validate({
-    //         rules: {
-    //             first_name: "required",
-    //             last_name: "required",
-    //             email: "required",
-    //             password: {
-    //                 required: true,
-    //                 minlength: 6
-    //             },
-    //             confirm_password: {
-    //                 required: true,
-    //                 minlength: 6
-    //             },
-    //             city: "required",
-    //             gender: "required"
-    //
-    //         },
-    //         messages: {
-    //             first_name: "Please enter your First Name",
-    //             last_name: "Please enter your Last Name",
-    //             email: "Please enter your email",
-    //             password: {
-    //                 required: "Please provide a password",
-    //                 minlength: "Your password must be at least 6 characters long"
-    //             },
-    //             confirm_password: {
-    //                 required: "Please confirm your password",
-    //                 minlength: "Your password must be at least 6 characters long"
-    //             },
-    //             city: "Please enter your city",
-    //             gender: "This field is required"
-    //         },
-    //         errorPlacement: function (error, element) {
-    //             if (element.is(":radio")) {
-    //                 error.appendTo(element.parents('.form-group'));
-    //             } else { // This is the default behavior
-    //                 error.insertAfter(element);
-    //             }
-    //         },
-    //         submitHandler: function (form) {
-    //             form.submit();
-    //         }
-    //
-    //     });
-    // });
+    $(document).ready(function ($) {
+
+        $("#modal-form").validate({
+            rules: {
+                court_name: "required",
+                city: "required",
+                state_id: "required",
+                address: {
+                    required: true,
+                    minlength: 6
+                },
+                zip: "required",
+                number_of_courts: "required",
+                accessibility: "required",
+                indoor_outdoor:"required"
+
+            },
+            messages: {
+                court_name: "Please enter your court name",
+                city: "Please enter your city",
+                state_id: "Please enter your state",
+                address: {
+                    required: "Please provide address",
+                    minlength: "Your address must be at least 6 characters long"
+                },
+                zip: "Please enter your zip",
+                number_of_courts: "number of courts required",
+                accessibility: "required",
+                indoor_outdoor:"required"
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(":radio")) {
+                    error.appendTo(element.parents('.form-group'));
+                } else { // This is the default behavior
+                    error.insertAfter(element);
+                }
+            },
+            submitHandler: function (form) {
+                var websiteLink = $('#website_link').val();
+                var pickleballCourtSubmitUrl = websiteLink + '/ajax-pickleball-court-submit';
+
+                $.ajax({
+                    url:  pickleballCourtSubmitUrl,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#modal-form').serialize(),
+                    dataType: 'json',
+                    success: function (response) {
+                     $('#modal-alert').removeClass('d-none');
+                     $('#modal-alert').addClass('d-block');
+                    }
+                });
+            }
+
+        });
+    });
 
 </script>
 </body>

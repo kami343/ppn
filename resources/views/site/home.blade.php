@@ -76,7 +76,7 @@
                             if (file_exists(public_path('/images/uploads/cms/'.$leaguePage->featured_image))) {
                                 $leagueImage = asset('/images/uploads/cms/'.$leaguePage->featured_image);
                             }
-                        }   
+                        }
                         @endphp
                     <div class="col-lg-6">
                         <div class="inner-program-box-black equal-image-height">
@@ -103,7 +103,7 @@
                             if (file_exists(public_path('/images/uploads/cms/'.$partnerPage->featured_image))) {
                                 $partnerImage = asset('/images/uploads/cms/'.$partnerPage->featured_image);
                             }
-                        }   
+                        }
                         @endphp
                     <div class="col-lg-6">
                         <div class="inner-program-box equal-image-height">
@@ -123,11 +123,11 @@
                     </div>
                     @endif
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
     {{-- End :: Our program section (CMS Our program page) --}}
 
     @include('site.includes.footer')
-    
+
 @endsection

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Contracts\Mail\Mailer;
 
@@ -28,7 +29,7 @@ class SendResetPasswordLinkToUser implements ShouldQueue
     {
         $this->data         = $data;
         $this->siteSettings = $siteSettings;
-        $this->rememberToken= $rememberToken;    
+        $this->rememberToken= $rememberToken;
     }
 
     /**
@@ -38,6 +39,7 @@ class SendResetPasswordLinkToUser implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
+
         $mailer->send('emails.site.reset_password_link_to_user', ['userDetails' => $this->data, 'rememberToken' => $this->rememberToken, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
             $message->to($this->data['email'], $this->siteSettings['website_title'])->subject(trans('custom.label_reset_password_link'));

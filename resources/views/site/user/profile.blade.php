@@ -12,15 +12,16 @@
     }
     @endphp
 
-    <div class="innerContentArea">
-        <div class="container">
+    <div class="innerContentArea pt-0">
+
+        <div class="container pt-0">
             @if ($isAccessAvailable)
             <div class="text-center">
                 <a href="#" class="btnMain mb-5 text-center">JOIN A LEAGUE</a>
             </div>
             @endif
             <div class="sec-title">
-                <h2>{!! $details->full_name !!}'s profile <a href="{{ route('site.users.edit-profile') }}" class="small-edit-profile">Edit Profile</a></h2>            
+                <h2>{!! $details->full_name !!}'s profile <a href="{{ route('site.users.edit-profile') }}" class="small-edit-profile">Edit Profile</a></h2>
             </div>
             <div class="pageContentArea">
                 <div class="row">
@@ -57,7 +58,7 @@
                                                 <tr>
                                                     <td>Gender:</td>
                                                     <td>@if ($details->gender == 'M')Male @elseif ($details->gender == 'F')Female @endif</td>
-                                                </tr> 
+                                                </tr>
                                                 <tr>
                                                     <td>Date of Birth:</td>
                                                     <td>@if ($details->dob != null){!! date('m/d/Y', strtotime($details->dob)) !!} @else NA @endif</td>
@@ -101,21 +102,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <h4 class="text-uppercase">My Leagues</h4>
-                    <span>No records found.</span>
-                    <ul class="league-profile-content">
-                    </ul>
+                <div class="row mt-3">
+                    <div class="text-uppercase h2 badge badge-info text-white">My Leagues</div>
+                    @include('site.league.leaguelist')
                 </div>
-                
+
             </div>
         </div>
     </div>
-    
+
     @include('site.includes.footer')
-    
+
 @endsection
 
 @push('scripts')
-   
+
 @endpush

@@ -22,9 +22,14 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
+
+        <!-- DataTables -->
+        <link href="{{ asset('css/admin/plugins/datatables.net-bs4/dataTables.bootstrap4.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/admin/plugins/datatables-responsive/responsive.bootstrap4.min.css') }}" rel="stylesheet">
+
         <!-- Custom styles for this template -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/site/style.css') }}" />
-        
+
         <!-- Datepicker -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
         <!-- Sweetalert -->
@@ -43,7 +48,7 @@
     <body>
         <div class="header_take_place"></div>
         @yield('content')
-        
+
         <!-- Pre-loader start -->
         <div class="preloader" style="display: none;">
             <div class="lds-ripple">
@@ -52,10 +57,10 @@
             </div>
         </div>
         <!-- Pre-loader end -->
-        
+
         <input type="hidden" name="website_link" id="website_link" value="{{ url('/') }}" />
         <input type="hidden" name="current_city" id="current_city" value="{{ Session::get('citySlug') }}" />
-        
+
         @if(!Auth::user())
             @php
             $redirectTo = '';
@@ -108,6 +113,8 @@
             </div>
         </div>
         <!-- Login modal end -->
+
+
         <!-- Forgot Password modal start -->
         <div class="modal fade loginModal" id="forgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -387,7 +394,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 form-group">&nbsp;</div>
                                 </div>
-                                
+
                                 <button type="submit">Register</button>
 
 
@@ -422,8 +429,8 @@
         @endif
 
         <!-- Bootstrap core JavaScript
-        ================================================== --> 
-        <!-- Placed at the end of the document so the pages load faster --> 
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/site/bootstrap.bundle.min.js')}}"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -431,6 +438,11 @@
         <script src="https://use.fontawesome.com/4b1a371264.js"></script>
         {{-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> --}}
         {{-- <script src="/path/to/dist/js/a11yAccordion.js"></script> --}}
+
+        <link href="{{ asset('css/admin/plugins/datatables.net-bs4/dataTables.bootstrap4.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/admin/plugins/datatables-responsive/responsive.bootstrap4.min.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/admin/dist/jquery/jquery.min.js') }}"></script>
+
         <script type="text/javascript" src="{{ asset('js/site/jquery.validate.min.js') }}"></script>
 
         @if (Route::currentRouteName() == 'site.registration')
@@ -466,7 +478,7 @@
         .select2-container--default .select2-search--dropdown .select2-search__field{outline: none !important;}
         </style>
         @endif
-        
+
         <!-- date-range-picker -->
         <!-- Bootstrap Date-Picker Plugin -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
@@ -483,6 +495,7 @@
 
         <!-- Custom -->
         <script src="{{asset('js/site/custom.js')}}"></script>
+
         <!-- Sweetalert -->
         <script src="{{ asset('js/admin/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
         <!-- Fancybox -->
@@ -493,6 +506,12 @@
         <script src="{{ asset('js/admin/plugins/toastr/toastr.min.js') }}"></script>
         @toastr_render
         <script src="{{asset('js/site/development.js')}}"></script>
+
+        <!-- DataTables -->
+        <script src="{{ asset('js/admin/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/admin/dist/pages/datatable/datatable-basic.init.js') }}"></script>
+        <script src="{{ asset('js/admin/plugins/datatables-responsive/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('js/admin/plugins/datatables-responsive/responsive.bootstrap4.min.js') }}"></script>
 
         @stack('scripts')
         <script type="text/javascript">
@@ -508,7 +527,7 @@
             @elseif (isset($_GET['popup']) && $_GET['popup'] == 'login')
                 window.location.href = $('#website_link').val() + '/users/profile';
             @endif
-            
+
         @endif
         </script>
 
