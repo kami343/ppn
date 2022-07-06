@@ -31,6 +31,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
     Route::any('/login-new', 'UsersController@LoginNew')->name('login-new');
+    Route::any('/verify-email-page', 'UsersController@VerifyEmailPage')->name('verify-email-page');
     Route::any('/registration', 'UsersController@registration')->name('registration');
     Route::post('/ajax-pickleball-court-submit', 'UsersController@ajaxPickleballCourtSubmit')->name('ajax-pickleball-court-submit');
     Route::any('/ajax-registration-submit', 'UsersController@ajaxRegistrationSubmit')->name('ajax-registration-submit');
@@ -54,6 +55,8 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
         /* Authenticated sections */
         Route::group(['middleware' => 'guest:web'], function () {
             Route::any('/profile', 'UsersController@profile')->name('profile');
+            Route::any('/league-sign-up/{id}', 'UsersController@leagueSignUp')->name('league-sign-up');
+            Route::any('/register-in-league/{id}', 'UsersController@registerInLeague')->name('register-in-league');
             Route::any('/edit-profile', 'UsersController@editProfile')->name('edit-profile');
             Route::post('/ajax-delete-profile-image', 'UsersController@ajaxDeleteProfileImage')->name('ajax-delete-profile-image');
             Route::get('/change-password', 'UsersController@changePassword')->name('change-password');

@@ -95,11 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="profileBottom">
-                            <div class="row">
-                                &nbsp;
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="row mt-3">

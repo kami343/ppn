@@ -223,7 +223,7 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-        return redirect('/registration')->with('status', $message);
+        return redirect('/verify-email-page');
     }
 
     /*
@@ -314,7 +314,6 @@ class UsersController extends Controller
         $lastTenMatchLists = [];
 
         $leaguesData= NewLeague::all();
-        Log::info($leaguesData);
         return view('site.user.profile', [
             'title' => $getMetaDetails['title'],
             'metaKeywords' => $getMetaDetails['metaKeywords'],
@@ -1063,4 +1062,41 @@ class UsersController extends Controller
         return view('site.includes.login');
     }
 
+    public function VerifyEmailPage(){
+        return view('site.account.email');
+    }
+    public function registerInLeague($id){
+        $specificLeague=NewLeague::where('leagueid',$id)->first();
+        $getMetaDetails = getMetaDetails();
+        $details = User::where(['id' => Auth::user()->id])->first();
+        $assignedLeagues = [];
+        $lastTenMatchLists = [];
+
+        return view('site.league.league_registration', [
+            'title' => $getMetaDetails['title'],
+            'metaKeywords' => $getMetaDetails['metaKeywords'],
+            'metaDescription' => $getMetaDetails['metaDescription'],
+            'details' => $details,
+            'assignedLeagues' => $assignedLeagues,
+            'lastTenMatchLists' => $lastTenMatchLists,
+
+        ],compact('specificLeague'));
+    }
+    public function leagueSignUp($id){
+        $specificLeague=NewLeague::where('leagueid',$id)->first();
+        $getMetaDetails = getMetaDetails();
+        $details = User::where(['id' => Auth::user()->id])->first();
+        $assignedLeagues = [];
+        $lastTenMatchLists = [];
+
+        return view('site.league.league_sign_up', [
+            'title' => $getMetaDetails['title'],
+            'metaKeywords' => $getMetaDetails['metaKeywords'],
+            'metaDescription' => $getMetaDetails['metaDescription'],
+            'details' => $details,
+            'assignedLeagues' => $assignedLeagues,
+            'lastTenMatchLists' => $lastTenMatchLists,
+
+        ],compact('specificLeague'));
+    }
 }

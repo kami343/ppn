@@ -9,22 +9,22 @@
         <div class="col-12">
 
             <table id="myTable">
-                <thead>
+                <thead style="background-color: #c8fe0a">
                 <tr>
-                    <th>League Name</th>
-                    <th>Location</th>
-                    <th>Play Type</th>
-                    <th>Gender</th>
-                    <th>Ratings</th>
-                    <th>Dates</th>
-                    <th>Teams Registered</th>
-                    <th>Status</th>
+                    <th><span style="color:black">League Name</span></th>
+                    <th><span style="color:black">Location</span></th>
+                    <th><span style="color:black">Play Type</span></th>
+                    <th><span style="color:black">Gender</span></th>
+                    <th><span style="color:black">Ratings</span></th>
+                    <th><span style="color:black">Dates</span></th>
+                    <th><span style="color:black">Teams Registered</span></th>
+                    <th><span style="color:black">Status</span></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($leaguesData as $data)
                 <tr>
-                    <td class="text-center"><a href="{{$data->leagueid}}" class="text-primary"><b>{{$data->league_name}}</b></a></td>
+                    <td class="text-center"><a href="{{url('users/register-in-league/'.$data->leagueid)}}" class="text-primary"><b>{{$data->league_name}}</b></a></td>
                     <td class="text-center">{{$data->city}}</td>
                     <td class="text-center">{{$data->play_type}}</td>
                     <td class="text-center">{{$data->gender}}</td>
