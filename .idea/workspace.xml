@@ -19,44 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="user can team up and register for leagues">
-      <change afterPath="$PROJECT_DIR$/app/Jobs/SendConfirmationToPlayerTwo.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Jobs/SendToBothPlayers.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/css/stylemodal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/js/site/jquery-input-mask-phone-number.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/otp-email.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/player-email.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/both_player_confirmation_page.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_confirmation_page.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_page.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/verify-email.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/admin/NewLeagueController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/admin/NewLeagueController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Helpers/helper.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Helpers/helper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendRegistrationToUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendRegistrationToUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendResetPasswordLinkToUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendResetPasswordLinkToUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/NewLeague.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/NewLeague.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/admin/dist/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/admin/dist/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/admin/plugins/selectpicker/bootstrap-select.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/admin/plugins/selectpicker/bootstrap-select.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/site/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/site/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/site/development.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/site/development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/registration_details_to_user.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/registration_details_to_user.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/account/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/find_a_league.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/find_a_league.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/includes/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/includes/header.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/layouts/app.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/league/league_registration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/league/league_registration.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/user/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/user/profile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="user can team up and register for leagues" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -302,7 +265,7 @@
       <workItem from="1658760582830" duration="1271000" />
       <workItem from="1658808722201" duration="13991000" />
       <workItem from="1658894314706" duration="18437000" />
-      <workItem from="1658932744623" duration="4814000" />
+      <workItem from="1658932744623" duration="5154000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
