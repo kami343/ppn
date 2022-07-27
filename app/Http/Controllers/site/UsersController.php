@@ -11,6 +11,7 @@ namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
 use App\Models\NewLeague;
+use App\Models\TeamPlayers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
@@ -71,24 +72,25 @@ class UsersController extends Controller
     public function registration(Request $request)
     {
         $getMetaDetails = getMetaDetails('cms', 2);
-        $cmsPage        = $this->cmsModel->where('id', 2)->first();
+        $cmsPage = $this->cmsModel->where('id', 2)->first();
         $homeCourts = PickleballCourt::select('id', 'title', 'city', 'state_id')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('title', 'ASC')->get();
-        $availabilities = Availability::select('id','title','short_code')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('sort', 'ASC')->get();
-        $states         = State::select('id','title','code')->orderBy('title', 'ASC')->get();
+
+        $availabilities = Availability::select('id', 'title', 'short_code')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('sort', 'ASC')->get();
+        $states = State::select('id', 'title', 'code')->orderBy('title', 'ASC')->get();
 
         if (Auth::guard('web')->check()) {
             return redirect()->route('site.users.profile');
         }
 
         return view('site.account.create-account-step1', [
-            'title'             => $getMetaDetails['title'],
-            'metaKeywords'      => $getMetaDetails['metaKeywords'],
-            'metaDescription'   => $getMetaDetails['metaDescription'],
-            'cmsDetails'        => $cmsPage,
-            'homeCourts'        => $homeCourts,
-            'availabilities'    => $availabilities,
-            'states'            => $states,
-            ]);
+            'title' => $getMetaDetails['title'],
+            'metaKeywords' => $getMetaDetails['metaKeywords'],
+            'metaDescription' => $getMetaDetails['metaDescription'],
+            'cmsDetails' => $cmsPage,
+            'homeCourts' => $homeCourts,
+            'availabilities' => $availabilities,
+            'states' => $states,
+        ]);
 //        return view('site.account.create-account-step1', ['homeCourts' => $homeCourts]);
     }
 
@@ -110,120 +112,125 @@ class UsersController extends Controller
         $loginId = '';
 
         try {
-                $checkUserExist = $this->userModel->where(['email' => $request->email])->count();
-                if ($checkUserExist == 0) {
-                    $newUser = $this->userModel;
-                    $newUser->first_name = ucfirst(trim($request->first_name, ' '));
-                    $newUser->last_name = ucfirst(trim($request->last_name, ' '));
-                    $newUser->full_name = $newUser->first_name . ' ' . $newUser->last_name;
-                    $newUser->email = trim($request->email, ' ');
-                    $newUser->phone_no = trim($request->phone_no, ' ');
-                    $newUser->password = $request->password;
-                    $newUser->gender = $request->gender ?? 'M';
-                    $newUser->dob = $request->year . '-' . $request->month . '-' . $request->day;
-                    $newUser->player_rating = $request->player_rating;
-                    $newUser->status = '1';
-                    $newUser->agree = $request->agree ? 'Y' : 'N';
-                    $newUser->is_waiver_signed = 'Y';
-                    $newUser->send_score_confirmation = 'Y';
-                    $password = $request->password;
-                    if ($newUser->save()) {
-                        $newUserDetail = new UserDetail();
-                        $newUserDetail->user_id = $newUser->id;
-                        $newUserDetail->home_court = $request->home_court ?? null;
-                        $newUserDetail->address_line_1 = $request->address_line_1 ?? null;
-                        $newUserDetail->address_line_2 = $request->address_line_2 ?? null;
-                        $newUserDetail->city = $request->city ?? null;
-                        $newUserDetail->state = $request->state ?? null;
-                        $newUserDetail->zip = $request->zip ?? null;
-                        $newUserDetail->how_did_you_find_us = $request->how_did_you_find_us ?? null;
-                        $newUserDetail->save();
+            $checkUserExist = $this->userModel->where(['email' => $request->email])->count();
+            if ($checkUserExist == 0) {
+                $newUser = $this->userModel;
+                $newUser->first_name = ucfirst(trim($request->first_name, ' '));
+                $newUser->last_name = ucfirst(trim($request->last_name, ' '));
+                $newUser->full_name = $newUser->first_name . ' ' . $newUser->last_name;
+                $newUser->email = trim($request->email, ' ');
+                $newUser->phone_no = trim($request->phone_no, ' ');
+                $newUser->password = $request->password;
+                $newUser->gender = $request->gender ?? 'M';
+                $newUser->dob = $request->year . '-' . $request->month . '-' . $request->day;
+                $newUser->player_rating = $request->player_rating;
+                $newUser->status = '1';
+                $newUser->agree = $request->agree ? 'Y' : 'N';
+                $newUser->is_waiver_signed = 'Y';
+                $newUser->send_score_confirmation = 'Y';
+                $newUser->flag = 0;
+                $password = $request->password;
+                if ($newUser->save()) {
+                    $newUserDetail = new UserDetail();
+                    $newUserDetail->user_id = $newUser->id;
+                    $newUserDetail->home_court = $request->home_court ?? null;
+                    $newUserDetail->address_line_1 = $request->address_line_1 ?? null;
+                    $newUserDetail->address_line_2 = $request->address_line_2 ?? null;
+                    $newUserDetail->city = $request->city ?? null;
+                    $newUserDetail->state = $request->state ?? null;
+                    $newUserDetail->zip = $request->zip ?? null;
+                    $newUserDetail->how_did_you_find_us = $request->how_did_you_find_us ?? null;
+                    $newUserDetail->save();
 
-                        // User availability
-                        $userAvailability = $availabilityIds = [];
-                        if (isset($request->availability) && count($request->availability)) {
-                            foreach ($request->availability as $key => $item) {
-                                $userAvailability[$key]['user_id'] = $newUser->id;
-                                $userAvailability[$key]['availability_id'] = $item;
-                                $availabilityIds[] = $item;
-                            }
-                            if (count($userAvailability)) {
-                                UserAvailability::insert($userAvailability);
-                            }
+                    // User availability
+                    $userAvailability = $availabilityIds = [];
+                    if (isset($request->availability) && count($request->availability)) {
+                        foreach ($request->availability as $key => $item) {
+                            $userAvailability[$key]['user_id'] = $newUser->id;
+                            $userAvailability[$key]['availability_id'] = $item;
+                            $availabilityIds[] = $item;
                         }
-
-                        $homeCourts = PickleballCourt::where(['id' => $newUserDetail->home_court])->first();
-                        $state = State::where(['id' => $newUserDetail->state])->first();
-                        $lastInsertedUser = $this->userModel->where(['id' => $newUser->id])->first();
-                        $playingDetails['home_court'] = $homeCourts->title;
-                        $playingDetails['address_line_1'] = $request->address_line_1 ?? null;
-                        $playingDetails['address_line_2'] = $request->address_line_2 ?? 'NA';
-                        $playingDetails['city'] = $request->city ?? null;
-                        $playingDetails['state'] = $state->title ?? null;
-                        $playingDetails['zip'] = $request->zip ?? null;
-
-                        $howDidYouHearAboutUs = config('global.HOW_DID_YOU_HEAR_ABOUT_US');
-
-                        if ($newUserDetail->how_did_you_find_us == 'SE') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['SE'];
-                        } else if ($newUserDetail->how_did_you_find_us == 'SM') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['SM'];
-                        } else if ($newUserDetail->how_did_you_find_us == 'RBF') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['RBF'];
-                        } else if ($newUserDetail->how_did_you_find_us == 'BOP') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['BOP'];
-                        } else if ($newUserDetail->how_did_you_find_us == 'AD') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['AD'];
-                        } else if ($newUserDetail->how_did_you_find_us == 'O') {
-                            $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['O'];
-                        } else {
-                            $playingDetails['how_did_you_find_us'] = 'NA';
+                        if (count($userAvailability)) {
+                            UserAvailability::insert($userAvailability);
                         }
-
-                        $userAvailabilities = '';
-                        if (count($availabilityIds)) {
-                            asort($availabilityIds);
-                            $userAvailabilitiesData = Availability::select('title')->whereIn('id', $availabilityIds)->get();
-
-                            $arrayCount = 1;
-                            foreach ($userAvailabilitiesData as $userAvailability) {
-                                $userAvailabilities .= $userAvailability->title;
-                                if ($arrayCount < count($availabilityIds)) {
-                                    $userAvailabilities .= ', ';
-                                }
-                                $arrayCount++;
-                            }
-                        }
-                        $playingDetails['availability'] = $userAvailabilities;
-
-                        $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
-                        // Mail to user
-                        dispatch(new SendRegistrationToUser($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $playingDetails, $password, $siteSettings));
-                        // Mail to admin
-                        dispatch(new SendRegistrationToAdmin($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $playingDetails, $siteSettings));
-
-                        // Login after registration
-                        // Auth::guard('web')->loginUsingId($newUser->id);
-
-                        $title = trans('custom.message_success');
-                        $message = trans('custom.message_registration_successful');
-                        $type = 'success';
-                        $loginId = customEncryptionDecryption($newUser->id);
                     }
-                } else {
-                    $title = trans('custom.message_error');
-                    $message = trans('custom.error_already_registered');
-                    $type = 'error';
-                    return redirect('/registration')->with('errstatus', $message);
 
+                    $homeCourts = PickleballCourt::where(['id' => $newUserDetail->home_court])->first();
+                    $state = State::where(['id' => $newUserDetail->state])->first();
+                    $lastInsertedUser = $this->userModel->where(['id' => $newUser->id])->first();
+                    $playingDetails['home_court'] = $homeCourts->title;
+                    $playingDetails['address_line_1'] = $request->address_line_1 ?? null;
+                    $playingDetails['address_line_2'] = $request->address_line_2 ?? 'NA';
+                    $playingDetails['city'] = $request->city ?? null;
+                    $playingDetails['state'] = $state->title ?? null;
+                    $playingDetails['zip'] = $request->zip ?? null;
+
+                    $howDidYouHearAboutUs = config('global.HOW_DID_YOU_HEAR_ABOUT_US');
+
+                    if ($newUserDetail->how_did_you_find_us == 'SE') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['SE'];
+                    } else if ($newUserDetail->how_did_you_find_us == 'SM') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['SM'];
+                    } else if ($newUserDetail->how_did_you_find_us == 'RBF') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['RBF'];
+                    } else if ($newUserDetail->how_did_you_find_us == 'BOP') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['BOP'];
+                    } else if ($newUserDetail->how_did_you_find_us == 'AD') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['AD'];
+                    } else if ($newUserDetail->how_did_you_find_us == 'O') {
+                        $playingDetails['how_did_you_find_us'] = $howDidYouHearAboutUs['O'];
+                    } else {
+                        $playingDetails['how_did_you_find_us'] = 'NA';
+                    }
+
+                    $userAvailabilities = '';
+                    if (count($availabilityIds)) {
+                        asort($availabilityIds);
+                        $userAvailabilitiesData = Availability::select('title')->whereIn('id', $availabilityIds)->get();
+
+                        $arrayCount = 1;
+                        foreach ($userAvailabilitiesData as $userAvailability) {
+                            $userAvailabilities .= $userAvailability->title;
+                            if ($arrayCount < count($availabilityIds)) {
+                                $userAvailabilities .= ', ';
+                            }
+                            $arrayCount++;
+                        }
+                    }
+                    $playingDetails['availability'] = $userAvailabilities;
+
+                    $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+
+                    // Mail to user
+                    dispatch(new SendRegistrationToUser($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $playingDetails, $password, $siteSettings));
+
+                    // Mail to admin
+                    dispatch(new SendRegistrationToAdmin($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $playingDetails, $siteSettings));
+
+                    // Login after registration
+                    // Auth::guard('web')->loginUsingId($newUser->id);
+
+                    $title = trans('custom.message_success');
+                    $message = trans('custom.message_registration_successful');
+                    $type = 'success';
+                    $loginId = customEncryptionDecryption($newUser->id);
                 }
+            } else {
+                $title = trans('custom.message_error');
+                $message = trans('custom.error_already_registered');
+                $type = 'error';
+                return redirect('/registration')->with('errstatus', $message);
+
+            }
 
         } catch (Exception $e) {
             $message = $e->getMessage();
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-        return redirect('/verify-email-page');
+        $checkUserId = $this->userModel->where(['email' => $request->email])->value('id');
+
+        return view('site.account.email')->with('email',$request->email)->with('id',$checkUserId);
     }
 
     /*
@@ -252,7 +259,7 @@ class UsersController extends Controller
         ]);
     }
 
-    /*
+    /*VerifyEmailPage
         * Function name : ajaxLoginSubmit
         * Purpose       : This function is submit login form
         * Author        :
@@ -263,10 +270,10 @@ class UsersController extends Controller
     */
     public function ajaxLoginSubmit(Request $request)
     {
-        $message="Login Successfully..";
-        $messageError="Credential is not valid";
-        $redirectTo="join-a-league";
-        $type="error";
+        $message = "Login Successfully..";
+        $messageError = "Credential is not valid";
+        $redirectTo = "join-a-league";
+        $type = "error";
         try {
             if ($request->ajax()) {
                 if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], true)) {
@@ -281,7 +288,7 @@ class UsersController extends Controller
                         $redirectTo = 'login-new';
                         $message = trans('custom.message_login_successful');
                     }
-                    $type="success";
+                    $type = "success";
                 } else {
                     $redirectTo = 'login-new';
 
@@ -293,7 +300,7 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-     return response()->json([ 'message' => $message,'type'=>$type,'redirectTo' => $redirectTo]);
+        return response()->json(['message' => $message, 'type' => $type, 'redirectTo' => $redirectTo]);
 
     }
 
@@ -313,7 +320,7 @@ class UsersController extends Controller
         $assignedLeagues = [];
         $lastTenMatchLists = [];
 
-        $leaguesData= NewLeague::all();
+        $leaguesData = NewLeague::all();
         return view('site.user.profile', [
             'title' => $getMetaDetails['title'],
             'metaKeywords' => $getMetaDetails['metaKeywords'],
@@ -322,7 +329,7 @@ class UsersController extends Controller
             'assignedLeagues' => $assignedLeagues,
             'lastTenMatchLists' => $lastTenMatchLists,
 
-        ],compact('leaguesData'));
+        ], compact('leaguesData'));
     }
 
     /*
@@ -564,6 +571,7 @@ class UsersController extends Controller
     public function ajaxForgotPasswordSubmit(Request $request)
     {
 
+
         $title = trans('custom.message_error');
         $message = trans('custom.error_something_went_wrong');
         $type = 'error';
@@ -623,49 +631,27 @@ class UsersController extends Controller
         $title = trans('custom.message_error');
         $message = trans('custom.error_something_went_wrong');
         $type = 'error';
-
         try {
-            if ($request->ajax()) {
-                $validationCondition = array(
-                    'otp' => 'required',
-                    // 'password'          => 'required|regex:'.config('global.PASSWORD_REGEX'),
-                    'password' => 'required',
-                    'confirm_password' => 'required|same:password',
-                );
-                $validationMessages = array(
-                    'otp.required' => trans('custom.error_otp'),
-                    'password.required' => trans('custom.error_new_password'),
-                    // 'password.regex'            => trans('custom.error_password_regex'),
-                    'confirm_password.required' => trans('custom.error_confirm_password'),
-                    'confirm_password.same' => trans('custom.error_confirm_password_password'),
-                );
-                $validator = Validator::make($request->all(), $validationCondition, $validationMessages);
-                if ($validator->fails()) {
-                    $message = validationMessageBeautifier($validator->messages()->getMessages());
-                    $type = 'validation';
+            $userData = $this->userModel->select('id', 'first_name', 'email', 'role_id', 'remember_token', 'status')
+                ->where(DB::raw('BINARY `remember_token`'), $request->otp)
+                ->first();
+            if ($userData) {
+                if ($userData->role_id != null) {
+                    $message = trans('custom.error_not_authorized');
+                } else if ($userData->status == '0') {
+                    $message = trans('custom.error_inactive_user');
                 } else {
-                    $userData = $this->userModel->select('id', 'first_name', 'email', 'role_id', 'remember_token', 'status')
-                        ->where(DB::raw('BINARY `remember_token`'), $request->otp)
-                        ->first();
-                    if ($userData) {
-                        if ($userData->role_id != null) {
-                            $message = trans('custom.error_not_authorized');
-                        } else if ($userData->status == '0') {
-                            $message = trans('custom.error_inactive_user');
-                        } else {
-                            $userData->remember_token = null;
-                            $userData->password = $request->password;
+                    $userData->remember_token = null;
+                    $userData->password = $request->password;
 
-                            if ($userData->save()) {
-                                $title = trans('custom.message_success');
-                                $message = trans('custom.message_password_update_successful');
-                                $type = 'success';
-                            }
-                        }
-                    } else {
-                        $message = trans('custom.error_reset_already_done');
+                    if ($userData->save()) {
+                        $title = trans('custom.message_success');
+                        $message = trans('custom.message_password_update_successful');
+                        $type = 'success';
                     }
                 }
+            } else {
+                $message = trans('custom.error_reset_already_done');
             }
         } catch (Exception $e) {
             $message = $e->getMessage();
@@ -970,15 +956,14 @@ class UsersController extends Controller
     public function ajaxPickleballCourtSubmit(Request $request)
     {
 
-        $message="";
+        $message = "";
         try {
             if ($request->ajax()) {
                 $isExist = PickleballCourt::where(['title' => $request->court_name, 'state_id' => $request->state_id])->count();
                 if ($isExist) {
                     $message = trans('custom.message_court_name_exist');
 
-                }
-                else {
+                } else {
                     $newPickleballCourt = new PickleballCourt();
                     $newPickleballCourt->title = $request->court_name ?? null;
                     $newPickleballCourt->slug = generateUniqueSlug($newPickleballCourt, trim($request->court_name, ' '));
@@ -1024,7 +1009,7 @@ class UsersController extends Controller
             $message = $e->getMessage();
         }
 
-       return response()->json(['message' => $message]);
+        return response()->json(['message' => $message]);
     }
 
 
@@ -1058,15 +1043,35 @@ class UsersController extends Controller
         }
     }
 
-    public function LoginNew(){
+    public function LoginNew()
+    {
         return view('site.includes.login');
     }
 
-    public function VerifyEmailPage(){
-        return view('site.account.email');
+    public function VerifyEmailPage()
+    {
+        return view('emails.site.player-email');
     }
-    public function registerInLeague($id){
-        $specificLeague=NewLeague::where('leagueid',$id)->first();
+
+    public function verifyEmailRedirect($id=null)
+    {
+         $email = User::where(['id' => $id])->value('email');
+        $fullName = User::where(['id' => $id])->value('full_name');
+        $leagueid=DB::table('teams')
+            ->join('team_players','team_players.team_id','=','teams.id')
+            ->where('team_players.player2_email',$email)->value('teams.leagueid');
+
+        $emailExist=TeamPlayers::where('player2_email',$email)->exists();
+        if (!empty($emailExist)){
+            return view('emails.site.teams_player.player_2_confirmation_page')->with('leagueid',$leagueid)->with('full_name',$fullName)->with('user2',$id);
+        }
+        else
+            return view('site.account.redirect-user-page');
+    }
+
+    public function registerInLeague($id)
+    {
+        $specificLeague = NewLeague::where('leagueid', $id)->first();
         $getMetaDetails = getMetaDetails();
         $details = User::where(['id' => Auth::user()->id])->first();
         $assignedLeagues = [];
@@ -1080,10 +1085,12 @@ class UsersController extends Controller
             'assignedLeagues' => $assignedLeagues,
             'lastTenMatchLists' => $lastTenMatchLists,
 
-        ],compact('specificLeague'));
+        ], compact('specificLeague'));
     }
-    public function leagueSignUp($id){
-        $specificLeague=NewLeague::where('leagueid',$id)->first();
+
+    public function leagueSignUp($id)
+    {
+        $specificLeague = NewLeague::where('leagueid', $id)->first();
         $getMetaDetails = getMetaDetails();
         $details = User::where(['id' => Auth::user()->id])->first();
         $assignedLeagues = [];
@@ -1097,6 +1104,184 @@ class UsersController extends Controller
             'assignedLeagues' => $assignedLeagues,
             'lastTenMatchLists' => $lastTenMatchLists,
 
-        ],compact('specificLeague'));
+        ], compact('specificLeague'));
     }
+
+    public function checkEmail($id)
+    {
+
+        $varEmail = User::where(['email' => $id])->exists();
+
+        return $varEmail;
+
+    }
+    public function resendVerifyEmail($id){
+        $title = trans('custom.message_error');
+        $message = trans('custom.error_something_went_wrong');
+        $type = 'error';
+        $loginId = '';
+        $email = $this->userModel->where(['id' => $id])->value('email');
+
+        try {
+            $checkUserExist = $this->userModel->where(['id' => $id])->count();
+            if ($checkUserExist != 0) {
+
+
+                $lastInsertedUser = $this->userModel->where(['id' => $id])->first();
+
+
+                $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+                // Mail to user
+                dispatch(new SendRegistrationToUser($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $lastInsertedUser, $lastInsertedUser['password'], $siteSettings));
+                // Mail to admin
+                dispatch(new SendRegistrationToAdmin($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $lastInsertedUser, $siteSettings));
+
+                // Login after registration
+                // Auth::guard('web')->loginUsingId($newUser->id);
+
+                $title = trans('custom.message_success');
+                $message = trans('custom.message_registration_successful');
+                $type = 'success';
+                $loginId = customEncryptionDecryption($lastInsertedUser->id);
+            }
+            else {
+                $title = trans('custom.message_error');
+                $message = trans('custom.error_already_registered');
+                $type = 'error';
+                return redirect('/registration')->with('errstatus', $message);
+
+            }
+
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+        } catch (\Throwable $e) {
+            $message = $e->getMessage();
+        }
+
+        return view('site.account.email')->with('email',$email)->with('id',$id);
+    }
+    public function verifyEmailNew()
+    {
+        return view('site.account.email');
+    }
+    public function getHomeCourts(){
+        $homeCourts=DB::table('pickleball_courts')
+            ->join('states','states.id','=','pickleball_courts.state_id')
+            ->where('status','1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title','states.code as code','states.title as state')->get();
+        return $homeCourts;
+    }
+    public function checkUserExistence($id){
+            //   $user_id=DB::table('newleague')
+            // ->join('teams','teams.leagueid','=','newleague.leagueid')
+            // ->join('team_players','team_players.team_id','=','teams.id')
+            // ->join('users','users.email','=','team_players.player2_email')
+            // ->where('newleague.leagueid',$id)
+            // ->value('users.id');
+                 $teamid=DB::table('teams')->where('teams.leagueid',$id)->value('teams.id');
+                 $email1=DB::table('team_players')->where('team_players.team_id',$teamid)->value('player1_email');
+                 $email2=DB::table('team_players')->where('team_players.team_id',$teamid)->value('player2_email');
+
+
+                  $user1=DB::table('users')->where('users.email',$email1)->exists();
+                  $user2=DB::table('users')->where('users.email',$email2)->exists();
+
+                  $flag=Auth::check();
+
+
+
+        $currentDate = date("Y-m-d");
+                    $data=NewLeague::where('leagueid',$id)->first();
+
+       if (empty($flag)){
+            return 2;
+        }
+        else if ($data->todate<$currentDate){
+            return 1;
+        }
+
+        else{
+            Log::info("else one");
+                              $userLoggedIn=Auth::user()->id;
+
+        $usersDetail= DB::table('users')
+            ->join('user_details', 'users.id', '=', 'user_details.user_id')
+            ->where('users.id',$userLoggedIn)
+            ->get();
+            return $usersDetail;
+        }
+    }
+
+
+ public function userCheckout(Request $request){
+        \Stripe\Stripe::setApiKey('sk_test_51L1CSDB0DWwA7fx5BxP5kBvTeFl1CVIeP4Fy8ANcNAzTpVIq0DgRyyWqviGNoUFu5ocInFxeLihoYzw1P1XqchxH00SbJpJAPG');
+
+$response = array(
+    'status' => 0,
+    'error' => array(
+        'message' => 'Invalid Request!'
+    )
+);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $input = file_get_contents('php://input');
+    $request = json_decode($input);
+}
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode($response);
+    exit;
+}
+
+if(!empty($request->createCheckoutSession)){
+    // Convert product price to cent
+    $stripeAmount = round(39.99*100, 2);
+
+    // Create new Checkout Session for the order
+    try {
+        $checkout_session = \Stripe\Checkout\Session::create([
+            'line_items' => [[
+              'price_data' => [
+                    'product_data' => [
+                        'name' => "Leagu Registration",
+                        'metadata' => [
+                            'pro_id' => 1
+                        ]
+                    ],
+                    'unit_amount' => $stripeAmount,
+                    'currency' => "usd",
+                ],
+                'quantity' => 1,
+                'description' => "Leagu Registration Details",
+            ]],
+            'mode' => 'payment',
+            'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/'.$request['player2id'].'/'.$request['leagueid'],
+            'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
+        ]);
+    } catch(Exception $e) {
+        $api_error = $e->getMessage();
+    }
+
+    if(empty($api_error) && $checkout_session){
+        $response = array(
+            'status' => 1,
+            'message' => 'Checkout Session created successfully!',
+            'sessionId' => $checkout_session->id
+        );
+    }else{
+        $response = array(
+            'status' => 0,
+            'error' => array(
+                'message' => 'Checkout Session creation failed! '.$api_error
+            )
+        );
+    }
+}
+
+//Payment status for player2 will be updated here as i added new colum
+
+
+echo json_encode($response);
+    }
+
 }

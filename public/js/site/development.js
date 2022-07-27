@@ -1,4 +1,4 @@
-$.validator.addMethod("valid_email", function(value, element) {
+$.validator.addMethod("valid_email", function (value, element) {
     if (/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) {
         return true;
     } else {
@@ -7,7 +7,7 @@ $.validator.addMethod("valid_email", function(value, element) {
 }, "Please enter a valid email");
 
 // Phone number eg. (+91)9876543210
-$.validator.addMethod("valid_number", function(value, element) {
+$.validator.addMethod("valid_number", function (value, element) {
     if (/^(?:[+]9)?[0-9]+$/.test(value)) {
         return true;
     } else {
@@ -17,13 +17,13 @@ $.validator.addMethod("valid_number", function(value, element) {
 }, "Please enter a valid phone number.");
 
 // Phone number eg. +919876543210
-$.validator.addMethod("valid_site_number", function(value, element) {
+$.validator.addMethod("valid_site_number", function (value, element) {
     if (/^(?:[+]9)?[0-9]+$/.test(value)) {
 
-        if($("#phone_no").val().charAt(0) == '0') {
+        if ($("#phone_no").val().charAt(0) == '0') {
             return false;
         }
-        if($("#phone_no").val().substring(0, 3) == '966') {
+        if ($("#phone_no").val().substring(0, 3) == '966') {
             return false;
         }
         return true;
@@ -33,7 +33,7 @@ $.validator.addMethod("valid_site_number", function(value, element) {
 }, "Please enter a valid phone number.");
 
 // Minimum 8 digit,small+capital letter,number,specialcharacter
-$.validator.addMethod("valid_password", function(value, element) {
+$.validator.addMethod("valid_password", function (value, element) {
     // if (/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(value)) {
     if (/^.{8,}$/.test(value)) {    // Minimum 8 characters only
         return true;
@@ -43,7 +43,7 @@ $.validator.addMethod("valid_password", function(value, element) {
 });
 
 // Alphabet or number
-$.validator.addMethod("valid_coupon_code", function(value, element) {
+$.validator.addMethod("valid_coupon_code", function (value, element) {
     if (/^[a-zA-Z0-9]+$/.test(value)) {
         return true;
     } else {
@@ -52,7 +52,7 @@ $.validator.addMethod("valid_coupon_code", function(value, element) {
 });
 
 // Integer and decimal
-$.validator.addMethod("valid_amount", function(value, element) {
+$.validator.addMethod("valid_amount", function (value, element) {
     if (/^[1-9]\d*(\.\d+)?$/.test(value)) {
         return true;
     } else {
@@ -61,7 +61,7 @@ $.validator.addMethod("valid_amount", function(value, element) {
 });
 
 // US phone number validation
-$.validator.addMethod("valid_us_phone_number", function(value, element) {
+$.validator.addMethod("valid_us_phone_number", function (value, element) {
     if (value) {
         if (/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(value)) {
             return true;
@@ -74,7 +74,7 @@ $.validator.addMethod("valid_us_phone_number", function(value, element) {
 });
 
 // Valid 5 digit number
-$.validator.addMethod("valid_5_digit_number", function(value, element) {
+$.validator.addMethod("valid_5_digit_number", function (value, element) {
     if (value) {
         if (/^[0-9]{5}$/.test(value)) {
             return true;
@@ -87,7 +87,7 @@ $.validator.addMethod("valid_5_digit_number", function(value, element) {
 });
 
 // Positive number
-$.validator.addMethod("valid_positive_number", function(value, element) {
+$.validator.addMethod("valid_positive_number", function (value, element) {
     if (value) {
         if (/^[0-9]+$/.test(value)) {
             return true;
@@ -100,24 +100,65 @@ $.validator.addMethod("valid_positive_number", function(value, element) {
 });
 
 
-var overallErrorMessage         = '';
-var pleaseFillOneField          = 'You missed 1 field. It has been highlighted.';
-var pleaseFillMoreFieldFirst    = 'You have missed ';
-var pleaseFillMoreFieldLast     = ' fields. Please fill before submitted.';
-var successMessage              = 'Success';
-var errorMessage                = 'Error';
-var warningMessage              = 'Warning';
-var infoMessage                 = 'Info';
-var btnSubmitting               = 'Submitting...';
-var btnUpdating                 = 'Updating...';
-var thankYouMessage             = 'Thank You';
-var formSuccessMessage          = 'Form has been submitted successfully. We will get back to you soon.';
-var somethingWrongMessage       = 'Something went wrong, please try again later.';
-var labelSelect                 = 'Select';
-var serviceProviderDateMessage  = 'Please select services, service provider, booking date first.';
+var overallErrorMessage = '';
+var pleaseFillOneField = 'You missed 1 field. It has been highlighted.';
+var pleaseFillMoreFieldFirst = 'You have missed ';
+var pleaseFillMoreFieldLast = ' fields. Please fill before submitted.';
+var successMessage = 'Success';
+var errorMessage = 'Error';
+var warningMessage = 'Warning';
+var infoMessage = 'Info';
+var btnSubmitting = 'Submitting...';
+var btnUpdating = 'Updating...';
+var thankYouMessage = 'Thank You';
+var formSuccessMessage = 'Form has been submitted successfully. We will get back to you soon.';
+var somethingWrongMessage = 'Something went wrong, please try again later.';
+var labelSelect = 'Select';
+var serviceProviderDateMessage = 'Please select services, service provider, booking date first.';
+
+function checkUserAuth(ele)
+{
 
 
-$(document).ready(function() {
+    const player2_clicked_user_id= $(ele).attr('value');
+
+    const flag=$("#user-login-check").val();
+    var websiteLink = $('#website_link').val();
+    const leagueid=$("#leagueid").val();
+    var loginUrl = websiteLink + '/login-new';
+
+
+
+   if (flag==""){
+       alert("you are requested to please login first..");
+       window.open(loginUrl,'_self')
+   }
+   else{
+       $.get('/check-partner/'+leagueid, function (data) {
+           if (data!=1)
+           {
+               alert("Looks like you have already added another partner. Please wait for your partner to decline your request or wait for the 5 day window to expire before adding another partner.");
+           }
+           else{
+            $.get('/add_selected_player/'+player2_clicked_user_id+'/'+leagueid,function (data) {
+
+                $("#checkoutBtn").removeClass('d-block');
+                $("#checkoutBtn").addClass('d-none');
+                $("#team_name").val(data[0].title);
+                $("#player_2_name").val(data[0].player1_name);
+                $("#player_2_email").val(data[0].player1_email);
+                $("#selected-player-flag").val(data[0].team_id);
+               $("#leagueSignupModal").modal('show');
+            })
+           }
+       })
+
+   }
+}
+
+
+
+$(document).ready(function () {
     var websiteLink = $('#website_link').val();
 
     var selectedUserIds = [];
@@ -160,10 +201,10 @@ $(document).ready(function() {
                 valid_positive_number: "Please enter valid number of courts.",
             },
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var pickleballCourtSubmitUrl = websiteLink + '/ajax-pickleball-court-submit';
             $.ajax({
@@ -183,10 +224,10 @@ $(document).ready(function() {
                         $('.preloader').hide();
                     } else if (response.type == 'validation') {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
                         $('.preloader').hide();
-                        toastr.error(response.message, response.title+'!');
+                        toastr.error(response.message, response.title + '!');
                     }
                 }
             });
@@ -335,7 +376,7 @@ $(document).ready(function() {
             //     required: "Please accept Waiver.",
             // },
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             if ($(element).attr('id') == 'agree') {
                 error.insertAfter($(element).parents('div#leagueAgree'));
             } else if ($(element).attr('class') == 'form-check-input available error-checkbox error') {
@@ -346,7 +387,7 @@ $(document).ready(function() {
                 error.insertAfter(element);
             }
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var registrationSubmitUrl = websiteLink + '/ajax-registration-submit';
             $.ajax({
@@ -363,10 +404,10 @@ $(document).ready(function() {
                         window.location.href = websiteLink + '/thank-you/' + response.loginId;
                     } else if (response.type == 'validation') {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
                         $('.preloader').hide();
-                        toastr.error(response.message, response.title+'!');
+                        toastr.error(response.message, response.title + '!');
                     }
                 }
             });
@@ -393,10 +434,10 @@ $(document).ready(function() {
                 required: "Please enter password.",
             }
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var loginSubmitUrl = websiteLink + '/ajax-login-submit';
             $.ajax({
@@ -419,10 +460,10 @@ $(document).ready(function() {
                         }
                     } else if (response.type == 'validation') {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     }
                 }
             });
@@ -497,10 +538,10 @@ $(document).ready(function() {
                 required: "Please select year.",
             },
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             form.submit();
         }
     });
@@ -521,10 +562,10 @@ $(document).ready(function() {
         },
         errorClass: 'error',
         errorElement: 'div',
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var forgotPasswordSubmitUrl = websiteLink + '/ajax-forgot-password-submit';
             $.ajax({
@@ -540,15 +581,15 @@ $(document).ready(function() {
                     ajax_check = false;
                     if (response.type == 'success') {
                         $('#forgotPasswordForm')[0].reset();
-                        toastr.success(response.message, successMessage+'!');
+                        toastr.success(response.message, successMessage + '!');
 
                         $('#forgotPasswordModal').modal('hide');
                         $('#loginModal').modal('hide');
                         $('#resetPasswordModal').modal('show');
                     } else if (response.type == 'validation') {
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     }
                 }
             });
@@ -587,10 +628,10 @@ $(document).ready(function() {
         },
         errorClass: 'error',
         errorElement: 'div',
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var changePasswordSubmitUrl = websiteLink + '/ajax-reset-password-submit';
             $.ajax({
@@ -605,17 +646,17 @@ $(document).ready(function() {
                     $('.preloader').hide();
                     if (response.type == 'success') {
                         $('#resetPasswordForm')[0].reset();
-                        toastr.success(response.message, successMessage+'!');
+                        toastr.success(response.message, successMessage + '!');
 
                         $('#forgotPasswordModal').modal('hide');
                         $('#loginModal').modal('show');
                         $('#resetPasswordModal').modal('hide');
                     } else if (response.type == 'validation') {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
                         $('.preloader').hide();
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     }
                 }
             });
@@ -654,10 +695,10 @@ $(document).ready(function() {
         },
         errorClass: 'error',
         errorElement: 'div',
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var changePasswordSubmitUrl = websiteLink + '/users/ajax-change-password-submit';
             $.ajax({
@@ -677,14 +718,14 @@ $(document).ready(function() {
                     ajax_check = false;
                     if (response.type == 'success') {
                         $('#changePasswordForm')[0].reset();
-                        toastr.success(response.message, successMessage+'!');
-                        setTimeout(function() {
+                        toastr.success(response.message, successMessage + '!');
+                        setTimeout(function () {
                             window.location.href = websiteLink + '/users/profile';
                         }, 2000);
                     } else if (response.type == 'validation') {
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     } else {
-                        toastr.error(response.message, errorMessage+'!');
+                        toastr.error(response.message, errorMessage + '!');
                     }
                 }
             });
@@ -719,10 +760,10 @@ $(document).ready(function() {
         },
         errorClass: 'error',
         errorElement: 'div',
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.insertAfter(element);
         },
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             $('.preloader').show();
             var contactSubmitUrl = websiteLink + '/ajax-contact-submit';
 
@@ -742,24 +783,80 @@ $(document).ready(function() {
                     $('.preloader').hide();
                     if (response.type == 'success') {
                         $('#contactForm')[0].reset();
-                        toastr.success(formSuccessMessage, thankYouMessage+'!');
+                        toastr.success(formSuccessMessage, thankYouMessage + '!');
                     } else {
-                        toastr.error(somethingWrongMessage, errorMessage+'!');
+                        toastr.error(somethingWrongMessage, errorMessage + '!');
                     }
                 }
             });
         }
     });
 
+    /* League Registration */
+    $("#leagueSignupForm").validate({
+        rules: {
+            team_name: "required",
+            player_1_name: "required",
+            player_2_name: "required",
+            player_2_email: "required",
+            signup_agree: "required",
+
+        },
+        messages: {
+            team_name: "team name is required",
+            player_1_name: "player 1 name is required",
+            player_2_name: "player 2 name is required",
+            player_2_email: "email is required",
+            signup_agree: "it is required",
+        },
+        errorPlacement: function (error, element) {
+            if (element.is(":radio")) {
+                error.appendTo(element.parents('.form-group'));
+            } else { // This is the default behavior
+                error.insertAfter(element);
+            }
+        },
+        submitHandler: function (form) {
+            var websiteLink = $('#website_link').val();
+            var teamsUrl = websiteLink + '/add-teams';
+            const flag=$("#selected-player-flag").val();
+            if (flag!=""){
+
+            }else{
+                $.ajax({
+                    url: teamsUrl,
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: $('#leagueSignupForm').serialize(),
+                    dataType: 'json',
+                    success: function (response) {
+
+                        $("#leagueSignupModal").modal('hide');
+                        $('#leagueSignupForm')[0].reset();
+                        window.location.href = '/player-one-confirmation/' + response.teamid;
+                        // $('#modal-alert').removeClass('d-none');
+                        // $('#modal-alert').addClass('d-block');
+                        // $('#pickleballCourtModal').modal('hide');
+                    }
+                });
+            }
+
+        }
+
+    });
+
+
     // Hide Login modal, open forgot password modal
-    $(document).on('click', '#openForgotPasswordModal', function() {
+    $(document).on('click', '#openForgotPasswordModal', function () {
         $('#loginModal').modal('hide');
         $('#resetPasswordModal').modal('hide');
         $('#forgotPasswordModal').modal('show');
     });
 
     // Hide forgot password modal, open login modal
-    $(document).on('click', '#openLoginModal', function() {
+    $(document).on('click', '#openLoginModal', function () {
         $('#forgotPasswordModal').modal('hide');
         $('#resetPasswordModal').modal('hide');
         $('#loginModal').modal('show');
@@ -769,36 +866,36 @@ $(document).ready(function() {
     // Start :: Select / Deselect all in city league page
     var totalCheckboxCount = $('input[type=checkbox]').length;
     totalCheckboxCount = totalCheckboxCount - 1;
-	$('.selectDeselectAll').click(function() {
-		if ($(this).is(':checked')) {
-			$('.individualCheckboxes').prop('checked', true);
+    $('.selectDeselectAll').click(function () {
+        if ($(this).is(':checked')) {
+            $('.individualCheckboxes').prop('checked', true);
             // set user ids
             $('.individualCheckboxes').each(function () {
                 selectedUserIds.push($(this).val());
             });
-		} else {
-			$('.individualCheckboxes').prop('checked', false);
+        } else {
+            $('.individualCheckboxes').prop('checked', false);
             selectedUserIds = [];
-		}
-	});
-    $('.individualCheckboxes').click(function() {
-		if ($(this).prop('checked') == true) {
+        }
+    });
+    $('.individualCheckboxes').click(function () {
+        if ($(this).prop('checked') == true) {
             selectedUserIds.push($(this).val());
 
-			// If total checkbox (except top checkbox) == all checked checkbox then "Check" the Top checkbox
-			var totalCheckedCheckbox = $('input[type=checkbox]:checked').length;
-			if (totalCheckedCheckbox == totalCheckboxCount) {
-				$('.selectDeselectAll').prop('checked', true);
-			}
-		} else {
+            // If total checkbox (except top checkbox) == all checked checkbox then "Check" the Top checkbox
+            var totalCheckedCheckbox = $('input[type=checkbox]:checked').length;
+            if (totalCheckedCheckbox == totalCheckboxCount) {
+                $('.selectDeselectAll').prop('checked', true);
+            }
+        } else {
             const index = selectedUserIds.indexOf($(this).val());
             if (index > -1) {
                 selectedUserIds.splice(index, 1);   // 2nd parameter means remove one item only
             }
-			// select/deselect checkbox un-check
-			$('.selectDeselectAll').prop('checked', false);
-		}
-	});
+            // select/deselect checkbox un-check
+            $('.selectDeselectAll').prop('checked', false);
+        }
+    });
     // End :: Select / Deselect all in city league page
 
     // Date of birth in edit profile
@@ -809,19 +906,19 @@ $(document).ready(function() {
         todayHighlight: true,
         endDate: '-18Y',
     });
-    $('#dob').bind('keypress', function(e) {
+    $('#dob').bind('keypress', function (e) {
         e.preventDefault();
     });
 
-    $('.holder-inner :input[type=text], .holder-inner :input[type=email], .holder-inner :input[type=password], .holder-inner textarea').focus(function() {
+    $('.holder-inner :input[type=text], .holder-inner :input[type=email], .holder-inner :input[type=password], .holder-inner textarea').focus(function () {
         $(this).prev("label").addClass('hide');
-    }).blur(function() {
+    }).blur(function () {
         if ($(this).val() == '') {
             $(this).prev('label').removeClass('hide');
         }
     });
 
-    $('.holder-inner select').change(function() {
+    $('.holder-inner select').change(function () {
         if ($(this).attr('id') == 'home_court') {
             if ($(this).val() != '') {
                 $('#pref-home-court').addClass('hide');
@@ -837,12 +934,95 @@ $(document).ready(function() {
         }
     });
 
-    $('#register-for-league').click(function() {
-        $("#leagueSignupModal").modal('toggle');
+    $(document).ready(function () {
+        const player2PassedId=$("#player2id").val();
+
+        if(player2PassedId!=""){
+            const leagueid=$("#leagueid").val();
+
+            $("#regBtn").removeClass("d-block");
+            $("#regBtn").addClass("d-none");
+            $("#checkoutBtn").removeClass("d-none");
+            $("#checkoutBtn").addClass("d-block");
+            $.get('/check-player2/'+leagueid+'/'+player2PassedId, function (data) {
+                console.log(data);
+
+                if (data == 1) {
+                    alert("date for registration has passed..")
+                } else if (data == 2) {
+                    alert("you are requested to please register first..");
+                    window.location.href = '/login-new';
+                } else {
+                    const location = $('#label_location').text();
+                    const gender = $('#label_gender').text();
+                    const rating = $('#label_rating').text();
+                    const age = $('#label_age').text();
+
+                    const currentYear = new Date().getFullYear();
+                    const currentAge = currentYear - data.user[0].dob.split('-')[0];
+
+                    if (location != data.user[0].city) {
+                        alert("location is not the same..you can't register")
+                    } else if (data.user[0].gender != gender) {
+                        alert("your gender is different..")
+                    } else if (currentAge < age) {
+                        alert("you are underage..");
+                    } else if (data.user[0].player_rating < rating) {
+                        alert("rating is less than required rating")
+                    } else {
+                        $("#team_name").val(data.players.title);
+                        $("#player_1_name").val(data.players.player1_name);
+                        $("#player_2_name").val(data.players.player2_name);
+                        $("#player_2_email").val(data.players.player2_email);
+                        $("#leagueSignupModal").modal('show');
+                    }
+                }
+            }).fail(function () {
+                console.log("its not player 2 request..")
+            })
+        }
+
+    })
+
+    $('#register-for-league').click(function () {
+        const lastLeagueId = $("#leagueid").val();
+        $("#regBtn").removeClass("d-none");
+        $("#regBtn").addClass("d-block");
+        $("#checkoutBtn").removeClass("d-block");
+        $("#checkoutBtn").addClass("d-none");
+        $.get('/check-user/' + lastLeagueId, function (data) {
+            if (data == 1) {
+                alert("date for registration has passed..")
+            } else if (data == 2) {
+
+                alert("you are requested to please register/login first..");
+                window.location.href = '/login-new';
+            } else {
+                const location = $('#label_location').text();
+                const gender = $('#label_gender').text();
+                const rating = $('#label_rating').text();
+                const age = $('#label_age').text();
+
+                const currentYear = new Date().getFullYear();
+                const currentAge = currentYear - data[0].dob.split('-')[0];
+
+                if (location != data[0].city) {
+                    alert("location is not the same..you can't register")
+                } else if (data[0].gender != gender) {
+                    alert("your gender is different..")
+                } else if (currentAge < age) {
+                    alert("you are underage..");
+                } else if (data[0].player_rating < rating) {
+                    alert("rating is less than required rating")
+                } else {
+                    $("#leagueSignupModal").modal('show');
+                }
+            }
+        })
     });
 
     // Need partner popup open (on League registration popup)
-    $('#need-partner').click(function() {
+    $('#need-partner').click(function () {
         $("#leagueSignupModal").modal('hide');
         $("#needPartnerModal").modal('toggle');
     });
@@ -878,7 +1058,7 @@ function sweetalertMessageRender(target, message, type, confirm = false) {
 }
 
 // Toggle password in registration
-$('.toggle-password').click(function() {
+$('.toggle-password').click(function () {
     $(this).toggleClass('fa-eye fa-eye-slash');
     var input = $($(this).attr('toggle'));
 
@@ -890,7 +1070,7 @@ $('.toggle-password').click(function() {
 });
 
 // Toggle confirm password in registration
-$('.toggle-confirm-password').click(function() {
+$('.toggle-confirm-password').click(function () {
     $(this).toggleClass('fa-eye fa-eye-slash');
     var input = $($(this).attr('toggle'));
 
@@ -901,12 +1081,12 @@ $('.toggle-confirm-password').click(function() {
     }
 });
 
-$(".leage-leftsec h3").click(function(){
+$(".leage-leftsec h3").click(function () {
     $(this).next().slideToggle();
 
 });
 
-$(".league-togglebutton").click(function(){
+$(".league-togglebutton").click(function () {
     $(this).next().slideToggle();
     $(this).toggleClass('active');
 

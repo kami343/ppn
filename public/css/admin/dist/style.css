@@ -7543,8 +7543,8 @@ a.text-purple:hover, a.text-purple:focus {
     color: inherit;
     border-color: #e8eef3; } }
 
-/*============================================================== 
- For all pages 
+/*==============================================================
+ For all pages
  ============================================================== */
 #main-wrapper {
   width: 100%;
@@ -7568,7 +7568,8 @@ a.text-purple:hover, a.text-purple:focus {
  Footer
 *******************/
 .footer {
-  padding: 15px 20px; }
+  padding: 15px 20px;
+}
 
 /*******************
  Stickey inner-left-part

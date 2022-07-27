@@ -9,8 +9,16 @@
 namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendConfirmationToPlayerTwo;
+use App\Jobs\SendRegistrationToUser;
+use App\Models\NewLeague;
+use App\Models\TeamPlayers;
+use App\Models\TeamsModel;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Auth;
@@ -25,7 +33,7 @@ use App\Jobs\SendContactUs;
 class HomeController extends Controller
 {
     use GeneralMethods;
-    
+
     /*
         * Function Name : __construct
         * Purpose       : It sets some public variables for being accessed throughout this
@@ -61,7 +69,6 @@ class HomeController extends Controller
         $leaguePage     = $this->cmsModel->where('id', 6)->first();
         $partnerPage    = $this->cmsModel->where('id', 7)->first();
         $siteSettings   = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line']);
-
         return view('site.home', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
@@ -71,7 +78,7 @@ class HomeController extends Controller
             'leaguePage'        => $leaguePage,
             'partnerPage'       => $partnerPage,
             'siteSettings'      => $siteSettings
-            ]);
+        ]);
     }
 
     /*
@@ -86,13 +93,13 @@ class HomeController extends Controller
     public function whatIsPpn(Request $request) {
         $getMetaDetails = getMetaDetails('cms', 21);
         $cmsPage        = $this->cmsModel->where('id', 21)->first();
-        
+
         return view('site.what_is_ppn', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
 
     /*
@@ -115,9 +122,9 @@ class HomeController extends Controller
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
             'video'             => $video
-            ]);
+        ]);
     }
-    
+
     /*
         * Function name : readCompleteRules
         * Purpose       : Read complete rules page of the website
@@ -136,9 +143,9 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
-    
+
     /*
         * Function name : partnerProgram
         * Purpose       : Partner program page of the website
@@ -159,9 +166,9 @@ class HomeController extends Controller
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
             'video'             => $video
-            ]);
+        ]);
     }
-    
+
     /*
         * Function name : faqs
         * Purpose       : FAQs of the website
@@ -180,7 +187,7 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
 
     /*
@@ -201,7 +208,7 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
 
     /*
@@ -242,7 +249,7 @@ class HomeController extends Controller
         }
         return response()->json(['title' => $title, 'message' => $message, 'type' => $type]);
     }
-    
+
     /*
         * Function name : privacyPolicy
         * Purpose       : Privacy policy page of the website
@@ -261,9 +268,9 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
-    
+
     /*
         * Function name : termsOfUse
         * Purpose       : Terms of use page of the website
@@ -282,9 +289,9 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
-    
+
     /*
         * Function name : copyrightPolicy
         * Purpose       : Copyright policy page of the website
@@ -303,7 +310,7 @@ class HomeController extends Controller
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+        ]);
     }
 
     /*
@@ -313,20 +320,20 @@ class HomeController extends Controller
         * Created Date  :
         * Modified date :
         * Input Params  : Request $request
-        * Return Value  : 
+        * Return Value  :
     */
     public function rateYourGame(Request $request) {
         $getMetaDetails = getMetaDetails('cms', 13);
         $cmsPage        = $this->cmsModel->where('id', 13)->first();
-        
+
         return view('site.rate_your_game', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage
-            ]);
+        ]);
     }
-    
+
     /*
         * Function Name : localCourt
         * Purpose       : This function is get local court
@@ -334,20 +341,20 @@ class HomeController extends Controller
         * Created Date  :
         * Modified date :
         * Input Params  : Request $request
-        * Return Value  : 
+        * Return Value  :
     */
     public function localCourt(Request $request) {
         $getMetaDetails = getMetaDetails('cms', 14);
         $cmsPage        = $this->cmsModel->where('id', 14)->first();
         $homeCourts     = PickleballCourt::select('id','title','address','city')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('title', 'ASC')->get();
-        
+
         return view('site.local_court', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
             'homeCourts'        => $homeCourts,
-            ]);
+        ]);
     }
 
     /*
@@ -357,24 +364,24 @@ class HomeController extends Controller
         * Created Date  :
         * Modified date :
         * Input Params  : Request $request
-        * Return Value  : 
+        * Return Value  :
     */
     public function playoffsPage(Request $request) {
         if (!Auth::user()) {
             return redirect()->route('site.home');
         }
-        
+
         $getMetaDetails = getMetaDetails('cms', 20);
         $cmsPage        = $this->cmsModel->where('id', 20)->first();
         $siteSettings   = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line']);
-        
+
         return view('site.city_playoffs', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
             'siteSettings'      => $siteSettings,
-            ]);
+        ]);
     }
 
     /*
@@ -384,18 +391,38 @@ class HomeController extends Controller
         * Created Date  :
         * Modified date :
         * Input Params  : Request $request
-        * Return Value  : 
+        * Return Value  :
     */
-    public function findALeague(Request $request) {
+    public function findALeague(Request $request,$id=null) {
+
         $getMetaDetails = getMetaDetails('cms', 1);
         $cmsPage        = $this->cmsModel->where('id', 1)->first();
-        
-        return view('site.find_a_league', [
-            'title'             => $getMetaDetails['title'],
-            'metaKeywords'      => $getMetaDetails['metaKeywords'],
-            'metaDescription'   => $getMetaDetails['metaDescription'],
-            'cmsDetails'        => $cmsPage,
+        $leagueList=NewLeague::all();
+        if (empty($id))
+        {
+            return view('site.find_a_league', [
+                'title'             => $getMetaDetails['title'],
+                'metaKeywords'      => $getMetaDetails['metaKeywords'],
+                'metaDescription'   => $getMetaDetails['metaDescription'],
+                'cmsDetails'        => $cmsPage,
+                'leaguelist'        => $leagueList,
+
             ]);
+        }
+        else{
+            $usersDetail= DB::table('users')
+                ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                ->where('users.id',$id)
+                ->get();
+            return view('site.find_a_league', [
+                'title'             => $getMetaDetails['title'],
+                'metaKeywords'      => $getMetaDetails['metaKeywords'],
+                'metaDescription'   => $getMetaDetails['metaDescription'],
+                'cmsDetails'        => $cmsPage,
+                'leaguelist'        => $leagueList,
+                'userDetail'=>$usersDetail
+            ]);
+        }
     }
 
     /*
@@ -405,18 +432,108 @@ class HomeController extends Controller
         * Created Date  :
         * Modified date :
         * Input Params  : Request $request
-        * Return Value  : 
+        * Return Value  :
     */
-    public function leagueRegistration(Request $request, $id = null) {
+    public function leagueRegistration(Request $request, $id = null,$userid=null) {
         $getMetaDetails = getMetaDetails('cms', 1);
         $cmsPage        = $this->cmsModel->where('id', 1)->first();
-        
+        $leagueRow=NewLeague::where('leagueid',$id)->first();
+
+        $teams=DB::table('teams')
+            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+            ->where('teams.leagueid',$id)->where('team_players.pending_status',0)->get();
+//        Log::info($teams);
         return view('site.league_registration', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
             'metaDescription'   => $getMetaDetails['metaDescription'],
             'cmsDetails'        => $cmsPage,
-            ]);
+            'leagueRow'=>$leagueRow,
+            'teamsPending'=>$teams,
+            'playertwo_id'=>$userid
+        ]);
+    }
+
+    public function checkPlayerTwo($id,$playertwoid)
+    {
+//        $teamid = DB::table('teams')->where('teams.leagueid', $id)->value('teams.id');
+        $player2Email=User::where('id',$playertwoid)->value('email');
+
+        $teamid = DB::table('teams')
+            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+            ->where('team_players.player2_email', $player2Email)->where('teams.leagueid', $id)->value('teams.id');
+
+        $email1 = DB::table('team_players')->where('team_players.team_id', $teamid)->value('player1_email');
+        $email2 = DB::table('team_players')->where('team_players.team_id', $teamid)->value('player2_email');
+
+
+        $user1 = DB::table('users')->where('users.email', $email1)->exists();
+        $user2 = DB::table('users')->where('users.email', $email2)->exists();
+
+
+        $emailExist = TeamPlayers::where('player2_email', $email1)->exists();
+        $emailExist = TeamPlayers::where('player2_email', $email2)->exists();
+
+        if (!empty($user1) && !empty($user2)) {
+            $currentDate = date("Y-m-d");
+            $data = NewLeague::where('leagueid', $id)->first();
+            $user = DB::table('users')
+                ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                ->where('users.id', $playertwoid)
+                ->get();
+
+            $players = DB::table('teams')
+                ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+                ->where('teams.id', $teamid)->first();
+            if ($data->todate < $currentDate) {
+                return 1;
+            } else if (empty($user2)) {
+                return 2;
+            } else {
+                return response()->json(['user' => $user, 'players' => $players]);
+            }
+        }
+        else {
+            return response()->json(['failed' => true]);
+        }
+    }
+
+    public function addTeamsInLeague(Request $request){
+        $user=Auth::user();
+        $teams = new TeamsModel();
+        $teams->leagueid = $request->leagueid;
+        $teams->title = $request->team_name;
+        $tosendid=0;
+        if($teams->save()){
+            $id=TeamsModel::where('title',$request->team_name)->value('id');
+            $tosendid=$id;
+            $players=new TeamPlayers();
+            $players->team_id=$id;
+            $players->player1_id=$user->id;
+            $players->player1_name=$request->player_1_name;
+            $players->player1_email=$user->email;
+            $players->player2_name=$request->player_2_name;
+            $players->player2_email=$request->player_2_email;
+            $players->player1_payment_status="pending";
+            $players->player2_payment_status="pending";
+            $players->pending_status=0;
+            $players->save();
+
+            $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+            $leagueDetails=NewLeague::where('leagueid',$request['leagueid'])->first();
+            dispatch(new SendConfirmationToPlayerTwo($request->all(),$leagueDetails, $siteSettings));
+        }
+        return response()->json(['success' => true, 'teamid' => $tosendid]);
+    }
+
+    public function checkPage()
+    {
+        return view('emails.site.both-player-success');
+    }
+    public function PlayerOnePage($id)
+    {
+        $players=TeamPlayers::where('team_id',$id)->first();
+        return view('emails.site.teams_player.player_1_confirmation_page')->with('user',$players);
     }
 
 }

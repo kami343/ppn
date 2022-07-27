@@ -98,10 +98,10 @@
 
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="text-uppercase h2 badge badge-info text-white">My Leagues</div>
-                    @include('site.league.leaguelist')
-                </div>
+{{--                <div class="row mt-3">--}}
+{{--                    <div class="text-uppercase h2 badge badge-info text-white">My Leagues</div>--}}
+{{--                    @include('site.league.leaguelist')--}}
+{{--                </div>--}}
 
             </div>
         </div>

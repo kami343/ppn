@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/all.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/stylemodal.css">
     <link rel="stylesheet" href="assets/css/green.css">
     <link rel="stylesheet" href="assets/fonts/stylesheet.css">
     <link
@@ -25,13 +26,18 @@
     <script src="{{asset('js/site/custom.js')}}"></script>
     <!-- Sweetalert -->
     <script src="{{ asset('js/admin/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
-{{--    Toastr--}}
-    <link href="{{ asset('css/admin/plugins/toastr/toastr.min.css') }}" rel="stylesheet" />
+    {{--    Toastr--}}
+    <link href="{{ asset('css/admin/plugins/toastr/toastr.min.css') }}" rel="stylesheet"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        .error {
+        label.error {
             color: red;
         }
+
+        :hover {
+            color: var(--hover-color);
+        }
+
 
     </style>
     <title>Create Account</title>
@@ -39,11 +45,11 @@
 
 <body>
 <section class="container-fluid fullcontent">
-    <input type="hidden" name="website_link" id="website_link" value="{{ url('/') }}" />
+    <input type="hidden" name="website_link" id="website_link" value="{{ url('/') }}"/>
     <div class="row fullcontent">
         <div class="col-lg-3 blacksecpadd">
             <div class="acc-leftblacksec">
-                <a href="#" class="logo"><img src="assets/img/logo-white.png" alt="" width="100%"></a>
+                <a href="/" class="logo"><img src="assets/img/logo-white.png" alt="" width="100%"></a>
 
                 <h3 class="leftmaintttl">Get started today!</h3>
                 <p class="p-font-size">Join PPN to register for leagues</p>
@@ -85,7 +91,7 @@
                         <div class="stepsec mt-1">
                             <div class="stepline"></div>
 
-                            <ul class="nav nav-tabs nav-fill navtop cust-step">
+                            <ul class="nav nav-pills nav-fill navtop cust-step">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="one-tab" data-toggle="tab">1</a>
                                     <p>Login Details</p>
@@ -106,21 +112,22 @@
                         </div>
 
                         <h1 class="loginttl">Create your PPN account</h1>
-                        <h3 class="loginttl-size">Already have an account? <a href="#" class="lnklogin">Login <i
-                                    class="fa-solid fa-chevron-right"></i></a></h3>
+                        <p>Already have an account? <a href="{{url('/login-new')}}"
+                                                                              class="lnklogin">Log in <i
+                                    class="fa-solid fa-chevron-right"></i></a></p>
                         {{ Form::open([
                              'method'=> 'POST',
-                             'class' => '',
+                             'class' => 'frmgen',
                              'route' => ['site.ajax-registration-submit'],
                              'name'  => 'createNewLeagueForm',
                              'id'    => 'createNewLeagueForm',
                              'files' => true,
                              'novalidate' => true ]) }}
 
-                        <form action="" method="post" id="register-form" novalidate="novalidate">
+                        <form class="frmgen" action="site.ajax-registration-submit" method="post" id="register-form"
+                              novalidate="novalidate">
 
                             <div id="step1">
-
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -129,6 +136,8 @@
                                                    placeholder="Enter first name">
                                             <small id="first_name_error" class="d-none text-danger">first name is
                                                 required</small>
+
+
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -149,6 +158,11 @@
                                             <small id="email_error" class="d-none text-danger">email is required</small>
 
                                         </div>
+                                        <div id="email_error_alert" class="d-none alert alert-danger">
+                                            It looks like you already have an account. <a href="{{url('/login-new')}}"
+                                                                                          class="lnklogin">Log in</a> to
+                                            your account.
+                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -156,14 +170,14 @@
                                             <div class="input-group tgpass">
                                                 <input type="password" id="password" name="password"
                                                        class="form-control pwd"
-                                                       placeholder="Enter password" value="">
+                                                       placeholder="Enter password" value="" autocomplete="off">
                                                 <span class="input-group-btn">
 												<button class="btn-default reveal" type="button"><i
                                                         class="fa-solid fa-eye"></i></button>
 											  </span>
                                             </div>
-                                            <small id="password_error" class="d-none text-danger">password is
-                                                required</small>
+                                            <small id="password_error" class="d-none text-danger">Password must be at
+                                                least 6 characters</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -172,24 +186,23 @@
                                             <div class="input-group tgpass">
                                                 <input type="password" id="confirm_password" name="confirm_password"
                                                        class="form-control pwd"
-                                                       placeholder="Enter confirm password" value="">
+                                                       placeholder="Enter confirm password" value="" autocomplete="off">
                                                 <span class="input-group-btn">
 												<button class="btn-default reveal" type="button"><i
                                                         class="fa-solid fa-eye"></i></button>
 											  </span>
                                             </div>
-                                            <small id="confirm_password_error" class="d-none text-danger">confirm
-                                                password is required</small>
+                                            <small id="confirm_password_error" class="d-none text-danger">Password must
+                                                be at least 6 characters</small>
+                                            <small id="both_password_error" class="d-none text-danger">Both passwords must be same</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="form-group mt-3">
-                                            <a id="btn-2" class="btn-next-step">Next Step</a>
+                                        <div class="form-group d-flex justify-content-between mt-3">
+                                            <a id="btn-2" class="btn btn-next-step">Next Step</a>
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="d-none" id="step2">
                                 <div class="row">
@@ -204,7 +217,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>Address Line 2 <span style="color: red;">*</span></label>
+                                            <label>Address Line 2</label>
                                             <input type="text" class="form-control" id="address_line_2"
                                                    name="address_line_2" placeholder="Enter Address Line 2">
                                             <small id="address_line_2_error" class="d-none text-danger">address 2 is
@@ -242,8 +255,8 @@
                                             <label>Phone <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="phone_no" name="phone_no"
                                                    placeholder="Enter Phone">
-                                            <small id="phone_no_error" class="d-none text-danger">phone no is
-                                                required</small>
+                                            <small id="phone_no_error" class="d-none text-danger">Phone is required</small>
+                                            <small id="phone_no_error1" class="d-none text-danger">Format is not valid</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -258,7 +271,8 @@
                                                         <select id="month" name="month" class="form-control">
                                                             <option value="" selected>MM</option>
                                                             @for ($month = 1; $month <= 12; $month++)
-                                                            <option value="{{ sprintf("%02d", $month) }}">{{ sprintf("%02d", $month) }}</option>
+                                                                <option
+                                                                    value="{{ sprintf("%02d", $month) }}">{{ sprintf("%02d", $month) }}</option>
                                                             @endfor
                                                         </select>
                                                         <small id="month_error" class="d-none text-danger">month is
@@ -273,7 +287,8 @@
                                                         <select id="day" name="day" class="form-control">
                                                             <option value="" selected>DD</option>
                                                             @for ($day = 1; $day <= 31; $day++)
-                                                                <option value="{{sprintf("%02d", $day)}}">{{sprintf("%02d", $day)}}</option>
+                                                                <option
+                                                                    value="{{sprintf("%02d", $day)}}">{{sprintf("%02d", $day)}}</option>
                                                             @endfor
                                                         </select>
                                                         <small id="day_error" class="d-none text-danger">day is
@@ -286,9 +301,9 @@
                                                     <div class="selectgroup">
                                                         <i class="fa-solid fa-chevron-down"></i>
                                                         <select id="year" name="year" class="form-control">
-                                                            <option value="" selected>year</option>
+                                                            <option value="" selected>YYYY</option>
                                                             @for ($year = (date('Y') - 18); $year >= 1900; $year--)
-                                                            <option value="{{ $year }}">{{ $year }}</option>
+                                                                <option value="{{ $year }}">{{ $year }}</option>
                                                             @endfor
                                                         </select>
                                                         <small id="year_error" class="d-none text-danger">year is
@@ -310,24 +325,24 @@
                                                         <li class="list-inline-item">
                                                             <label class="customradio"><span
                                                                     class="radiotextsty">Female</span>
-                                                                <input type="radio" checked="checked" value="female"
-                                                                       name="gender">
+                                                                <input type="radio" value="F"
+                                                                       name="gender" id="gender">
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <label class="customradio"><span
                                                                     class="radiotextsty">Male</span>
-                                                                <input type="radio" checked="checked" value="male"
-                                                                       name="gender">
+                                                                <input type="radio" value="M"
+                                                                       name="gender" id="gender">
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <label class="customradio"><span
                                                                     class="radiotextsty">Other</span>
-                                                                <input type="radio" checked="checked" value="gender"
-                                                                       name="gender">
+                                                                <input type="radio" value="U"
+                                                                       name="gender" id="gender">
                                                                 <span class="checkmark"></span>
                                                             </label>
                                                         </li>
@@ -339,8 +354,13 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="form-group mt-3">
-                                            <a id="btn-3" class="btn-next-step">Next Step</a>
+                                        <div class="form-group d-flex justify-content-between mt-1">
+                                            {{--                                            <button type="button" class="btn btn-success" style="padding: 10px 27px;border-radius: 60px;font-size: 15px;text-align: center;">Green circular buttton</button>--}}
+
+                                            <a id="one-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
+                                                                style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            </a>
+                                            <a id="btn-3" class="btn btn-next-step">Next Step</a>
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +374,6 @@
                                                 <i class="fa-solid fa-chevron-down"></i>
                                                 <select id="player_rating" name="player_rating" class="form-control">
                                                     <option value="">Select</option>
-
                                                     @for ($playerRating = 2.0; $playerRating <= 5.5; $playerRating += 0.25)
                                                         <option
                                                             value="{{ formatToTwoDecimalPlaces($playerRating) }}">{{ formatToTwoDecimalPlaces($playerRating)}}@if ($playerRating == 5.50)
@@ -373,48 +392,52 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <div id="home-court-div">
+                                            <div id="home-court-div-up">
                                                 <div class="holder-inner">
+
                                                     <label class="placeholder-label-selectpicker" id="pref-home-court">Preferred
                                                         Home Court<span class="text-red">*</span></label>
-                                                    <select name="home_court" id="home_court"
-                                                            class="selectpicker text-dark form-control bg_transparent"
-                                                            data-live-search="true"
-                                                            data-live-search-placeholder="Search"
-                                                            data-actions-box="true" data-placeholder="">
-                                                        <option value="" selected>Select</option>
+                                                   <div id="home_court_div">
+                                                       <select name="home_court" id="home_court"
+                                                               class="selectpicker text-dark form-control"
+                                                               data-live-search="true"
+                                                               {{--                                                            data-live-search-placeholder="Search"--}}
+                                                               data-actions-box="true" data-placeholder="Search">
 
-                                                        @foreach ($homeCourts as $homeCourt)
-                                                            <option
-                                                                value="{{ $homeCourt->id }}">{!! $homeCourt->title.' ('.$homeCourt->city.', '.$homeCourt->stateDetails->code.')' !!}</option>
-                                                        @endforeach
-                                                    </select>
+
+                                                       </select>
+                                                   </div>
+
                                                     <small id="home_court_error" class="d-none text-danger">home court
                                                         is required</small>
 
-                                                    <a href="javascript:void(0);" data-bs-toggle="modal"
-                                                       data-bs-target="#pickleballCourtModal"><img
-                                                            src="{{ asset("images/site/plus-circle.png") }}"
-                                                            style="width: 18px;"/> Can’t find your court, click here to
-                                                        add it</a>
+                                                    {{--                                                    <a href="javascript:void(0);" data-bs-toggle="modal"--}}
+                                                    {{--                                                       data-bs-target="#pickleballCourtModal"><img--}}
+                                                    {{--                                                            src="{{ asset("images/site/plus-circle.png") }}"--}}
+                                                    {{--                                                            style="width: 18px;"/> Can’t find your court, click here to--}}
+                                                    {{--                                                        add it</a>--}}
 
                                                 </div>
                                             </div>
-                                            <label><a href="{{ route('site.local-court') }}"
+                                            <label><a class="inpt-lnk" href="{{ route('site.local-court') }}"
                                                       target="_blank">@lang('custom.label_find_a_local_court')</a></label>
 
                                         </div>
+
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             @if ($availabilities && $availabilities->count())
                                                 <div class="col-lg-12 form-group">
-                                                    <label class=""><strong>Playing Time Availability<span
+                                                    <label class="tooltip_cls pb-0 mb-0"><strong>Playing Time Availability<span
                                                                 class="text-red">*</span></strong> <i
-                                                            class="fa fa-question-circle cursor-pointer"
+                                                            id="question_mark_tooltip"
+                                                            class="fa-2xs fa fa-question-circle cursor-pointer"
                                                             aria-hidden="true" data-toggle="tooltip"
                                                             title="To best facilitate league play, please specify your playing time availability. You will have the opportunity to change this as needed"></i>
-                                                        <i>(Select all that apply)</i></label>
+                                                        </label>
+                                                    <small class="text-small"><i>(Select all that apply)</i></small>
+
                                                     <div class="row" id="availability">
                                                         @foreach ($availabilities as $availability)
                                                             <div>
@@ -425,7 +448,7 @@
                                                                         value="{!! $availability->id !!}"
                                                                         id="availability_{{ $availability->id }}"
                                                                         name="availability[]">
-                                                                    <label class="form-check-label text-uppercase"
+                                                                    <label class="form-check-label"
                                                                            for="availability_{{ $availability->id }}">{!! $availability->title !!}</label>
                                                                 </div>
                                                             </div>
@@ -439,8 +462,7 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label>How Did You Hear About Us? <span
-                                                    style="color: red;">*</span></label>
+                                            <label>How Did You Hear About Us?</label>
                                             <div class="selectgroup">
                                                 <i class="fa-solid fa-chevron-down"></i>
                                                 <select id="how_did_you_find_us" name="how_did_you_find_us"
@@ -458,8 +480,12 @@
                                     </div>
 
                                     <div class="col-lg-12">
-                                        <div class="form-group mt-3">
-                                            <a id="btn-4" class="btn-next-step">Proceed
+                                        <div class="form-group d-flex justify-content-between mt-1">
+
+                                            <a id="two-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
+                                                                style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            </a>
+                                            <a id="btn-4" class="btn btn-next-step">Proceed
                                                 to Waiver</a>
                                         </div>
                                     </div>
@@ -470,7 +496,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Waiver</label>
-                                            <div class="terms-scroll">
+                                            <div id="scroll-section" class="terms-scroll">
                                                 <p>Lorem Ipsum is simply dummy text of the printing and
                                                     typesetting industry. Lorem Ipsum has been the
                                                     industry's standard dummy text ever since the 1500s,
@@ -502,21 +528,25 @@
                                                     1500s, when an unknown printer took a galley of type and
                                                     scrambled it to make a type specimen book</p>
                                             </div>
-                                            <label class="customcheck" style="font-weight: 400;">By clicking
+                                            <label id="checkbox-id" class="customcheck text-muted"
+                                                   style="font-weight: 400;">By clicking
                                                 this checkbox, I acknowledge that I have read, understand
-                                                and agree to the above waiver and <a href="#"
+                                                and agree to the above waiver and <a href="/terms-of-use"
                                                                                      class="lnklogin">Terms
                                                     of Use</a>.<span style="color: red;">*</span>
-                                                <input type="checkbox" id="agree" name="agree" value="1"
-                                                       checked="checked">
+                                                <input type="checkbox" disabled id="agree" name="agree" value="1"
+                                                >
                                                 <span class="checkmark"></span>
                                             </label>
-                                            <small id="agree_error" class="text-danger d-none">it is required</small>
+                                            <small id="agree_error" class="text-danger d-none">Please scroll to the bottom of the waiver before clicking this checkbox</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <button type="submit" id="submit" name="submit" class="btn-next-step">
+                                        <div class="form-group d-flex justify-content-between">
+                                            <a id="three-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
+                                                                  style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            </a>
+                                            <button type="submit" id="submit" name="submit" class="btn btn-next-step">
                                                 Complete Registration
                                             </button>
                                         </div>
@@ -531,133 +561,128 @@
                         {{ Form::close() }}
 
 
-                        <div id="pickleBallCourt">
-                            <div class="modal fade loginModal" id="pickleballCourtModal" tabindex="-1"
-                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header pt-3">
-                                            <h5 class="modal-title" id="exampleModalLabel">Add A Pickleball Court</h5>
-                                            <button type="button" class="btn-sm btn-danger rounded-3"
-                                                    data-bs-dismiss="modal" aria-label="Close">X
-                                            </button>
-                                        </div>
-                                        <div class="modal-body pt-0">
-                                            <div class="loginForm">
-                                                <form id="modal-form" name="modal-form">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">Court Name<span
-                                                                        class="text-red">*</span></label>
-                                                                <input type="text" id="court_name" name="court_name" class="form-control placeholder-input">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">City<span
-                                                                        class="text-red">*</span></label>
-
-                                                                <input type="text" id="city" name="city" class="form-control placeholder-input">
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">State<span
-                                                                        class="text-red">*</span></label>
-                                                                <select name="state_id"
-                                                                        class="placeholder-input form-control">
-                                                                    <option value=""></option>
-                                                                                                                                        @foreach ($states as $item)
-                                                                                                                                            <option value="{{ $item->id }}">{!! $item->title !!}</option>
-                                                                                                                                        @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">Address</label>
-
-
-                                                                <input type="text" id="address" name="address" class="form-control placeholder-input">
-
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">Zip</label>
-
-                                                                <input type="text" id="zip" name="zip" class="form-control placeholder-input">
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label class="placeholder-label-popup">Number of
-                                                                    Courts</label>
-                                                                <select name="number_of_courts" id="number_of_courts"
-                                                                        class="placeholder-input form-control">
-                                                                    <option value=""></option>
-                                                                                                                                        @for ($courts = 1; $courts <= 30; $courts++)
-                                                                                                                                            <option value="{{$courts}}">{{$courts}}</option>
-                                                                                                                                        @endfor
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label
-                                                                    class="placeholder-label-popup">Accessibility</label>
-                                                                <select name="accessibility"
-                                                                        class="placeholder-input form-control">
-                                                                    <option value=""></option>
-                                                                    <option value="PR">Private</option>
-                                                                    <option value="PL">Public</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 form-group">
-                                                            <div class="holder-inner">
-                                                                <label
-                                                                    class="placeholder-label-popup">Indoor/Outdoor</label>
-                                                                <select name="indoor_outdoor"
-                                                                        class="placeholder-input form-control">
-                                                                    <option value=""></option>
-                                                                    <option value="ID">Indoor</option>
-                                                                    <option value="OD">Outdoor</option>
-                                                                    <option value="B">Both</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="-fields-position">
-                                                        <span
-                                                            class="text-red">*</span> {{config('global._FIELD')}}
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-
-                                                        <button class="btn btn-success" type="submit">Submit</button>
-
-                                                        <div class="alert alert-success alert-dismissible d-none mt-2 fade show" id="modal-alert" role="alert">
-                                                            Record Stored <strong>Successfully..</strong> mail sent!!
-                                                            <button type="button" class="btn btn-sm btn-white text-black close" data-dismiss="alert" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-
-
-                                                </form>
-                                            </div>
-                                        </div>
+                        <div class="modal fade" id="pickleballCourtModal" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">LEAGUE SIGN UP</h5>
+                                        <button type="button" class="btn-close-1" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            <i class="fa-solid fa-xmark"></i></button>
                                     </div>
+                                    <div class="modal-body">
+                                        <form id="modal-form" name="modal-form" novalidate="novalidate"
+                                              class="frmgen mt-3">
+
+                                            <div class="form-group">
+                                                <label>Court Name <span style="color: red;">*</span></label>
+                                                <input type="text" id="court_name" name="court_name"
+                                                       class="form-control" placeholder="Enter Court Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>City<span style="color: red;">*</span></label>
+                                                <input type="text" id="city" name="city" class="form-control"
+                                                       placeholder="Enter City">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>State<span style="color: red;">*</span></label>
+
+                                                <div class="selectgroup">
+
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                    <select id="state_id" name="state_id" class="form-control">
+                                                        <option value="">Select</option>
+
+                                                        @foreach ($states as $item)
+                                                            <option
+                                                                value="{{ $item->id }}">{!! $item->title !!}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Address</label>
+                                                <input type="text" id="address" name="address" class="form-control"
+                                                       placeholder="Enter Address">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Zip</label>
+                                                <input type="text" id="zip" name="zip" class="form-control"
+                                                       placeholder="Enter Zip Code">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Number of courts</label>
+
+                                                <div class="selectgroup">
+
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                    <select name="number_of_courts" id="number_of_courts"
+                                                            class="form-control">
+                                                        <option value=""></option>
+                                                        @for ($courts = 1; $courts <= 30; $courts++)
+                                                            <option value="{{$courts}}">{{$courts}}</option>
+                                                        @endfor
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Accessibility</label>
+
+                                                <div class="selectgroup">
+
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                    <select name="accessibility"
+                                                            class="form-control">
+                                                        <option value=""></option>
+                                                        <option value="PR">Private</option>
+                                                        <option value="PL">Public</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Indoor/Outdoor</label>
+
+                                                <div class="selectgroup">
+
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                    <select name="indoor_outdoor"
+                                                            class="form-control">
+                                                        <option value=""></option>
+                                                        <option value="ID">Indoor</option>
+                                                        <option value="OD">Outdoor</option>
+                                                        <option value="B">Both</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer" style="border-top: 1px solid #ddd;">
+                                                <button type="button" class="btn-Close" data-bs-dismiss="modal">Close
+                                                </button>
+                                                <button type="submit" class="btn btn-signacc">Submit</button>
+                                                <div
+                                                    class="alert alert-success alert-dismissible d-none mt-2 fade show"
+                                                    id="modal-alert" role="alert">
+                                                    Record Stored <strong>Successfully..</strong> mail sent!!
+                                                    <button type="button"
+                                                            class="btn btn-sm btn-white text-black close"
+                                                            data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="container">
                             <div class="row">
@@ -671,41 +696,24 @@
             </div>
             <div class="row footer">
                 <div class="col-lg-6 col-md-6">
-                    <h5>© Pickleball Players Network</h5>
+                    <p>© Pickleball Players Network</p>
                 </div>
                 <div class="col-lg-6 col-md-6">
+                    <p>
                     <ul class="footlink">
-                        <li class="list-inline-item"><a href="#">Terms</a></li>
-                        <li class="list-inline-item"><a href="#">Privacy</a></li>
+                        <li class="list-inline-item"><a href="{{url('/terms-of-use')}}">Terms</a></li>
+                        <li class="list-inline-item"><a href="{{url('/privacy-policy')}}">Privacy</a></li>
                     </ul>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- <section class="container-fluid foot">
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="leftblack"></div>
-        </div>
-        <div class="col-lg-9 bg-white">
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <h5>© Pickleball Players Network</h5>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <ul class="footlink">
-                        <li class="list-inline-item"><a href="#">Terms</a></li>
-                        <li class="list-inline-item"><a href="#">Privacy</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script src="js/site/jquery-input-mask-phone-number.js"></script>
 <script src="assets/js/plugins.js"></script>
 <script src="assets/js/theme.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -715,7 +723,79 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 
 <script>
+    $('#phone_no').usPhoneFormat({
+        format: '(xxx) xxx-xxxx',
+    });
+    $('#scroll-section').bind('scroll', function () {
+        var element = document.getElementById('scroll-section');
+        if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+            // $('#agree').prop('checked', true);
+            $('#checkbox-id').removeClass('text-muted')
+            $('#agree').removeAttr('Disabled');
+
+        }
+        // } else {
+        //     $('#agree').prop('checked', false);
+        // }
+
+    });
     $(document).ready(function () {
+        $('#home_court').change(function () {
+            const modalShow = $('#home_court').val();
+            if (modalShow == 'modal')
+                $("#pickleballCourtModal").modal('show');
+        });
+
+
+        // $('#email').change(function () {
+        //     const email = $('#email').val();
+        //
+        //
+        //     var websiteLink = $('#website_link').val();
+        //      var checkEmailUrl = websiteLink + '/ajax-check-email/'+email;
+        //      checkEmailExistence(checkEmailUrl)
+        //      // setTimeout(function () {
+        //      //     checkEmailExistence(checkEmailUrl)
+        //      // }, 15000);
+        //
+        // })
+        $('#email').keyup(function (e) {
+            const email = e.target.value;
+
+
+            var websiteLink = $('#website_link').val();
+            var checkEmailUrl = 'https://demosite.usapickleballnetwork.com/ajax-check-email/' + email;
+
+            if (email.includes(".")) {
+                // console.log(checkEmailUrl+"/")
+                checkEmailExistence(checkEmailUrl + "}")
+            }
+            // setTimeout(function () {
+            //     checkEmailExistence(checkEmailUrl)
+            // }, 15000);
+
+        })
+
+        function checkEmailExistence(checkEmailUrl) {
+            $.ajax({
+                url: checkEmailUrl,
+                method: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response == 1) {
+                        $('#email_error_alert').removeClass('d-none');
+                        $('#email_error_alert').addClass('d-block');
+                    } else {
+                        $('#email_error_alert').removeClass('d-block');
+                        $('#email_error_alert').addClass('d-none');
+                    }
+                }
+            });
+
+        }
+
         $(".reveal").on('click', function () {
             var $pwd = $(".pwd");
             if ($pwd.attr('type') === 'password') {
@@ -726,7 +806,32 @@
         });
 
 
-        $('#one-tab').click(function () {
+        $('#phone_no').keyup(function () {
+            // ^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$
+            var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+            if (reg.test($('#phone_no').val())) {
+                $('#phone_no_error').removeClass('d-block')
+                $('#phone_no_error').addClass('d-none')
+                $('#phone_no_error1').removeClass('d-block')
+                $('#phone_no_error1').addClass('d-none')
+            } else {
+                if($('#phone_no').val().length==0)
+                {
+                    $('#phone_no_error').removeClass('d-none')
+                    $('#phone_no_error').addClass('d-block')
+                    $('#phone_no_error1').removeClass('d-block')
+                    $('#phone_no_error1').addClass('d-none')
+                }
+                else{
+                    $('#phone_no_error').removeClass('d-block')
+                    $('#phone_no_error').addClass('d-none')
+                    $('#phone_no_error1').removeClass('d-none')
+                    $('#phone_no_error1').addClass('d-block')
+                }
+            }
+        })
+
+        $('#one-tab,#one-back').click(function () {
             $('#one-tab').addClass("active");
             $('#two-tab').removeClass("active");
             $('#three-tab').removeClass("active");
@@ -745,9 +850,60 @@
             $('#step4').addClass("d-none");
             $('#step4').removeClass("d-block");
         })
-        $('#two-tab,#btn-2').click(function () {
+        $('#first_name').keyup(function () {
+            if ($('#first_name').val().length > 0) {
+                $('#first_name_error').removeClass('d-block');
+                $('#first_name_error').addClass('d-none');
+            }
+        })
+        $('#last_name').keyup(function () {
+            if ($('#last_name').val().length > 0) {
+                $('#last_name_error').removeClass('d-block');
+                $('#last_name_error').addClass('d-none');
+            }
+        })
+        $('#email').keyup(function () {
+            if ($('#email').val().length > 0) {
+                $('#email_error').removeClass('d-block');
+                $('#email_error').addClass('d-none');
+            }
+        })
+        $('#password').keyup(function () {
+            if ($('#password').val().length > 6) {
+                $('#password_error').removeClass('d-block');
+                $('#password_error').addClass('d-none');
+            } else {
+                $('#password_error').removeClass('d-none');
+                $('#password_error').addClass('d-block');
+            }
+        })
+        $('#confirm_password').keyup(function () {
+            if ($('#confirm_password').val().length > 6) {
+                $('#confirm_password_error').removeClass('d-block');
+                $('#confirm_password_error').addClass('d-none');
+                if ($('#confirm_password').val()===$('#password').val()){
+                    $('#both_password_error').removeClass('d-block');
+                    $('#both_password_error').addClass('d-none');
+                }
+            } else {
+                $('#confirm_password_error').removeClass('d-none');
+                $('#confirm_password_error').addClass('d-block');
+            }
+        })
 
-            if ($('#first_name').val() == '') {
+        $('#two-tab,#btn-2,#two-back').click(function () {
+            if ($('#first_name').val() == '' && $('#last_name').val() == '' && $('#email').val() == '' && $('#password').val() == '' && $('#confirm_password').val() == '') {
+                $('#first_name_error').removeClass('d-none');
+                $('#first_name_error').addClass('d-block');
+                $('#last_name_error').removeClass('d-none');
+                $('#last_name_error').addClass('d-block');
+                $('#email_error').removeClass('d-none');
+                $('#email_error').addClass('d-block');
+                $('#password_error').removeClass('d-none');
+                $('#password_error').addClass('d-block');
+                $('#confirm_password_error').removeClass('d-none');
+                $('#confirm_password_error').addClass('d-block');
+            } else if ($('#first_name').val() == '') {
                 $('#first_name_error').removeClass('d-none');
                 $('#first_name_error').addClass('d-block');
             } else if ($('#last_name').val() == '') {
@@ -757,12 +913,17 @@
                 $('#email_error').removeClass('d-none');
                 $('#email_error').addClass('d-block');
             } else if ($('#password').val() == '') {
-                $('#password').removeClass('d-none');
-                $('#password').addClass('d-block');
+                $('#password_error').removeClass('d-none');
+                $('#password_error').addClass('d-block');
             } else if ($('#confirm_password').val() == '') {
                 $('#confirm_password_error').removeClass('d-none');
                 $('#confirm_password_error').addClass('d-block');
-            } else {
+            }
+            else if(($('#password').val() !== $('#confirm_password').val())){
+                $('#both_password_error').removeClass('d-none');
+                $('#both_password_error').addClass('d-block');
+            }
+            else {
                 $('#two-tab').addClass("active");
                 $('#one-tab').removeClass("active");
                 $('#three-tab').removeClass("active");
@@ -782,22 +943,113 @@
 
             }
         })
-        $('#three-tab,#btn-3').click(function (e) {
-            if ($('#address_line_1').val() == '') {
+
+        $('#address_line_1').keyup(function () {
+            if ($('#address_line_1').val().length > 0) {
+                $('#address_line_1_error').removeClass('d-block');
+                $('#address_line_1_error').addClass('d-none');
+            } else {
                 $('#address_line_1_error').removeClass('d-none');
                 $('#address_line_1_error').addClass('d-block');
-            } else if ($('#address_line_2').val() == '') {
-                $('#address_line_2_error').removeClass('d-none');
-                $('#address_line_2_error').addClass('d-block');
+            }
+        })
+        $('#city').keyup(function () {
+            if ($('#city').val().length > 0) {
+                $('#city_error').removeClass('d-block');
+                $('#city_error').addClass('d-none');
+            } else {
+                $('#city_error').removeClass('d-none');
+                $('#city_error').addClass('d-block');
+            }
+        })
+        $('#state').change(function () {
+            if ($('#state').val().length > 0) {
+                $('#state_error').removeClass('d-block');
+                $('#state_error').addClass('d-none');
+            } else {
+                $('#state_error').removeClass('d-none');
+                $('#state_error').addClass('d-block');
+            }
+        })
+
+        $('#month').change(function () {
+            if ($('#month').val().length > 0) {
+                $('#month_error').removeClass('d-block');
+                $('#month_error').addClass('d-none');
+            } else {
+                $('#month_error').removeClass('d-none');
+                $('#month_error').addClass('d-block');
+            }
+        })
+        $('#day').change(function () {
+            if ($('#day').val().length > 0) {
+                $('#day_error').removeClass('d-block');
+                $('#day_error').addClass('d-none');
+            } else {
+                $('#day_error').removeClass('d-none');
+                $('#day_error').addClass('d-block');
+            }
+        })
+        $('#year').change(function () {
+            if ($('#year').val().length > 0) {
+                $('#year_error').removeClass('d-block');
+                $('#year_error').addClass('d-none');
+            } else {
+                $('#year_error').removeClass('d-none');
+                $('#year_error').addClass('d-block');
+            }
+        })
+        $('input[type=radio][name=gender]').change(function () {
+            if ($('input[type=radio][name=gender]').is(':checked')) {
+                $('#gender_error').removeClass('d-block');
+                $('#gender_error').addClass('d-none');
+            } else {
+                $('#gender_error').removeClass('d-none');
+                $('#gender_error').addClass('d-block');
+            }
+        })
+
+        $('#three-tab,#btn-3,#three-back').click(function (e) {
+            var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+            if ($('#address_line_1').val() == '' &&
+                $('#city').val() == '' &&
+                $('#state').val() == '' &&
+                $('#phone_no').val() == '' &&
+                $('#month').val() == '' &&
+                $('#day').val() == '' &&
+                $('#year').val() == '' && !$('input[type=radio][name=gender]').is(':checked')) {
+                $('#address_line_1_error').removeClass('d-none');
+                $('#address_line_1_error').addClass('d-block');
+                $('#city_error').removeClass('d-none');
+                $('#city_error').addClass('d-block');
+                $('#state_error').removeClass('d-none');
+                $('#state_error').addClass('d-block');
+                $('#phone_no_error').removeClass('d-none');
+                $('#phone_no_error').addClass('d-block');
+                $('#phone_no_error1').removeClass('d-block');
+                $('#phone_no_error1').addClass('d-none');
+                $('#month_error').removeClass('d-none');
+                $('#month_error').addClass('d-block');
+                $('#day_error').removeClass('d-none');
+                $('#day_error').addClass('d-block');
+                $('#year_error').removeClass('d-none');
+                $('#year_error').addClass('d-block');
+                $('#gender_error').removeClass('d-none');
+                $('#gender_error').addClass('d-block');
+            } else if ($('#address_line_1').val() == '') {
+                $('#address_line_1_error').removeClass('d-none');
+                $('#address_line_1_error').addClass('d-block');
             } else if ($('#city').val() == '') {
                 $('#city_error').removeClass('d-none');
                 $('#city_error').addClass('d-block');
             } else if ($('#state').val() == '') {
                 $('#state_error').removeClass('d-none');
                 $('#state_error').addClass('d-block');
-            } else if ($('#phone_no').val() == '') {
+            } else if ($('#phone_no').val() == '' || !reg.test($('#phone_no').val())) {
                 $('#phone_no_error').removeClass('d-none');
                 $('#phone_no_error').addClass('d-block');
+                $('#phone_no_error1').removeClass('d-block');
+                $('#phone_no_error1').addClass('d-none');
             } else if ($('#month').val() == '') {
                 $('#month_error').removeClass('d-none');
                 $('#month_error').addClass('d-block');
@@ -807,6 +1059,9 @@
             } else if ($('#year').val() == '') {
                 $('#year_error').removeClass('d-none');
                 $('#year_error').addClass('d-block');
+            } else if (!$('input[type=radio][name=gender]').is(':checked')) {
+                $('#gender_error').removeClass('d-none');
+                $('#gender_error').addClass('d-block');
             } else {
                 $('#three-tab').addClass("active");
                 $('#two-tab').removeClass("active");
@@ -828,19 +1083,54 @@
             }
 
         })
+
+        $('#player_rating').change(function () {
+            if ($('#player_rating').val().length > 0) {
+                $('#player_rating_error').removeClass('d-block');
+                $('#player_rating_error').addClass('d-none');
+            } else {
+                $('#player_rating_error').removeClass('d-none');
+                $('#player_rating_error').addClass('d-block');
+            }
+        })
+
+        $('#home_court').change(function () {
+            if ($('#home_court').val().length > 0) {
+                $('#home_court_error').removeClass('d-block');
+                $('#home_court_error').addClass('d-none');
+            } else {
+                $('#home_court_error').removeClass('d-none');
+                $('#home_court_error').addClass('d-block');
+            }
+        })
+
+        $('#availability_1,#availability_2,#availability_3,#availability_4').change(function () {
+            if ($('#availability_1').is(':checked') || $('#availability_2').is(':checked') || $('#availability_3').is(':checked') || $('#availability_4').is(':checked')) {
+                $('#availability_error').removeClass('d-block');
+                $('#availability_error').addClass('d-none');
+            } else {
+                $('#availability_error').removeClass('d-none');
+                $('#availability_error').addClass('d-block');
+            }
+        })
+
         $('#four-tab,#btn-4').click(function () {
 
-            if ($('#player_rating').val() == '') {
+            if ($('#player_rating').val() == '' && $('#home_court').val() == '' && !$('#availability_1').is(':checked') && !$('#availability_2').is(':checked') && !$('#availability_3').is(':checked') && !$('#availability_4').is(':checked')) {
+                $('#player_rating_error').removeClass('d-none');
+                $('#player_rating_error').addClass('d-block');
+                $('#home_court_error').removeClass('d-none');
+                $('#home_court_error').addClass('d-block');
+                $('#availability_error').removeClass('d-none');
+                $('#availability_error').addClass('d-block');
+
+            } else if ($('#player_rating').val() == '') {
                 $('#player_rating_error').removeClass('d-none');
                 $('#player_rating_error').addClass('d-block');
             } else if ($('#home_court').val() == '') {
                 $('#home_court_error').removeClass('d-none');
                 $('#home_court_error').addClass('d-block');
-                $('#availability_error').removeClass('d-none');
-                $('#availability_error').addClass('d-block');
-            } else if ($('#how_did_you_find_us').val() == '') {
-                $('#how_did_you_find_us_error').removeClass('d-none');
-                $('#how_did_you_find_us_error').addClass('d-block');
+            } else if (!$('#availability_1').is(':checked') && !$('#availability_2').is(':checked') && !$('#availability_3').is(':checked') && !$('#availability_4').is(':checked')) {
                 $('#availability_error').removeClass('d-none');
                 $('#availability_error').addClass('d-block');
             } else {
@@ -848,7 +1138,6 @@
                 $('#two-tab').removeClass("active");
                 $('#three-tab').removeClass("active");
                 $('#one-tab').removeClass("active");
-
 
                 $('#step1').removeClass("d-block");
                 $('#step1').addClass("d-none");
@@ -874,34 +1163,30 @@
     })
 
     $(document).ready(function ($) {
+        populateNewHomeCourt();
 
+
+        $(function () {
+            $('#question_mark_tooltip').tooltip().on("mouseenter", function () {
+                var $this = $(this),
+                    tooltip = $this.next(".tooltip");
+                tooltip.find(".tooltip-inner").css({
+                    width: "500px",
+                });
+            });
+        });
         $("#modal-form").validate({
             rules: {
                 court_name: "required",
                 city: "required",
-                state_id: "required",
-                address: {
-                    required: true,
-                    minlength: 6
-                },
-                zip: "required",
-                number_of_courts: "required",
-                accessibility: "required",
-                indoor_outdoor:"required"
+                state_id: "required"
 
             },
             messages: {
                 court_name: "Please enter your court name",
                 city: "Please enter your city",
                 state_id: "Please enter your state",
-                address: {
-                    required: "Please provide address",
-                    minlength: "Your address must be at least 6 characters long"
-                },
-                zip: "Please enter your zip",
-                number_of_courts: "number of courts required",
-                accessibility: "required",
-                indoor_outdoor:"required"
+
             },
             errorPlacement: function (error, element) {
                 if (element.is(":radio")) {
@@ -915,7 +1200,7 @@
                 var pickleballCourtSubmitUrl = websiteLink + '/ajax-pickleball-court-submit';
 
                 $.ajax({
-                    url:  pickleballCourtSubmitUrl,
+                    url: pickleballCourtSubmitUrl,
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -923,13 +1208,63 @@
                     data: $('#modal-form').serialize(),
                     dataType: 'json',
                     success: function (response) {
-                     $('#modal-alert').removeClass('d-none');
-                     $('#modal-alert').addClass('d-block');
+                        populateNewHomeCourt();
+                        // $('#modal-alert').removeClass('d-none');
+                        // $('#modal-alert').addClass('d-block');
+                        // $('#pickleballCourtModal').modal('hide');
                     }
                 });
             }
 
         });
+
+        function populateNewHomeCourt(){
+            // $("#bs-select-1").empty()
+            $.get( "/getcourts", function( data ) {
+
+                $('.selectpicker').html('');
+                $('.selectpicker').empty();
+                $.each(data , function (key, value) {
+                    if (value.title!=="Private Residence / At Home Court")
+                    $('.selectpicker').append(`<option value="${value.id}">${value.title}-${value.code}</option>`);
+                });
+                $.each(data , function (key, value) {
+                    if (value.title=="Private Residence / At Home Court")
+                    $('.selectpicker').append(`<option style="color:black; border: 2px solid lightslategray;border-radius: 5px;--hover-color: #B0E500;background-color: #E7E6E1" value="${value.id}">${value.title}</option>`);
+                });
+                $('#bs-select-1').append('<div style="color:black;padding:2px;margin-top:2px;border: 2px solid lightslategray;border-radius: 5px;--hover-color: #B0E500;background-color: #E7E6E1"><i class="fa-1x fa fa-plus-circle" style="color:#B0E500;border-radius: 55%;margin-left: 3.5%;--hover-color: #B0E500;background-color: black"></i><strong><a style="color: black" \n' +
+                    '        href="javascript:void(0);"\n' +
+                    '        class="text-dark"\n' +
+                    '        data-bs-toggle="modal"\n' +
+                    '        data-bs-target="#pickleballCourtModal">\n' +
+                    '            Can’t find your court, click\n' +
+                    '        here to\n' +
+                    '        add it</a></strong><div>');
+                 $('.selectpicker').selectpicker('refresh');
+
+                $('#modal-form')[0].reset();
+
+                $('#pickleballCourtModal').modal('hide');
+
+            });
+        }
+        function populateNewHomeCourtAfter(){
+            // $("#bs-select-1").empty()
+            $.get( "/getcourts", function( data ) {
+                $.each(data , function (key, value) {
+                    var groupFilter = $('#home_court');
+                    groupFilter.selectpicker('val', value.id);
+                    groupFilter.find('option').remove();
+                    groupFilter.selectpicker("refresh");
+                });
+                // teamPositionFilter.selectpicker('refresh');
+
+                $('#modal-form')[0].reset();
+
+                $('#pickleballCourtModal').modal('hide');
+
+            });
+        }
     });
 
 </script>

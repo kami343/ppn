@@ -1,9 +1,17 @@
 @extends('emails.layouts.confirmation')
     @section('content')
-    
+
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 14px;">
         <tr>
             <td style="color:#141414; font-size:15px;">Welcome to the Pickleball Players Network!</td>
+        </tr>
+        <tr>
+            <td>
+               <div class="alert alert-success">
+{{--                   In order to verify & confirm your email please click the button <a class="btn btn-outline-primary" href="{{url('/request-from-user/'.$user['id'])}}">Verify</a>--}}
+                   In order to verify & confirm your email please click the button <a class="btn btn-outline-primary" href="{{url('/request-from-user')}}">Verify</a>
+               </div>
+            </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -121,5 +129,5 @@
             </td>
         </tr>
     </table>
-    
+
   	@endsection

@@ -40,7 +40,7 @@ class SendResetPasswordLinkToUser implements ShouldQueue
     public function handle(Mailer $mailer)
     {
 
-        $mailer->send('emails.site.reset_password_link_to_user', ['userDetails' => $this->data, 'rememberToken' => $this->rememberToken, 'siteSettings' => $this->siteSettings], function ($message) {
+        $mailer->send('emails.site.otp-email', ['userDetails' => $this->data, 'rememberToken' => $this->rememberToken, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
             $message->to($this->data['email'], $this->siteSettings['website_title'])->subject(trans('custom.label_reset_password_link'));
         });

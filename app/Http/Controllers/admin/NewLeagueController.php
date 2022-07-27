@@ -309,7 +309,6 @@ class NewLeagueController extends Controller
      */
     public function destroy($id)
     {
-        Log::info($id);
         $flag = NewLeague::destroy($id);
         // $flag = NewLeague::where('leagueid', $id)
         //     ->update([

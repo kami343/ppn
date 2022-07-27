@@ -42,7 +42,7 @@ class SendRegistrationToUser implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $mailer->send('emails.site.registration_details_to_user', ['user' => $this->data, 'userDetails' => $this->userDetail, 'playingDetails' => $this->playingDetails, 'password' => $this->password, 'siteSettings' => $this->siteSettings], function ($message) {
+        $mailer->send('emails.site.verify-email', ['user' => $this->data, 'userDetails' => $this->userDetail, 'playingDetails' => $this->playingDetails, 'password' => $this->password, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
             $message->to($this->data['email'], $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
         });

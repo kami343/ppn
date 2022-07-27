@@ -3,6 +3,7 @@
         <div class="headerTop">
         {{-- Start :: Logo --}}
         @if ($settingData->logo != null)
+
             @if (file_exists(public_path('/images/uploads/'.$accountStorage.'/'.$settingData->logo)))
                 <div class="logo">
                     <a href="{{ getBaseUrl() }}">

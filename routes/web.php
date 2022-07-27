@@ -30,6 +30,22 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/rate-your-game', 'HomeController@rateYourGame')->name('rate-your-game');
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
+    Route::POST('/checkout','UsersController@userCheckout')->name('user-checkout');
+    Route::get('/both-players-page/{id?}/{leagueid?}','DisplayPageController@playerTwoCheckout')->name('both-players-page');
+
+
+
+
+    Route::get('/verify-email-new', 'UsersController@verifyEmailNew')->name('verify-email-new');
+    Route::get('/checkpage', 'HomeController@checkPage')->name('checkpage');
+    Route::get('/player-one-confirmation/{id}', 'HomeController@PlayerOnePage')->name('player-one-confirmation');
+    Route::get('/getcourts', 'UsersController@getHomeCourts')->name('getcourts');
+    Route::get('/check-user/{id}', 'UsersController@checkUserExistence')->name('check-user');
+
+    Route::any('/request-from-user/{id?}', 'UsersController@verifyEmailRedirect')->name('request-from-user');
+    Route::get('/resend-verify-email/{id}', 'UsersController@resendVerifyEmail')->name('resend-verify-email');
+
+    Route::any('/ajax-check-email/{id}', 'UsersController@checkEmail')->name('ajax-check-email');
     Route::any('/login-new', 'UsersController@LoginNew')->name('login-new');
     Route::any('/verify-email-page', 'UsersController@VerifyEmailPage')->name('verify-email-page');
     Route::any('/registration', 'UsersController@registration')->name('registration');
@@ -46,8 +62,12 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::any('/reset-password/{token}', 'UsersController@resetPassword')->name('reset-password');
     Route::any('/ajax-reset-password-submit', 'UsersController@ajaxResetPasswordSubmit')->name('ajax-reset-password-submit');
 
-    Route::get('/find-a-league', 'HomeController@findALeague')->name('find-a-league');
-    Route::get('/league-registration/{id}', 'HomeController@leagueRegistration')->name('league-registration');
+    Route::get('/find-a-league/{id?}', 'HomeController@findALeague')->name('find-a-league');
+    Route::get('/league-registration/{id}/{userid?}', 'HomeController@leagueRegistration')->name('league-registration');
+    Route::get('/check-player2/{id}/{playertwoid}', 'HomeController@checkPlayerTwo')->name('check-player2');
+    Route::get('/check-partner/{id}', 'PlayersController@PlayerOnePartnerCheck')->name('check-partner');
+    Route::get('/add_selected_player/{id}/{leagueid}', 'PlayersController@PlayerTwoDetails')->name('add_selected_player');
+    Route::post('/add-teams', 'HomeController@addTeamsInLeague')->name('add-teams');
 
 
     /* User */
