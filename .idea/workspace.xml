@@ -19,12 +19,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="user can team up and register for leagues">
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="player 1 can add from player who need section..">
+      <change afterPath="$PROJECT_DIR$/app/Jobs/SendPlayerOneNotification.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_notification_email.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/PlayersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/PlayersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/site/development.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/site/development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -45,6 +46,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -203,14 +209,14 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\baseerx\ppn\app\Jobs" />
       <recent name="D:\baseerx\ppn\routes" />
       <recent name="D:\baseerx\ppn\app\Http\Controllers\site" />
       <recent name="D:\baseerx\ppn\public\js\site" />
+      <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
     </key>
   </component>
@@ -273,7 +279,7 @@
       <workItem from="1658808722201" duration="13991000" />
       <workItem from="1658894314706" duration="18437000" />
       <workItem from="1658932744623" duration="9979000" />
-      <workItem from="1658980126803" duration="7429000" />
+      <workItem from="1658980126803" duration="14295000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -289,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657102901543</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="player 1 can add from player who need section..">
+      <created>1658989721474</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1658989721474</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -310,7 +323,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="registration plus login finalised,leagues list for users is displayed" />
     <MESSAGE value="user can team up and register for leagues" />
-    <option name="LAST_COMMIT_MESSAGE" value="user can team up and register for leagues" />
+    <MESSAGE value="player 1 can add from player who need section.." />
+    <option name="LAST_COMMIT_MESSAGE" value="player 1 can add from player who need section.." />
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -326,10 +340,10 @@
     </state>
     <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658986978875" />
     <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.720@0.0.1366.720" timestamp="1658934672921" />
-    <state x="513" y="83" key="NewPhpClassDialog" timestamp="1658818488081">
+    <state x="513" y="83" key="NewPhpClassDialog" timestamp="1658993904622">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="513" y="83" key="NewPhpClassDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658818488081" />
+    <state x="513" y="83" key="NewPhpClassDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658993904622" />
     <state x="517" y="283" key="NewPhpFileDialog" timestamp="1658743615355">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -338,10 +352,10 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1657102906142">
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1658989732816">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1657102906142" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658989732816" />
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1657036551026" />
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
@@ -361,10 +375,10 @@
     </state>
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1658934653293" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1658987330108">
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659000323701">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658987330108" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659000323701" />
     <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1658943080022" />
   </component>
 </project>

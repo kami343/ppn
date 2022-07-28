@@ -31,6 +31,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
     Route::POST('/checkout','UsersController@userCheckout')->name('user-checkout');
+    Route::POST('/playerone-checkout','UsersController@userOneCheckout')->name('playerone-checkout');
     Route::get('/both-players-page/{id?}/{leagueid?}','DisplayPageController@playerTwoCheckout')->name('both-players-page');
 
 
