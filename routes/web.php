@@ -71,7 +71,11 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::post('/replace_player_two', 'PlayersController@ReplacePlayerTwo')->name('replace_player_two');
     Route::post('/add-teams', 'HomeController@addTeamsInLeague')->name('add-teams');
 
+    //route for player profile
+
     Route::any('/player-profile/{id}', 'UsersController@playerProfile')->name('player-profile');
+
+
 
     /* User */
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
