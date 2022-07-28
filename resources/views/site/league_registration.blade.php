@@ -213,28 +213,30 @@
                                         <input type="text" id="player_2_email" name="player_2_email"
                                                class="form-control" placeholder="Player 2 Email">
 
-                                        <label class="league-signup-message">Don't have a partner?<br/>
-                                            <a href="javascript: void(0);" id="need-partner"><u>Click here to add
-                                                    yourself to
-                                                    the players who need a partner list</u></a>
-                                        </label>
+                                      <div class="d-block" id="need-partner-hide">
+                                          <label class="league-signup-message">Don't have a partner?<br/>
+                                              <a href="javascript: void(0);" id="need-partner"><u>Click here to add
+                                                      yourself to
+                                                      the players who need a partner list</u></a>
+                                          </label>
+                                      </div>
                                     </div>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-lg-12">
-                                        <input type="text" id="promo_code" name="promo_code"
-                                               class="form-control" placeholder="Enter Promo Code">
-                                    </div>
-                                    <div class="d-flex justify-content-between">
+{{--                                <div class="row mt-2">--}}
+{{--                                    <div class="col-lg-12">--}}
+{{--                                        <input type="text" id="promo_code" name="promo_code"--}}
+{{--                                               class="form-control" placeholder="Enter Promo Code">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="d-flex justify-content-between">--}}
 
-                                        <div class="col-lg-3 col-4 form-group">
-                                            <button type="button" class="apply-promo-code">Apply</button>
-                                        </div>
-                                        <div class="col-lg-2 form-group">
-                                            <span class="text-red registration-amount"><strong>$39.99</strong></span>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                        <div class="col-lg-3 col-4 form-group">--}}
+{{--                                            <button type="button" class="apply-promo-code">Apply</button>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-2 form-group">--}}
+{{--                                            <span class="text-red registration-amount"><strong>$39.99</strong></span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">

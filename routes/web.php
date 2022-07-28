@@ -67,6 +67,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/check-player2/{id}/{playertwoid}', 'HomeController@checkPlayerTwo')->name('check-player2');
     Route::get('/check-partner/{id}', 'PlayersController@PlayerOnePartnerCheck')->name('check-partner');
     Route::get('/add_selected_player/{id}/{leagueid}', 'PlayersController@PlayerTwoDetails')->name('add_selected_player');
+    Route::post('/replace_player_two', 'PlayersController@ReplacePlayerTwo')->name('replace_player_two');
     Route::post('/add-teams', 'HomeController@addTeamsInLeague')->name('add-teams');
 
 
