@@ -332,6 +332,28 @@ class UsersController extends Controller
         ], compact('leaguesData'));
     }
 
+
+        public function playerProfile($id)
+    {
+        $getMetaDetails = getMetaDetails();
+        $details = User::where(['id' => $id])->first();
+        $assignedLeagues = [];
+        $lastTenMatchLists = [];
+
+        $leaguesData = NewLeague::all();
+        return view('site.profile', [
+            'title' => $getMetaDetails['title'],
+            'metaKeywords' => $getMetaDetails['metaKeywords'],
+            'metaDescription' => $getMetaDetails['metaDescription'],
+            'details' => $details,
+            'assignedLeagues' => $assignedLeagues,
+            'lastTenMatchLists' => $lastTenMatchLists,
+
+        ], compact('leaguesData'));
+    }
+
+
+
     /*
         * Function name : editProfile
         * Purpose       : Edit profile page of the website
