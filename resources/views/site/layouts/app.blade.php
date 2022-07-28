@@ -958,6 +958,12 @@
 
         app.init();
     });
+
+
+// $(".fa-circle-question").mouseover(function(){
+   
+// $('.availability').tooltip('show')
+// })
 </script>
 
 
