@@ -230,7 +230,7 @@ class UsersController extends Controller
         }
         $checkUserId = $this->userModel->where(['email' => $request->email])->value('id');
 
-        return view('site.account.email')->with('email',$request->email)->with('id',$checkUserId);
+        return view('site.account.email')->with('email', $request->email)->with('id', $checkUserId);
     }
 
     /*
@@ -1053,19 +1053,18 @@ class UsersController extends Controller
         return view('emails.site.player-email');
     }
 
-    public function verifyEmailRedirect($id=null)
+    public function verifyEmailRedirect($id = null)
     {
-         $email = User::where(['id' => $id])->value('email');
+        $email = User::where(['id' => $id])->value('email');
         $fullName = User::where(['id' => $id])->value('full_name');
-        $leagueid=DB::table('teams')
-            ->join('team_players','team_players.team_id','=','teams.id')
-            ->where('team_players.player2_email',$email)->value('teams.leagueid');
+        $leagueid = DB::table('teams')
+            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+            ->where('team_players.player2_email', $email)->value('teams.leagueid');
 
-        $emailExist=TeamPlayers::where('player2_email',$email)->exists();
-        if (!empty($emailExist)){
-            return view('emails.site.teams_player.player_2_confirmation_page')->with('leagueid',$leagueid)->with('full_name',$fullName)->with('user2',$id);
-        }
-        else
+        $emailExist = TeamPlayers::where('player2_email', $email)->exists();
+        if (!empty($emailExist)) {
+            return view('emails.site.teams_player.player_2_confirmation_page')->with('leagueid', $leagueid)->with('full_name', $fullName)->with('user2', $id);
+        } else
             return view('site.account.redirect-user-page');
     }
 
@@ -1115,7 +1114,9 @@ class UsersController extends Controller
         return $varEmail;
 
     }
-    public function resendVerifyEmail($id){
+
+    public function resendVerifyEmail($id)
+    {
         $title = trans('custom.message_error');
         $message = trans('custom.error_something_went_wrong');
         $type = 'error';
@@ -1143,8 +1144,7 @@ class UsersController extends Controller
                 $message = trans('custom.message_registration_successful');
                 $type = 'success';
                 $loginId = customEncryptionDecryption($lastInsertedUser->id);
-            }
-            else {
+            } else {
                 $title = trans('custom.message_error');
                 $message = trans('custom.error_already_registered');
                 $type = 'error';
@@ -1158,130 +1158,137 @@ class UsersController extends Controller
             $message = $e->getMessage();
         }
 
-        return view('site.account.email')->with('email',$email)->with('id',$id);
+        return view('site.account.email')->with('email', $email)->with('id', $id);
     }
+
     public function verifyEmailNew()
     {
         return view('site.account.email');
     }
-    public function getHomeCourts(){
-        $homeCourts=DB::table('pickleball_courts')
-            ->join('states','states.id','=','pickleball_courts.state_id')
-            ->where('status','1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title','states.code as code','states.title as state')->get();
+
+    public function getHomeCourts()
+    {
+        $homeCourts = DB::table('pickleball_courts')
+            ->join('states', 'states.id', '=', 'pickleball_courts.state_id')
+            ->where('status', '1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title', 'states.code as code', 'states.title as state')->get();
         return $homeCourts;
     }
-    public function checkUserExistence($id){
-            //   $user_id=DB::table('newleague')
-            // ->join('teams','teams.leagueid','=','newleague.leagueid')
-            // ->join('team_players','team_players.team_id','=','teams.id')
-            // ->join('users','users.email','=','team_players.player2_email')
-            // ->where('newleague.leagueid',$id)
-            // ->value('users.id');
-                 $teamid=DB::table('teams')->where('teams.leagueid',$id)->value('teams.id');
-                 $email1=DB::table('team_players')->where('team_players.team_id',$teamid)->value('player1_email');
-                 $email2=DB::table('team_players')->where('team_players.team_id',$teamid)->value('player2_email');
+
+    public function checkUserExistence($id)
+    {
+        //   $user_id=DB::table('newleague')
+        // ->join('teams','teams.leagueid','=','newleague.leagueid')
+        // ->join('team_players','team_players.team_id','=','teams.id')
+        // ->join('users','users.email','=','team_players.player2_email')
+        // ->where('newleague.leagueid',$id)
+        // ->value('users.id');
+        $teamid = DB::table('teams')->where('teams.leagueid', $id)->value('teams.id');
+        $email1 = DB::table('team_players')->where('team_players.team_id', $teamid)->value('player1_email');
+        $email2 = DB::table('team_players')->where('team_players.team_id', $teamid)->value('player2_email');
 
 
-                  $user1=DB::table('users')->where('users.email',$email1)->exists();
-                  $user2=DB::table('users')->where('users.email',$email2)->exists();
+        $user1 = DB::table('users')->where('users.email', $email1)->exists();
+        $user2 = DB::table('users')->where('users.email', $email2)->exists();
 
-                  $flag=Auth::check();
-
+        $flag = Auth::check();
 
 
         $currentDate = date("Y-m-d");
-                    $data=NewLeague::where('leagueid',$id)->first();
+        $data = NewLeague::where('leagueid', $id)->first();
 
-       if (empty($flag)){
+        if (empty($flag)) {
             return 2;
-        }
-        else if ($data->todate<$currentDate){
+        } else if ($data->todate < $currentDate) {
             return 1;
-        }
-
-        else{
-            Log::info("else one");
-                              $userLoggedIn=Auth::user()->id;
-
-        $usersDetail= DB::table('users')
-            ->join('user_details', 'users.id', '=', 'user_details.user_id')
-            ->where('users.id',$userLoggedIn)
-            ->get();
-            return $usersDetail;
+        } else {
+            $userLoggedIn = Auth::user()->id;
+            $asPlayerExistenceEmail = Auth::user()->email;
+            $asPlayerExists = DB::table('teams')->join('team_players', 'team_players.team_id', '=', 'teams.id')->where('team_players.player1_email',$asPlayerExistenceEmail)->where('teams.leagueid', $id)->exists();
+            if (!empty($asPlayerExists)){
+                return 3;
+            }
+           else{
+               $usersDetail = DB::table('users')
+                   ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                   ->where('users.id', $userLoggedIn)
+                   ->get();
+               return $usersDetail;
+           }
         }
     }
 
 
- public function userCheckout(Request $request){
+    public function userCheckout(Request $request)
+    {
         \Stripe\Stripe::setApiKey('sk_test_51L1CSDB0DWwA7fx5BxP5kBvTeFl1CVIeP4Fy8ANcNAzTpVIq0DgRyyWqviGNoUFu5ocInFxeLihoYzw1P1XqchxH00SbJpJAPG');
 
-$response = array(
-    'status' => 0,
-    'error' => array(
-        'message' => 'Invalid Request!'
-    )
-);
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $input = file_get_contents('php://input');
-    $request = json_decode($input);
-}
-
-if (json_last_error() !== JSON_ERROR_NONE) {
-    http_response_code(400);
-    echo json_encode($response);
-    exit;
-}
-
-if(!empty($request->createCheckoutSession)){
-    // Convert product price to cent
-    $stripeAmount = round(39.99*100, 2);
-
-    // Create new Checkout Session for the order
-    try {
-        $checkout_session = \Stripe\Checkout\Session::create([
-            'line_items' => [[
-              'price_data' => [
-                    'product_data' => [
-                        'name' => "Leagu Registration",
-                        'metadata' => [
-                            'pro_id' => 1
-                        ]
-                    ],
-                    'unit_amount' => $stripeAmount,
-                    'currency' => "usd",
-                ],
-                'quantity' => 1,
-                'description' => "Leagu Registration Details",
-            ]],
-            'mode' => 'payment',
-            'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/'.$request['player2id'].'/'.$request['leagueid'],
-            'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
-        ]);
-    } catch(Exception $e) {
-        $api_error = $e->getMessage();
-    }
-
-    if(empty($api_error) && $checkout_session){
-        $response = array(
-            'status' => 1,
-            'message' => 'Checkout Session created successfully!',
-            'sessionId' => $checkout_session->id
-        );
-    }else{
         $response = array(
             'status' => 0,
             'error' => array(
-                'message' => 'Checkout Session creation failed! '.$api_error
+                'message' => 'Invalid Request!'
             )
         );
-    }
-}
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $input = file_get_contents('php://input');
+            $request = json_decode($input);
+        }
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            http_response_code(400);
+            echo json_encode($response);
+            exit;
+        }
+
+        if (!empty($request->createCheckoutSession)) {
+            // Convert product price to cent
+            $stripeAmount = round(39.99 * 100, 2);
+
+            // Create new Checkout Session for the order
+            try {
+                $checkout_session = \Stripe\Checkout\Session::create([
+                    'line_items' => [[
+                        'price_data' => [
+                            'product_data' => [
+                                'name' => "Leagu Registration",
+                                'metadata' => [
+                                    'pro_id' => 1
+                                ]
+                            ],
+                            'unit_amount' => $stripeAmount,
+                            'currency' => "usd",
+                        ],
+                        'quantity' => 1,
+                        'description' => "Leagu Registration Details",
+                    ]],
+                    'mode' => 'payment',
+                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/' . $request['player2id'] . '/' . $request['leagueid'],
+                    'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
+                ]);
+            } catch (Exception $e) {
+                $api_error = $e->getMessage();
+            }
+
+            if (empty($api_error) && $checkout_session) {
+                $response = array(
+                    'status' => 1,
+                    'message' => 'Checkout Session created successfully!',
+                    'sessionId' => $checkout_session->id
+                );
+            } else {
+                $response = array(
+                    'status' => 0,
+                    'error' => array(
+                        'message' => 'Checkout Session creation failed! ' . $api_error
+                    )
+                );
+            }
+        }
 
 //Payment status for player2 will be updated here as i added new colum
 
 
-echo json_encode($response);
+        echo json_encode($response);
     }
 
 }
