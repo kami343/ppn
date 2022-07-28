@@ -21,7 +21,7 @@
         .btn-reg:hover{opacity: 0.8;}
         .lnklogin{color: #057EDC;}
         .lnklogin:hover{color: #87DF10;}
-        .league-title{background-color: #000;padding: 8px 15px;color: #fff;}
+        .league-title{background-image: linear-gradient(to right,#B0E500,#C3FA02,#B5EB01);padding: 8px 15px;}
         .league-desc{background-color: #f0f0f0;padding: 8px 15px;}
     </style>
 </head>
@@ -29,47 +29,25 @@
 
 <div class="main">
     <div style="padding: 15px;">
-        {{Log::info($league)}}
         <table>
             <tr>
-                <td><a href="/"><img src="https://i.ibb.co/9G7tmpD/logo.png" alt="" width="200px"></a></td>
+                <td><a href="#"><img src="https://i.ibb.co/9G7tmpD/logo.png" alt="" width="200px"></a></td>
             </tr>
             <tr><td><hr style="border-color: #fff;margin: 25px 0px;"></td></tr>
             <tr>
-                <td><b>Dear {{$data['player_2_name']}},</b></td>
+                <td><b style="margin-bottom: 10px;display: inline-block;font-size: 18px;">Dear Player 1 {{$data['player1_name']}},</b></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 0px;">{{$data['player_1_name']}} has registered for a PPN Doubles Leagues and listed you as a partner.</p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">{{$data['player2_name']}} has confirmed you as a partner.</p></td>
             </tr>
             <tr>
-                <td>
-                    <table style="margin-top: 20px;">
-                        <tbody>
-
-                        <tr>
-                            <td class="league-title"><b>Name</b></td>
-                            <td class="league-desc"><a href="{{url('/league-registration/'.$league->leagueid)}}" class="lnklogin">  {{$league->league_name}}</a></td>
-                        </tr>
-                        <tr>
-                            <td class="league-title"><b>Start Date</b></td>
-                            <td class="league-desc"> {{$league->fromdate}}</td>
-                        </tr>
-                        <tr>
-                            <td class="league-title"><b>End Date</b></td>
-                            <td class="league-desc"> {{$league->todate}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">Complete your team’s registration by clicking <a href="/playerone-checkout/".{{$data['team_id']}} class="lnklogin">here.</a></p></td>
             </tr>
             <tr>
-                <td><a href="{{url('/login-new')}}" class="btn-reg">Register</a></td>
+                <td><p style="margin: 10px 0px 0px;">Once you have paid, your team will be successfully registered for the league.</p></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 5px;">You have <u>5 days</u> to register and secure your spot.</p></td>
-            </tr>
-            <tr>
-                <td><p style="margin: 0px 0px;">If you believe that you received this email by mistake or wish to deny the request, <a href="{{url('/')}}" class="lnklogin">click here</a>.</p></td>
+                <td><p style="margin-bottom: 10px;margin-top: 10px;">If you were not expecting this email, or you think you received it in error, <a href="{{url('/contact-us')}}" class="lnklogin">contact us.</a></p></td>
             </tr>
             <tr>
                 <td><p style="margin-top: 65px;margin-bottom: 5px;">Thank you,</p></td>
