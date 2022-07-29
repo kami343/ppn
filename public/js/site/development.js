@@ -129,35 +129,42 @@ function checkUserAuth(ele)
 
 
 
-   if (flag==""){
-       alert("you are requested to please login first..");
-       window.open(loginUrl,'_self')
-   }
-   else{
-       $.get('/check-partner/'+leagueid, function (data) {
-           if (data!=1)
-           {
-               alert("Looks like you have already added another partner. Please wait for your partner to decline your request or wait for the 5 day window to expire before adding another partner.");
-           }
-           else{
-               $("#need-partner-hide").removeClass("d-block");
-               $("#need-partner-hide").addClass("d-none");
-            $.get('/add_selected_player/'+player2_clicked_user_id+'/'+leagueid,function (data) {
+    if (flag==""){
+        alert("you are requested to please login first..");
+        window.open(loginUrl,'_self')
+    }
+    else{
+        $.get('/check-partner/'+leagueid, function (data) {
+            if (data!=1)
+            {
+                alert("Looks like you have already added another partner. Please wait for your partner to decline your request or wait for the 5 day window to expire before adding another partner.");
+            }
+            else{
+                $("#need-partner-hide").removeClass("d-block");
+                $("#need-partner-hide").addClass("d-none");
+                $.get('/add_selected_player/'+player2_clicked_user_id+'/'+leagueid,function (data) {
 
-                $("#checkoutBtn").removeClass('d-block');
-                $("#checkoutBtn").addClass('d-none');
-                // $("#team_name").val(data[0].title);
-                $("#player_2_name").val(data[0].player1_name);
-                $("#player_2_email").val(data[0].player1_email);
-                $("#selected-player-flag").val(data[0].team_id);
-                $("#leagueSignupModal").modal('show');
-            })
-           }
-       })
+                    $("#checkoutBtn").removeClass('d-block');
+                    $("#checkoutBtn").addClass('d-none');
+                    // $("#team_name").val(data[0].title);
+                    $("#player_2_name").val(data[0].player1_name);
+                    $("#player_2_email").val(data[0].player1_email);
+                    $("#selected-player-flag").val(data[0].team_id);
+                    $("#leagueSignupModal").modal('show');
+                })
+            }
+        })
 
-   }
+    }
 }
 
+// $(document).ready(function () {
+//     $("#check-league-status").click(function () {
+//         alert("isnide")
+//         const val=$("#league-status-text").text();
+//         alert(val);
+//     })
+// })
 
 
 $(document).ready(function () {
@@ -1010,16 +1017,15 @@ $(document).ready(function () {
         $("#checkoutBtn").addClass("d-none");
         $.get('/check-user/' + lastLeagueId, function (data) {
             if (data == 1) {
-                alert("date for registration has passed..")
+                alert("date for registration has passed..");
             } else if (data == 2) {
-
                 alert("you are requested to please register/login first..");
                 window.location.href = '/login-new';
             }
             else if(data==3){
-             alert("Looks like you are already registered for this league.")
+                alert("Looks like you are already registered for this league.");
             }
-             else {
+            else {
                 const location = $('#label_location').text();
                 const gender = $('#label_gender').text();
                 const rating = $('#label_rating').text();
@@ -1028,13 +1034,13 @@ $(document).ready(function () {
                 const currentYear = new Date().getFullYear();
                 const currentAge = currentYear - data[0].dob.split('-')[0];
 
-                if (location != data.user[0].city) {
+                if (location != data[0].city) {
                     alert("Looks like your address does not correspond to the location for this league. You may proceed but please be aware that you will be required to play league matches within the confines of this league's location prior to participating.")
-                } else if (data.user[0].gender != gender) {
+                } else if (data[0].gender != gender) {
                     alert("Looks like your gender does not qualify you for this league. Please register for a league that caters to your gender.")
                 } else if (currentAge < age) {
                     alert("Looks like your age does not qualify you for this league. Please register for a league that caters to your age");
-                } else if (data.user[0].player_rating < rating) {
+                } else if (data[0].player_rating < rating) {
                     alert("Looks like your player rating is above or beyond the suggested rating for this league. You may proceed but please be aware of this prior to participating.")
                 } else {
                     $("#leagueSignupModal").modal('show');

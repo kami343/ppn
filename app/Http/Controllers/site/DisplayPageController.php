@@ -47,9 +47,9 @@ class DisplayPageController extends Controller
               $teamid = DB::table('teams')
                   ->join('team_players', 'team_players.team_id', '=', 'teams.id')
                   ->where('team_players.player2_email', $player2email)->where('teams.leagueid', $leagueid)->value('teams.id');
-
+              $playersTableId=TeamPlayers::where('team_id',$teamid)->value('teams.id');
 //        update player2 status of payment in table
-              $toSave = TeamPlayers::where('team_id', $teamid)->find();
+              $toSave = TeamPlayers::find($playersTableId);
 
               $toSave->player2_payment_status = 'some session id here';
               $toSave->pending_status = 1;
