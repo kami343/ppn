@@ -148,7 +148,7 @@
                                         @foreach($leaguelist as $leaguelist)
                                             <tr>
                                                 <td>
-                                                    <a href="{{ route('site.league-registration', $leaguelist->leagueid) }}">{{$leaguelist->league_name}}</a>
+                                                    <a id="check-league-status" href="{{ route('site.league-registration', $leaguelist->leagueid) }}">{{$leaguelist->league_name}}</a>
                                                 </td>
                                                 <td>{{$leaguelist->city}}</td>
                                                 <td>{{$leaguelist->play_type}} </td>
@@ -156,7 +156,7 @@
                                                 <td>{{$leaguelist->rating}}</td>
                                                 <td>{{$leaguelist->fromdate}}-{{$leaguelist->todate}}</td>
                                                 <td>{{$leaguelist->max_team}}</td>
-                                                <td>{{$leaguelist->status}}</td>
+                                                <td id="league-status-text">{{$leaguelist->status}}</td>
 {{--                                                @if($leaguelist->status==1)--}}
 {{--                                                    <td>open for registration</td>--}}
 {{--                                                @else--}}
