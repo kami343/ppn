@@ -19,21 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="this work keeps model and controller for kamih storing session id in checkout method of user controller..">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersControllerOld.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Jobs/SendPlayerOneDenyEmail.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player-one-deny-mail.blade.php" afterDir="false" />
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="this commited code is tested till player one on server..">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/admin/TeamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/admin/TeamsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendConfirmationToPlayerTwo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendConfirmationToPlayerTwo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendPlayerOneNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendPlayerOneNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppn.zip" beforeDir="false" afterPath="$PROJECT_DIR$/ppn.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/both-player-success.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/both-player-success.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_notification_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_notification_email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="bsr-checkout-session-work" />
+        <entry key="$PROJECT_DIR$" value="bsr-code-tested-till-player1" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -291,7 +281,7 @@
       <workItem from="1658932744623" duration="9979000" />
       <workItem from="1658980126803" duration="15632000" />
       <workItem from="1659009740781" duration="6420000" />
-      <workItem from="1659066980350" duration="12428000" />
+      <workItem from="1659066980350" duration="14801000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -328,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659074749102</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="this commited code is tested till player one on server..">
+      <created>1659090079194</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659090079195</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -352,7 +349,8 @@
     <MESSAGE value="player 1 can add from player who need section.." />
     <MESSAGE value="new notification email applied.." />
     <MESSAGE value="this work keeps model and controller for kamih storing session id in checkout method of user controller.." />
-    <option name="LAST_COMMIT_MESSAGE" value="this work keeps model and controller for kamih storing session id in checkout method of user controller.." />
+    <MESSAGE value="this commited code is tested till player one on server.." />
+    <option name="LAST_COMMIT_MESSAGE" value="this commited code is tested till player one on server.." />
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -384,11 +382,11 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659074774276">
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659090080903">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659001075376" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659074774276" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659090080903" />
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -411,10 +409,10 @@
     </state>
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1658934653293" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659089473831">
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659094773221">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659085962843" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659089473831" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659094773221" />
   </component>
 </project>
