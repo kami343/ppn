@@ -29,8 +29,6 @@ use App\Models\PickleballCourt;
 use App\Models\Availability;
 use App\Models\UserAvailability;
 use App\Models\State;
-use App\Models\StoreSession;
-
 use App\Jobs\SendPickleballCourtRegistrationToAdmin;
 use App\Jobs\SendRegistrationToAdmin;
 use App\Jobs\SendRegistrationToUser;
@@ -335,7 +333,7 @@ class UsersController extends Controller
     }
 
 
-    public function playerProfile($id)
+        public function playerProfile($id)
     {
         $getMetaDetails = getMetaDetails();
         $details = User::where(['id' => $id])->first();
@@ -1231,28 +1229,19 @@ class UsersController extends Controller
             if (!empty($asPlayerExists)){
                 return 3;
             }
-            else{
-                $usersDetail = DB::table('users')
-                    ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                    ->where('users.id', $userLoggedIn)
-                    ->get();
-                return $usersDetail;
-            }
+           else{
+               $usersDetail = DB::table('users')
+                   ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                   ->where('users.id', $userLoggedIn)
+                   ->get();
+               return $usersDetail;
+           }
         }
     }
 
 
     public function userCheckout(Request $request)
     {
-        $data = explode("&",$request->data);
-
-        Log::info($data);
-
-        $playerid = str_replace("player2id=","",$data[1]);
-        $leagueId = str_replace("leagueid=","",$data[0]);
-
-        Log::info($leagueId.$playerid);
-
         \Stripe\Stripe::setApiKey('sk_test_51L1CSDB0DWwA7fx5BxP5kBvTeFl1CVIeP4Fy8ANcNAzTpVIq0DgRyyWqviGNoUFu5ocInFxeLihoYzw1P1XqchxH00SbJpJAPG');
 
         $response = array(
@@ -1295,7 +1284,7 @@ class UsersController extends Controller
                         'description' => "Leagu Registration Details",
                     ]],
                     'mode' => 'payment',
-                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/'.$playerid.'/'.$leagueId,
+                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/' . $request['player2id'] . '/' . $request['leagueid'],
                     'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
                 ]);
             } catch (Exception $e) {
@@ -1320,25 +1309,80 @@ class UsersController extends Controller
 
 //Payment status for player2 will be updated here as i added new colum
 
-        $teamid = DB::table('teams')
-            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-            ->where('teams.leagueid', $leagueId)->value('teams.id');
-
-        Log::info($response['sessionId']);
-
-        $flag=StoreSession::create([
-            'leagueid' => $leagueId,
-            'team_id' => $teamid,
-            'sessionid' =>$response['sessionId'],
-            'playerid' => $playerid,
-        ]);
-
 
         echo json_encode($response);
     }
-    public function userOneCheckout($teamid)
+    public function userOneCheckout(Request $request)
     {
-      Log::info("testing");
+        \Stripe\Stripe::setApiKey('sk_test_51L1CSDB0DWwA7fx5BxP5kBvTeFl1CVIeP4Fy8ANcNAzTpVIq0DgRyyWqviGNoUFu5ocInFxeLihoYzw1P1XqchxH00SbJpJAPG');
+
+        $response = array(
+            'status' => 0,
+            'error' => array(
+                'message' => 'Invalid Request!'
+            )
+        );
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $input = file_get_contents('php://input');
+            $request = json_decode($input);
+        }
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            http_response_code(400);
+            echo json_encode($response);
+            exit;
+        }
+
+        if (!empty($request->createCheckoutSession)) {
+            // Convert product price to cent
+            $stripeAmount = round(39.99 * 100, 2);
+
+            // Create new Checkout Session for the order
+            try {
+                $checkout_session = \Stripe\Checkout\Session::create([
+                    'line_items' => [[
+                        'price_data' => [
+                            'product_data' => [
+                                'name' => "League Registration",
+                                'metadata' => [
+                                    'pro_id' => 1
+                                ]
+                            ],
+                            'unit_amount' => $stripeAmount,
+                            'currency' => "usd",
+                        ],
+                        'quantity' => 1,
+                        'description' => "League Registration Details",
+                    ]],
+                    'mode' => 'payment',
+                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/' . $request['team_id'],
+                    'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
+                ]);
+            } catch (Exception $e) {
+                $api_error = $e->getMessage();
+            }
+
+            if (empty($api_error) && $checkout_session) {
+                $response = array(
+                    'status' => 1,
+                    'message' => 'Checkout Session created successfully!',
+                    'sessionId' => $checkout_session->id
+                );
+            } else {
+                $response = array(
+                    'status' => 0,
+                    'error' => array(
+                        'message' => 'Checkout Session creation failed! ' . $api_error
+                    )
+                );
+            }
+        }
+
+//Payment status for player2 will be updated here as i added new colum
+
+
+        echo json_encode($response);
     }
 
 

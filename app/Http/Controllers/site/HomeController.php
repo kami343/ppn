@@ -505,7 +505,7 @@ class HomeController extends Controller
         $teams->title = $request->team_name;
         $tosendid=0;
         if($teams->save()){
-            $id=TeamsModel::where('title',$request->team_name)->value('id');
+            $id=TeamsModel::where('title',$request->team_name)->where('leagueid',$request['leagueid'])->value('id');
             $tosendid=$id;
             $players=new TeamPlayers();
             $players->team_id=$id;
@@ -521,7 +521,7 @@ class HomeController extends Controller
 
             $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
             $leagueDetails=NewLeague::where('leagueid',$request['leagueid'])->first();
-            dispatch(new SendConfirmationToPlayerTwo($request->all(),$leagueDetails, $siteSettings));
+            dispatch(new SendConfirmationToPlayerTwo($request->all(),$id,$leagueDetails, $siteSettings));
         }
         return response()->json(['success' => true, 'teamid' => $tosendid]);
     }
