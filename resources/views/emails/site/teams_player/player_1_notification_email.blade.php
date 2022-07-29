@@ -43,7 +43,7 @@
                 <td><p style="margin-bottom: 0px;margin-top: 10px;">{{$data[0]->player2_name}} has confirmed you as a partner.</p></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 10px;">Complete your team’s registration by clicking <a href="/playerone-checkout/".{{$data[0]->team_id}} class="lnklogin">here.</a></p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">Complete your team’s registration by clicking <a href="{{url('/playerone-checkout/'.$data[0]->team_id)}}" class="lnklogin">here.</a></p></td>
             </tr>
             <tr>
                 <td><p style="margin: 10px 0px 0px;">Once you have paid, your team will be successfully registered for the league.</p></td>
