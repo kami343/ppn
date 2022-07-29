@@ -19,12 +19,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="new notification email applied..">
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="this work keeps model and controller for kamih storing session id in checkout method of user controller..">
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersControllerOld.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Jobs/SendPlayerOneDenyEmail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player-one-deny-mail.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/admin/TeamsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/admin/TeamsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppn.zip" beforeDir="false" afterPath="$PROJECT_DIR$/ppn.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/site/development.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/site/development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/find_a_league.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/find_a_league.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/SendConfirmationToPlayerTwo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendConfirmationToPlayerTwo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/SendPlayerOneNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendPlayerOneNotification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/both-player-success.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/both-player-success.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_notification_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_1_notification_email.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +58,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="bsr-player-who-need-add-implement" />
+        <entry key="$PROJECT_DIR$" value="bsr-checkout-session-work" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -204,20 +213,20 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/storage/logs/laravel.log" />
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Jobs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Http/Controllers/site" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\baseerx\ppn\app\Jobs" />
-      <recent name="D:\baseerx\ppn\routes" />
-      <recent name="D:\baseerx\ppn\app\Http\Controllers\site" />
-      <recent name="D:\baseerx\ppn\public\js\site" />
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\baseerx\ppn\app\Http\Controllers\site" />
+      <recent name="D:\baseerx\ppn\app\Jobs" />
+      <recent name="D:\baseerx\ppn\routes" />
+      <recent name="D:\baseerx\ppn\public\js\site" />
       <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
     </key>
   </component>
@@ -282,7 +291,7 @@
       <workItem from="1658932744623" duration="9979000" />
       <workItem from="1658980126803" duration="15632000" />
       <workItem from="1659009740781" duration="6420000" />
-      <workItem from="1659066980350" duration="3172000" />
+      <workItem from="1659066980350" duration="12428000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -312,7 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659001068641</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="this work keeps model and controller for kamih storing session id in checkout method of user controller..">
+      <created>1659074749102</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659074749102</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +351,8 @@
     <MESSAGE value="user can team up and register for leagues" />
     <MESSAGE value="player 1 can add from player who need section.." />
     <MESSAGE value="new notification email applied.." />
-    <option name="LAST_COMMIT_MESSAGE" value="new notification email applied.." />
+    <MESSAGE value="this work keeps model and controller for kamih storing session id in checkout method of user controller.." />
+    <option name="LAST_COMMIT_MESSAGE" value="this work keeps model and controller for kamih storing session id in checkout method of user controller.." />
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -346,19 +363,19 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="413" y="107" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.720@0.0.1366.720" timestamp="1658422555632" />
-    <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1658986978875">
+    <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1659078264212">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658986978875" />
+    <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659078264212" />
     <state x="413" y="115" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.720@0.0.1366.720" timestamp="1658934672921" />
     <state x="92" y="92" width="1182" height="536" key="DiffContextDialog" timestamp="1659024601261">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="92" y="92" width="1182" height="536" key="DiffContextDialog/0.0.1366.720@0.0.1366.720" timestamp="1659024601261" />
-    <state x="513" y="83" key="NewPhpClassDialog" timestamp="1658993904622">
+    <state x="513" y="83" key="NewPhpClassDialog" timestamp="1659078056809">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="513" y="83" key="NewPhpClassDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658993904622" />
+    <state x="513" y="83" key="NewPhpClassDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659078056809" />
     <state x="517" y="283" key="NewPhpFileDialog" timestamp="1658743615355">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -367,37 +384,37 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659001075376">
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659074774276">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659001075376" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1657036551026" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659074774276" />
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.720@0.0.1366.720" timestamp="1657796827894" />
-    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1659071663760">
+    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1659075459803">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.720@0.0.1366.720" timestamp="1659071663760" />
+    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.720@0.0.1366.720" timestamp="1659075459803" />
     <state x="288" y="160" width="1140" height="707" key="dock-window-1" timestamp="1658561021474">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="288" y="160" width="1140" height="707" key="dock-window-1/0.0.1366.720@0.0.1366.720" timestamp="1658561021474" />
-    <state x="390" y="93" width="585" height="624" key="find.popup" timestamp="1658941017186">
+    <state x="390" y="93" width="585" height="558" key="find.popup" timestamp="1659076747573">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="390" y="93" width="585" height="558" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1658375835285" />
+    <state x="390" y="93" width="585" height="558" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659076747573" />
     <state x="390" y="93" width="585" height="624" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1658941017186" />
     <state x="339" y="160" key="run.anything.popup" timestamp="1658934653293">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1658934653293" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659073862655">
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659089473831">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659000323701" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659073862655" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659085962843" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659089473831" />
   </component>
 </project>

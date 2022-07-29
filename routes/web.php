@@ -31,7 +31,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
     Route::POST('/checkout','UsersController@userCheckout')->name('user-checkout');
-    Route::POST('/playerone-checkout','UsersController@userOneCheckout')->name('playerone-checkout');
+    Route::get('/playerone-checkout/{teamid}','UsersController@userOneCheckout')->name('playerone-checkout');
     Route::get('/both-players-page/{id?}/{leagueid?}','DisplayPageController@playerTwoCheckout')->name('both-players-page');
 
 
@@ -70,6 +70,9 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/add_selected_player/{id}/{leagueid}', 'PlayersController@PlayerTwoDetails')->name('add_selected_player');
     Route::post('/replace_player_two', 'PlayersController@ReplacePlayerTwo')->name('replace_player_two');
     Route::post('/add-teams', 'HomeController@addTeamsInLeague')->name('add-teams');
+
+    //    route for deny
+    Route::get('/deny/{teamid}', 'TeamsController@SendPlayerOneDenyRequest')->name('deny');
 
     //route for player profile
 

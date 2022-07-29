@@ -35,10 +35,10 @@
             </tr>
             <tr><td><hr style="border-color: #fff;margin: 25px 0px;"></td></tr>
             <tr>
-                <td><b>Dear {{$data['player_2_name']}},</b></td>
+                <td><b>Dear {{$data->player1_name}},</b></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 0px;">{{$data['player_1_name']}} has registered for a PPN Doubles Leagues and listed you as a partner.</p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 0px;">{{$data->player2_name}} have been removed you as a partner.</p></td>
             </tr>
             <tr>
                 <td>
@@ -65,11 +65,9 @@
                 <td><a href="{{url('/login-new')}}" class="btn-reg">Register</a></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 5px;">You have <u>5 days</u> to register and secure your spot.</p></td>
+                <td><p style="margin-bottom: 5px;">You are requested to please team up again..</p></td>
             </tr>
-            <tr>
-                <td><p style="margin: 0px 0px;">If you believe that you received this email by mistake or wish to deny the request, <a href="{{url('/deny/')}}{{$teamid}}" class="lnklogin">click here</a>.</p></td>
-            </tr>
+
             <tr>
                 <td><p style="margin-top: 65px;margin-bottom: 5px;">Thank you,</p></td>
             </tr>

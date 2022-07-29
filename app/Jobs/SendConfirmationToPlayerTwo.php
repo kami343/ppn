@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\StoreSession;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -19,6 +20,7 @@ class SendConfirmationToPlayerTwo implements ShouldQueue
     protected $data = [];
     protected $leagueDetail = [];
 
+    protected $teamsId;
     protected $siteSettings;
 
     /**
@@ -26,12 +28,12 @@ class SendConfirmationToPlayerTwo implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data, $leagueDetail, $siteSettings)
+    public function __construct($data,$teamsid,$leagueDetail, $siteSettings)
     {
         $this->data = $data;
         $this->leagueDetail = $leagueDetail;
         $this->siteSettings = $siteSettings;
-
+        $this->teamsId=$teamsid;
     }
 
     /**
@@ -41,7 +43,8 @@ class SendConfirmationToPlayerTwo implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $mailer->send('emails.site.teams_player.player_2_confirmation_email', ['data' => $this->data, 'league' => $this->leagueDetail, 'siteSettings' => $this->siteSettings], function ($message) {
+
+        $mailer->send('emails.site.teams_player.player_2_confirmation_email', ['data' => $this->data,'teamid'=>$this->teamsId,'league' => $this->leagueDetail, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
             $message->to($this->data['player_2_email'], $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
         });

@@ -1,7 +1,8 @@
 <?php
 
-
 namespace App\Jobs;
+
+use App\Models\StoreSession;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,8 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Mail;
 use Illuminate\Contracts\Mail\Mailer;
 
-
-class SendPlayerOneNotification implements ShouldQueue
+class SendPlayerOneDenyEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -27,12 +27,11 @@ class SendPlayerOneNotification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data, $leagueDetail, $siteSettings)
+    public function __construct($data,$leagueDetail, $siteSettings)
     {
         $this->data = $data;
         $this->leagueDetail = $leagueDetail;
         $this->siteSettings = $siteSettings;
-
     }
 
     /**
@@ -42,9 +41,10 @@ class SendPlayerOneNotification implements ShouldQueue
      */
     public function handle(Mailer $mailer)
     {
-        $mailer->send('emails.site.teams_player.player_1_notification_email', ['data' => $this->data, 'league' => $this->leagueDetail, 'siteSettings' => $this->siteSettings], function ($message) {
+
+        $mailer->send('emails.site.teams_player.player-one-deny-mail', ['data' => $this->data,'league' => $this->leagueDetail, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
-            $message->to($this->data[0]->player1_email, $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
+            $message->to($this->data['player_2_email'], $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
         });
 
     }

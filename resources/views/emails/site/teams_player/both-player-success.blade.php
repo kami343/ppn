@@ -2,151 +2,72 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta name="author" content="">
-    <title>PPN</title>
-    <link rel="shortcut icon" href="assets_new/img/favicon.png">
+    <title>PPN Email</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{"assets_new/css/all.css"}}">
-    <link rel="stylesheet" href="{{"assets_new/css/style.css"}}">
-    <title>Create Account</title>
-</head>
-
-<body class="poppins">
-<section class="container-fluid">
-    <div class="row">
-        <header class="wrapper bg-dark">
-            <nav class="navbar navbar-expand-lg center-nav transparent navbar-dark">
-                <div class="container flex-lg-row flex-nowrap align-items-center">
-                    <div class="navbar-brand w-100">
-                        <a href="index.html">
-                            <img class="logo-dark" src="assets_new/img/logo-white.png" srcset="./assets_new/img/logo-dark@2x.png 2x" alt="">
-                            <img class="logo-light" src="assets_new/img/logo-white.png" srcset="./assets_new/img/logo-light@2x.png 2x" alt="">
-                        </a>
-                    </div>
-                    <div class="navbar-collapse offcanvas offcanvas-nav offcanvas-start">
-                        <div class="offcanvas-header d-lg-none">
-                            <h3 class="text-white fs-30 mb-0"><img src="assets_new/img/logo-white.png" srcset="./assets_new/img/logo-dark@2x.png 2x" alt="" width="150px"></h3>
-                            <a href="#" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-xmark"></i></a>
-                        </div>
-
-                        <div class="offcanvas-body ms-lg-auto d-flex flex-column h-100">
-                            <ul class="navbar-nav">
-                                <li class="nav-item dropdown custmenu_ico">
-                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">About <i class="fa-solid fa-chevron-down"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="dropdown-item" href="#">About PPN</a></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="#">Contact</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown custmenu_ico">
-                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Leagues <i class="fa-solid fa-chevron-down"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="dropdown-item" href="#">Find League</a></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="#">League Rule</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link" href="#">Courts</a>
-                                </li>
-                                <li class="nav-item dropdown custmenu_ico">
-                                    <a class="nav-link dropdown-toggle btn-head resdis custmenu_ico" href="#" data-bs-toggle="dropdown">Account <i class="fa-solid fa-chevron-down"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item"><a class="dropdown-item" href="#">Profle</a></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="#">Change Password</a></li>
-                                        <li class="nav-item"><a class="dropdown-item" href="#">Logout</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!-- /.offcanvas-footer -->
-                        </div>
-                        <!-- /.offcanvas-body -->
-                    </div>
-                    <!-- /.navbar-collapse -->
-
-                    <div class="navbar-other w-100 d-flex ms-auto">
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
-                            <li class="nav-item d-none d-md-block">
-                                <div class="dropdown">
-                                    <a href="#" class="dropdown-toggle btn-head custmenu_ico" data-toggle="dropdown">Account <i class="fa-solid fa-chevron-down"></i></a>
-                                    <ul class="dropdown-menu proflnk" role="menu">
-                                        <li><a href="#">Profile</a></li>
-                                        <li><a href="#">Change Password</a></li>
-                                        <li><a href="#">Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item d-lg-none">
-                                <button class="hamburger offcanvas-nav-btn"><span></span></button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- /.navbar-other -->
-                </div>
-                <!-- /.container -->
-            </nav>
-            <!-- /.navbar -->
-            <div class="offcanvas offcanvas-top bg-light" id="offcanvas-search" data-bs-scroll="true">
-                <div class="container d-flex flex-row py-6">
-                    <form class="search-form w-100">
-                        <input id="search-form" type="text" class="form-control" placeholder="Type keyword and hit enter">
-                    </form>
-                    <!-- /.search-form -->
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <!-- /.container -->
-            </div>
-            <!-- /.offcanvas -->
-        </header>
-    </div>
-</section>
-<section class="container-fluid email-height">
-    <div class="row">
-        <div class="col-lg-12 position-relative email-sec empl">
-            <div class="loginpage">
-                <div class="row">
-                    <div class="col-lg-8 email-pl m-auto">
-                        <h1 class="loginttl pb-5 mt-0">Congratulations!</h1>
-                        <p class="txtmail">Player2 has checkout Successfully <br> <b>Ipsum League</b></p>
-                        <p class="txtmail">An email has been sent to both Players <a href="{{url('/')}}" class="lnklogin">here.</a></p>
-                        <div class="didn-rec">
-                            <p style="font-weight: 700; font-size: 18px;">Want to get prepared for your league?</p>
-                            <p class="txtmail">Read Our <a href="{{url('/faqs')}}" class="lnklogin">FAQs</a></p>
-                        </div>
-
-                        <p class="txtmail">If you need any assistance, don’t hesitate to <a href="{{url('/contact-us')}}" class="lnklogin">contact support.</a></p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="container-fluid notfixedfooter">
-        <div class="row">
-            <div class="col-lg-9 col-md-7"><h5 class="copy-text">© Pickleball Players Network</h5></div>
-            <div class="col-lg-3 col-md-5"><ul class="footlink">
-                    <li class="list-inline-item"><a href="#">Terms</a></li>
-                    <li class="list-inline-item"><a href="#">Privacy</a></li>
-                </ul></div>
-        </div>
-    </div>
-</section>
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets_new/js/plugins.js"></script>
-<script src="assets_new/js/theme.js"></script>
-<script>
-    $(".reveal").on('click',function() {
-        var $pwd = $(".pwd");
-        if ($pwd.attr('type') === 'password') {
-            $pwd.attr('type', 'text');
-        } else {
-            $pwd.attr('type', 'password');
+    <style>
+        body{font-family: 'Poppins', sans-serif;padding: 0px;margin: 0px;}
+        .main{background-color: #fff;margin: auto;width: 600px;}
+        .btn-reg{
+            background-image: linear-gradient(to right,#B0E500,#C3FA02,#B5EB01);
+            padding: 10px 27px;
+            color: #000;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 22px;
+            text-decoration: none;
+            margin: 20px 0px;
+            display: inline-block;
         }
-    });
-</script>
+        .btn-reg:hover{opacity: 0.8;}
+        .lnklogin{color: #057EDC;}
+        .lnklogin:hover{color: #87DF10;}
+        .league-title{background-image: linear-gradient(to right,#B0E500,#C3FA02,#B5EB01);padding: 8px 15px;}
+        .league-desc{background-color: #f0f0f0;padding: 8px 15px;}
+    </style>
+</head>
+<body style="background-color: #f7f7f7;">
+
+<div class="main">
+    <div style="padding: 15px;">
+
+
+        <table>
+            <tr>
+                <td><a href="#"><img src="https://i.ibb.co/9G7tmpD/logo.png" alt="" width="200px"></a></td>
+            </tr>
+            <tr><td><hr style="border-color: #fff;margin: 25px 0px;"></td></tr>
+            <tr>
+                <td><b style="margin-bottom: 10px;display: inline-block;font-size: 18px;">Dear Player 1 {{$data[0]->player1_name}},</b></td>
+            </tr>
+            <tr>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">{{$data[0]->player2_name}} has confirmed you as a partner.</p></td>
+            </tr>
+            <tr>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">Complete your team’s registration by clicking <a href="/playerone-checkout/".{{$data[0]->team_id}} class="lnklogin">here.</a></p></td>
+            </tr>
+            <tr>
+                <td><p style="margin: 10px 0px 0px;">Once you have paid, your team will be successfully registered for the league.</p></td>
+            </tr>
+            <tr>
+                <td><p style="margin-bottom: 10px;margin-top: 10px;">If you were not expecting this email, or you think you received it in error, <a href="{{url('/contact-us')}}" class="lnklogin">contact us.</a></p></td>
+            </tr>
+            <tr>
+                <td><p style="margin-top: 65px;margin-bottom: 5px;">Thank you,</p></td>
+            </tr>
+            <tr>
+                <td><p style="margin: 0px 0px;">The PPN Team</p></td>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px;"><a href="{!! $settingData['facebook_link'] !!}" target="_blank"><img src="https://i.ibb.co/D1qq2jr/facebook.png" alt="" width="50px"></a><a href="{!! $settingData['instagram_link'] !!}" target="_blank" style="margin-left: 10px;"><img src="https://i.ibb.co/7bvv2qK/instagram.png" alt="" width="50px"></a></td>
+            </tr>
+        </table>
+    </div>
+    <table style="background-color: #f7f7f7;padding: 15px;width: 100%;">
+        <tr>
+            <td><p style="margin: 0px 0px;text-align: center;font-size: 13px;">© 2022 Pickball Players Network, all rights reserved.</p></td>
+        </tr>
+    </table>
+</div>
+
 </body>
 </html>

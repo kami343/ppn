@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendConfirmationToPlayerTwo;
+use App\Jobs\SendPlayerOneDenyEmail;
+use App\Models\NewLeague;
+use App\Models\TeamPlayers;
 use App\Models\TeamsModel;
 use App\Traits\GeneralMethods;
 use Illuminate\Http\Request;
@@ -125,6 +129,20 @@ class TeamsController extends Controller
         } catch (\Throwable $e) {
             $this->generateToastMessage('error', $e->getMessage(), false);
             return '';
+        }
+    }
+
+    public function SendPlayerOneDenyRequest($teamid){
+
+        $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+        $leagueid=TeamsModel::where('id',$teamid)->value('leagueid');
+        $leagueDetails=NewLeague::where('leagueid',$leagueid)->first();
+        $data=TeamPlayers::where('team_id',$teamid)->first();
+        $teamsDeleteflag=TeamsModel::destroy($teamid);
+        $teamPlayersDeletFlag=TeamPlayers::where('team_id', $teamid)->delete();
+        if ($teamsDeleteflag && $teamPlayersDeletFlag){
+            dispatch(new SendPlayerOneDenyEmail($data,$leagueDetails, $siteSettings));
+
         }
     }
 
