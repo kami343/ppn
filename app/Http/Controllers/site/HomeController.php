@@ -426,6 +426,42 @@ class HomeController extends Controller
         }
     }
 
+
+    public function findALeague2(Request $request,$id=null) {
+
+        $getMetaDetails = getMetaDetails('cms', 1);
+        $cmsPage        = $this->cmsModel->where('id', 1)->first();
+        $leagueList=NewLeague::all();
+        if (empty($id))
+        {
+            return view('site.findleague1', [
+                'title'             => $getMetaDetails['title'],
+                'metaKeywords'      => $getMetaDetails['metaKeywords'],
+                'metaDescription'   => $getMetaDetails['metaDescription'],
+                'cmsDetails'        => $cmsPage,
+                'leaguelist'        => $leagueList,
+
+            ]);
+        }
+        else{
+            $usersDetail= DB::table('users')
+                ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                ->where('users.id',$id)
+                ->get();
+            return view('site.find_a_league', [
+                'title'             => $getMetaDetails['title'],
+                'metaKeywords'      => $getMetaDetails['metaKeywords'],
+                'metaDescription'   => $getMetaDetails['metaDescription'],
+                'cmsDetails'        => $cmsPage,
+                'leaguelist'        => $leagueList,
+                'userDetail'=>$usersDetail
+            ]);
+        }
+    }
+
+
+
+
     /*
         * Function Name : leagueRegistration
         * Purpose       : This function is show find a league registration page
