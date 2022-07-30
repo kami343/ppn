@@ -108,4 +108,8 @@ class PlayersController extends Controller
 
 
     }
+
+    public function BeforePlayerTwoCheckout(){
+        Log::info("inside before player checkout");
+    }
 }

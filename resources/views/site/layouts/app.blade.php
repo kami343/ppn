@@ -43,7 +43,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css"
           rel="stylesheet"/>
     <!-- Sweetalert -->
-    <link href="{{ asset('css/admin/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Toastr css -->
     <link href="{{ asset('css/admin/plugins/toastr/toastr.min.css') }}" rel="stylesheet"/>
     <!-- Development css -->
@@ -62,7 +62,10 @@
         label.error {
             color: red;
         }
-
+        .swal2-popup {
+            font-size: 0.8rem !important;
+            font-family: Poppins
+        }
         :hover {
             color: var(--hover-color);
         }
@@ -961,7 +964,7 @@
 
 
 // $(".fa-circle-question").mouseover(function(){
-   
+
 // $('.availability').tooltip('show')
 // })
 </script>

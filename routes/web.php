@@ -30,11 +30,10 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/rate-your-game', 'HomeController@rateYourGame')->name('rate-your-game');
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
-    Route::POST('/checkout','UsersController@userCheckout')->name('user-checkout');
-    Route::get('/playerone-checkout/{teamid}','UsersController@userOneCheckout')->name('playerone-checkout');
-    Route::get('/both-players-page/{id?}/{leagueid?}','DisplayPageController@playerTwoCheckout')->name('both-players-page');
-
-
+    Route::POST('/checkout', 'UsersController@userCheckout')->name('user-checkout');
+    Route::POST('/playerone-checkout', 'UsersController@userOneCheckout')->name('playerone-checkout');
+    Route::get('/both-players-page/{id?}/{leagueid?}', 'DisplayPageController@playerTwoCheckout')->name('both-players-page');
+    Route::get('/after-playerone-checkout/{teamid?}', 'DisplayPageController@afterPlayeroneCheckout')->name('after-playerone-checkout');
 
 
     Route::get('/verify-email-new', 'UsersController@verifyEmailNew')->name('verify-email-new');
@@ -67,6 +66,8 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/league-registration/{id}/{userid?}', 'HomeController@leagueRegistration')->name('league-registration');
     Route::get('/check-player2/{id}/{playertwoid}', 'HomeController@checkPlayerTwo')->name('check-player2');
     Route::get('/check-partner/{id}', 'PlayersController@PlayerOnePartnerCheck')->name('check-partner');
+    Route::get('/checkout-player1/{id}', 'PlayersController@PlayerOneCheckOut')->name('checkout-player1');
+
     Route::get('/add_selected_player/{id}/{leagueid}', 'PlayersController@PlayerTwoDetails')->name('add_selected_player');
     Route::post('/replace_player_two', 'PlayersController@ReplacePlayerTwo')->name('replace_player_two');
     Route::post('/add-teams', 'HomeController@addTeamsInLeague')->name('add-teams');
@@ -78,7 +79,8 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
 
     Route::any('/player-profile/{id}', 'UsersController@playerProfile')->name('player-profile');
 
-
+    //    playerone red button beforecheckout
+    Route::get('/before-player-two-checkout', 'PlayersController@BeforePlayerTwoCheckout')->name('before-player-two-checkout');
 
     /* User */
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
