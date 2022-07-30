@@ -70,6 +70,20 @@ class DisplayPageController extends Controller
     }
 
     public function afterPlayeroneCheckout($teamid){
+        $playerTableId=TeamPlayers::where('team_id',$teamid)->value('id');
+        $playerOne=TeamPlayers::where('team_id',$teamid)->value('player1_name');
+        $toSave=TeamPlayers::find($playerTableId);
+        $toSave->player1_payment_status=1;
+        $toSave->player2_payment_status=1;
+        $toSave->save();
+        $data = DB::table('teams')
+            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
+            ->where('team_players.id', $playerTableId)->get();
+        $leagueDetails = NewLeague::where('leagueid', $data[0]->leagueid)->first();
+
+        $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+        dispatch(new SendToBothPlayers($data, $leagueDetails, $siteSettings));
+        return view('site.team_player.player1_checkout_page')->with('playerOne',$playerOne);
 
     }
 

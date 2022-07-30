@@ -44,7 +44,8 @@ class SendToBothPlayers implements ShouldQueue
     {
         $mailer->send('emails.site.teams_player.both_player_confirmation_page', ['data' => $this->data, 'league' => $this->leagueDetail, 'siteSettings' => $this->siteSettings], function ($message) {
             $message->from($this->siteSettings['from_email'], $this->siteSettings['website_title']);
-            $message->to($this->data['player_2_email'], $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
+            $message->to($this->data[0]->player_2_email, $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
+            $message->to($this->data[0]->player_1_email, $this->siteSettings['website_title'])->subject(trans('custom.label_signup_form'));
         });
 
     }
