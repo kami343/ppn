@@ -126,11 +126,11 @@
                 <ul>
                     @foreach($teamsPending as $key=>$teamsPending)
 
-                   
+
                         @if(Auth::check()==1 && $teamsPending->player1_email==auth()->user()->email)
                             <li>
                                 <span class="name">{{$teamsPending->player1_name}}</span>
-                                <span class="minus"><a href="javscript:void(0);"><i class="fa fa-minus-circle"
+                                <span class="minus" id="player-one-red-minus"><a href="javscript:void(0);"><i class="fa fa-minus-circle"
                                                                                     aria-hidden="true"></i></a></span>
                                 <span class="user"><a href="/player-profile/{{$teamsPending->player1_id}}"><i class="fa fa-user"
                                                                                    aria-hidden="true"></i></a></span>

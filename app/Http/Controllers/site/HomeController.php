@@ -69,6 +69,7 @@ class HomeController extends Controller
         $leaguePage     = $this->cmsModel->where('id', 6)->first();
         $partnerPage    = $this->cmsModel->where('id', 7)->first();
         $siteSettings   = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line']);
+
         return view('site.home', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],

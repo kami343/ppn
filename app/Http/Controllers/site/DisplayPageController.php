@@ -68,4 +68,8 @@ class DisplayPageController extends Controller
 
         }
     }
+
+    public function afterPlayeroneCheckout($teamid){
+
+    }
 }
