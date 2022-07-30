@@ -168,21 +168,43 @@ function checkUserAuth(ele)
 
 $(document).ready(function () {
     $("#player-one-red-minus").click(function () {
-        Swal.fire({
-            title: 'Are you sure you would like to remove yourself from the list? By doing so, this will cancel any current requests to add another partner from this list?',
-            showDenyButton: true,  showCancelButton: true,
-            confirmButtonText: `Confirm`,
-            denyButtonText: `Cancel`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.value) {
-                $.get('/before-player-two-checkout',function (data) {
-                    alert("you are back");
-                })
-            } else if (result.isDenied) {
-                Swal.fire('there is some error in processing..', '', 'info')
+        const leagueid=$("#league_id").text();
+        $.get('/playertwo-checkout-status/'+leagueid,function (data) {
+            if (data==1){
+                Swal.fire({
+                    title: 'Are you sure you would like to remove yourself from the list? By doing so, this will cancel any current requests to add another partner from this list?',
+                    showDenyButton: true,  showCancelButton: true,
+                    confirmButtonText: `Confirm`,
+                    denyButtonText: `Cancel`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.value) {
+                        $.get('/before-player-two-checkout/'+leagueid,function (data) {
+                            location.reload(true);
+                        })
+                    } else {
+                        Swal.fire('there is some error in processing..', '', 'info')
+                    }
+                });
+            }else{
+                Swal.fire({
+                    title: 'Are you sure you would like to remove yourself from the list? By doing so, this will cancel any current requests to add another partner from this list?',
+                    showDenyButton: true,  showCancelButton: true,
+                    confirmButtonText: `Confirm`,
+                    denyButtonText: `Cancel`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.value) {
+                        $.get('/before-player-two-checkout/'+leagueid,function (data) {
+                            location.reload(true);
+                        })
+                    } else{
+                        Swal.fire('there is some error in processing..', '', 'info')
+                    }
+                });
             }
-        });
+        })
+
     })
 })
 $(document).ready(function () {
