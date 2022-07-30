@@ -54,6 +54,7 @@
                             Cost <span class="p-1 ms-2 border-2 borderClr rounded-1">${{$leagueRow->amount}} per player</span>
                         </label>
                         <label class="d-none">age <span id="label_age">{{$leagueRow->age}}</span></label>
+                        <label class="d-none">league <span id="league_id">{{$leagueRow->leagueid}}</span></label>
                     </div>
                 </div>
             </div>
