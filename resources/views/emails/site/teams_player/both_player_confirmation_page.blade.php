@@ -35,13 +35,13 @@
             </tr>
             <tr><td><hr style="border-color: #fff;margin: 25px 0px;"></td></tr>
             <tr>
-                <td><b style="margin-bottom: 10px;display: inline-block;font-size: 18px;">Dear {{$data['player1_name']}} and {{$data['player2_name']}},</b></td>
+                <td><b style="margin-bottom: 10px;display: inline-block;font-size: 18px;">Dear {{$data[0]->player1_name}} and {{$data[0]->player2_name}},</b></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 10px;">Congratulations! {{$data['title']}} is registered for the {{$league['title']}}.</p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">Congratulations! {{$data[0]->title}} has registered for the {{$league->title}}.</p></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 10px;">View your league page <a href="{{url('/find-a-league')}}" class="lnklogin">here.</a></p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 10px;">View your league page <a href="{{url('/league-registration/'.$league->leagueid)}}" class="lnklogin">here.</a></p></td>
             </tr>
             <tr>
                 <td><p style="margin-bottom: 10px;margin-top: 10px;">If you were not expecting this email, or you think you received it in error<a href="{{url('/contact-us')}}" class="lnklogin">contact us.</a></p></td>
