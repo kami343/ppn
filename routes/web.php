@@ -35,6 +35,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/both-players-page/{id?}/{leagueid?}', 'DisplayPageController@playerTwoCheckout')->name('both-players-page');
     Route::get('/after-playerone-checkout/{teamid?}', 'DisplayPageController@afterPlayeroneCheckout')->name('after-playerone-checkout');
 
+    Route::get('/findleague1/{id?}', 'HomeController@findALeague2')->name('findleague1');
 
     Route::get('/verify-email-new', 'UsersController@verifyEmailNew')->name('verify-email-new');
     Route::get('/checkpage', 'HomeController@checkPage')->name('checkpage');
