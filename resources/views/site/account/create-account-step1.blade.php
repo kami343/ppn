@@ -39,10 +39,10 @@
         }
         .fa-circle-arrow-left {
             color: #B0E500;
-            width: auto;
             cursor: pointer;
 
         }
+
 
     </style>
     <title>Create Account</title>
@@ -360,10 +360,9 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between mt-1">
-                                            {{--                                            <button type="button" class="btn btn-success" style="padding: 10px 27px;border-radius: 60px;font-size: 15px;text-align: center;">Green circular buttton</button>--}}
-
-                                            <a id="one-back" style="background-color: black;width: 38px;justify-content: center"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4 pr-3"></i>
-                                            </a>
+                                               <a id="one-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
+                                                   <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
+                                               </a>
                                             <a id="btn-3" class="btn btn-next-step">Next Step</a>
                                         </div>
                                     </div>

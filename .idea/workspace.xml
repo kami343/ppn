@@ -22,26 +22,6 @@
     <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="done with changes in single user add section changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="done with the implementation of player one checkout process and email will be send to both players..">
-      <change afterPath="$PROJECT_DIR$/app/Jobs/SendPlayer2Confirmation2.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email_single.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/DisplayPageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/PlayersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/PlayersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendRegistrationToUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendRegistrationToUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/SendToBothPlayers.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/SendToBothPlayers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/NewLeague.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/NewLeague.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TeamsModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TeamsModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/site/development.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/site/development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/verify-email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/verify-email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/account/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/email.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/league_registration.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +285,8 @@
       <workItem from="1659247351656" duration="14738000" />
       <workItem from="1659334719532" duration="859000" />
       <workItem from="1659338868834" duration="11862000" />
-      <workItem from="1659411907784" duration="15624000" />
+      <workItem from="1659411907784" duration="21195000" />
+      <workItem from="1659450177692" duration="674000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -377,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659199009927</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="done with changes in single user add section changes">
+      <created>1659433303756</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1659433303756</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,9 +394,8 @@
     <MESSAGE value="saturday morning we have test playerone checkout and work on that live,red button work in progress.." />
     <MESSAGE value="implementation of remove player one done and player two is adjusted accordingly.." />
     <MESSAGE value="done with the implementation of player one checkout process and email will be send to both players.." />
-
-    <option name="LAST_COMMIT_MESSAGE" value="done with the implementation of player one checkout process and email will be send to both players.." />
-
+    <MESSAGE value="done with changes in single user add section changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="done with changes in single user add section changes" />
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -445,11 +432,10 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
-
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659199175241">
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659433313200">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659001075376" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659433313200" />
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659199175241" />
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
