@@ -276,6 +276,7 @@ class UsersController extends Controller
         $messageError = "Credential is not valid";
         $redirectTo = "join-a-league";
         $type = "error";
+        $flag=0;
         try {
             if ($request->ajax()) {
                 if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], true)) {
@@ -293,7 +294,14 @@ class UsersController extends Controller
                     $type = "success";
                 } else {
                     $redirectTo = 'login-new';
-
+                    $flagCheck=User::where('email',$request->email)->exists();
+                    Log::info($flagCheck);
+                    if (!empty($flagCheck)){
+                        $flag=1;
+                    }
+                    else{
+                        $flag=0;
+                    }
                     $message = trans('custom.error_invalid_credentials_inactive_user');
                 }
             }
@@ -302,8 +310,8 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
-        return response()->json(['message' => $message, 'type' => $type, 'redirectTo' => $redirectTo]);
 
+        return response()->json(['message' => $message,'flag'=>$flag,'type' => $type, 'redirectTo' => $redirectTo]);
     }
 
     /*

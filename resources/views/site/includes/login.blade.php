@@ -62,11 +62,7 @@
                 <div class="row">
                     <div class="col-lg-6 m-auto">
 
-                        <div id="login-message" class="alert d-none alert-danger">
 
-                            Login <strong>Failed!!</strong>please check the credentials..!
-
-                        </div>
 
                         <h1 class="loginttl" style="font-family: 'Poppins', sans-serif;font-weight: 900;">Log in to Your
                             Account</h1>
@@ -92,6 +88,16 @@
 												<button class="btn-default reveal" type="button"><i
                                                         class="fa-solid fa-eye"></i></button>
 											  </span>
+                                        </div>
+                                        <div id="password-message" class="alert d-none mt-2 alert-danger">
+
+                                           The password you have entered is incorrect!
+
+                                        </div>
+                                        <div id="email-message" class="alert d-none mt-2 alert-danger">
+
+                                           The email you have entered is incorrect!
+
                                         </div>
                                     </div>
                                 </div>
@@ -299,12 +305,26 @@
                     data: $('#loginForm').serialize(),
                     dataType: 'json',
                     success: function (response) {
-                        if (response.type == "error") {
-                            $('#login-message').removeClass('d-none')
+                        if (response.type == "error" && response.flag=='1') {
+                            $('#password-message').removeClass('d-none')
 
-                            $('#login-message').addClass('d-block')
+                            $('#password-message').addClass('d-block')
 
-                        } else {
+                            $('#email-message').removeClass('d-block')
+
+                            $('#email-message').addClass('d-none')
+
+                        }
+                        else if (response.type == "error" && response.flag=='0'){
+                            $('#password-message').removeClass('d-block')
+
+                            $('#password-message').addClass('d-none')
+
+                            $('#email-message').removeClass('d-none')
+
+                            $('#email-message').addClass('d-block')
+                        }
+                        else {
                             window.location.href = websiteLink + '/users/profile';
                         }
                     }

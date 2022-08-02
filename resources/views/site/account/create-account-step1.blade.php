@@ -37,6 +37,7 @@
         :hover {
             color: var(--hover-color);
         }
+
         .fa-circle-arrow-left {
             color: #B0E500;
             cursor: pointer;
@@ -209,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-block" id="step2">
+                            <div class="d-none" id="step2">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -441,7 +442,7 @@
                                                         </label>
                                                     <small class="text-small"><i>(Select all that apply)</i></small>
 
-                                                    <div class="row" id="availability">
+                                                    <div class="row mt-3" id="availability">
                                                         @foreach ($availabilities as $availability)
                                                             <div>
                                                                 <div class="form-check display-inline-block">
@@ -451,8 +452,7 @@
                                                                         value="{!! $availability->id !!}"
                                                                         id="availability_{{ $availability->id }}"
                                                                         name="availability[]">
-                                                                    <label class="form-check-label"
-                                                                           for="availability_{{ $availability->id }}">{!! $availability->title !!}</label>
+                                                                    <p for="availability_{{ $availability->id }}">{!! $availability->title !!}</p>
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -485,8 +485,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between mt-1">
 
-                                            <a id="two-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
-                                                                style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            <a id="two-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
+                                                <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
                                             </a>
                                             <a id="btn-4" class="btn btn-next-step">Proceed
                                                 to Waiver</a>
@@ -542,12 +542,13 @@
                                                 <span class="checkmark"></span>
                                             </label>
                                             <small id="agree_error" class="text-danger d-none">Please scroll to the bottom of the waiver before clicking this checkbox</small>
+                                            <small id="agree_error1" class="text-danger d-none">Please click on the checkbox</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between">
-                                            <a id="three-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
-                                                                  style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            <a id="three-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
+                                                <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
                                             </a>
                                             <button type="submit" id="submit" name="submit" class="btn btn-next-step">
                                                 Complete Registration
@@ -743,10 +744,35 @@
 
     });
     $(document).ready(function () {
+        $('#checkbox-id').click(function () {
+            if($('#checkbox-id').hasClass('text-muted')){
+                $('#agree_error').removeClass('d-none');
+                $('#agree_error').addClass('d-block');
+                $('#agree_error1').removeClass('d-block');
+                $('#agree_error1').addClass('d-none');
+            }
+        })
+
+        $('#submit').click(function (e) {
+            const active = $('#agree').prop("checked") ? 1 : 0 ;
+
+            if (active==0 && !$('#checkbox-id').hasClass('text-muted')){
+                e.preventDefault()
+                $('#agree_error').removeClass('d-block');
+                $('#agree_error').addClass('d-none');
+                $('#agree_error1').removeClass('d-none');
+                $('#agree_error1').addClass('d-block');
+            }
+        })
+
+        $('#pickleballCourtModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
         $('#home_court').change(function () {
             const modalShow = $('#home_court').val();
             if (modalShow == 'modal')
-                $("#pickleballCourtModal").modal('show');
+            $('#pickleballCourtModal').modal({backdrop: 'static', keyboard: false}, 'show');
         });
 
 
@@ -779,6 +805,7 @@
 
         })
 
+
         function checkEmailExistence(checkEmailUrl) {
             $.ajax({
                 url: checkEmailUrl,
@@ -809,30 +836,16 @@
         });
 
 
-        // $('#phone_no').keyup(function () {
-        //     // ^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$
-        //     var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
-        //     if (reg.test($('#phone_no').val())) {
-        //         $('#phone_no_error').removeClass('d-block')
-        //         $('#phone_no_error').addClass('d-none')
-        //         $('#phone_no_error1').removeClass('d-block')
-        //         $('#phone_no_error1').addClass('d-none')
-        //     } else {
-        //         if($('#phone_no').val().length==0)
-        //         {
-        //             $('#phone_no_error').removeClass('d-none')
-        //             $('#phone_no_error').addClass('d-block')
-        //             $('#phone_no_error1').removeClass('d-block')
-        //             $('#phone_no_error1').addClass('d-none')
-        //         }
-        //         else{
-        //             $('#phone_no_error').removeClass('d-block')
-        //             $('#phone_no_error').addClass('d-none')
-        //             $('#phone_no_error1').removeClass('d-none')
-        //             $('#phone_no_error1').addClass('d-block')
-        //         }
-        //     }
-        // })
+        $('#phone_no').keyup(function () {
+            // ^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$
+            var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+            if (reg.test($('#phone_no').val())) {
+                $('#phone_no_error').removeClass('d-block')
+                $('#phone_no_error').addClass('d-none')
+                $('#phone_no_error1').removeClass('d-block')
+                $('#phone_no_error1').addClass('d-none')
+            }
+        })
 
         $('#one-tab,#one-back').click(function () {
             $('#one-tab').addClass("active");
@@ -1051,12 +1064,19 @@
             } else if ($('#state').val() == '') {
                 $('#state_error').removeClass('d-none');
                 $('#state_error').addClass('d-block');
-            } else if ($('#phone_no').val() == '' || !reg.test($('#phone_no').val())) {
+            } else if ($('#phone_no').val() == '') {
+                $('#phone_no_error').removeClass('d-none');
+                $('#phone_no_error').addClass('d-block');
+                $('#phone_no_error1').removeClass('d-block');
+                $('#phone_no_error1').addClass('d-none');
+            }
+            else if (!reg.test($('#phone_no').val())){
                 $('#phone_no_error').removeClass('d-block');
                 $('#phone_no_error').addClass('d-none');
                 $('#phone_no_error1').removeClass('d-none');
                 $('#phone_no_error1').addClass('d-block');
-            } else if ($('#month').val() == '') {
+            }
+            else if ($('#month').val() == '') {
                 $('#month_error').removeClass('d-none');
                 $('#month_error').addClass('d-block');
             } else if ($('#day').val() == '') {
@@ -1159,13 +1179,13 @@
             }
         })
 
-        $('#submit').click(function (e) {
-            if (!$('input[name="agree"]').is(':checked')) {
-                e.preventDefault()
-                $('#agree_error').removeClass('d-none');
-                $('#agree_error').addClass('d-block');
-            }
-        })
+        // $('#submit').click(function (e) {
+        //     if (!$('input[name="agree"]').is(':checked')) {
+        //         e.preventDefault()
+        //         $('#agree_error').removeClass('d-none');
+        //         $('#agree_error').addClass('d-block');
+        //     }
+        // })
     })
 
     $(document).ready(function ($) {
@@ -1230,9 +1250,10 @@
 
                 $('.selectpicker').html('');
                 $('.selectpicker').empty();
+                console.log(data)
                 $.each(data , function (key, value) {
                     if (value.title!=="Private Residence / At Home Court")
-                    $('.selectpicker').append(`<option value="${value.id}">${value.title}-${value.code}</option>`);
+                    $('.selectpicker').append(`<option value="${value.id}">${value.title} (${value.state},${value.code})</option>`);
                 });
                 $.each(data , function (key, value) {
                     if (value.title=="Private Residence / At Home Court")
