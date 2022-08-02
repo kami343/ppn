@@ -37,7 +37,12 @@
         :hover {
             color: var(--hover-color);
         }
+        .fa-circle-arrow-left {
+            color: #B0E500;
+            width: auto;
+            cursor: pointer;
 
+        }
 
     </style>
     <title>Create Account</title>
@@ -204,7 +209,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-none" id="step2">
+                            <div class="d-block" id="step2">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -357,8 +362,7 @@
                                         <div class="form-group d-flex justify-content-between mt-1">
                                             {{--                                            <button type="button" class="btn btn-success" style="padding: 10px 27px;border-radius: 60px;font-size: 15px;text-align: center;">Green circular buttton</button>--}}
 
-                                            <a id="one-back"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4"
-                                                                style="color: #B0E500;cursor: pointer;background-color:black;border-radius:50px"></i>
+                                            <a id="one-back" style="background-color: black;width: 38px;justify-content: center"><i class="fa-3x fa-solid fa-circle-arrow-left mt-4 pr-3"></i>
                                             </a>
                                             <a id="btn-3" class="btn btn-next-step">Next Step</a>
                                         </div>
@@ -806,30 +810,30 @@
         });
 
 
-        $('#phone_no').keyup(function () {
-            // ^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$
-            var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
-            if (reg.test($('#phone_no').val())) {
-                $('#phone_no_error').removeClass('d-block')
-                $('#phone_no_error').addClass('d-none')
-                $('#phone_no_error1').removeClass('d-block')
-                $('#phone_no_error1').addClass('d-none')
-            } else {
-                if($('#phone_no').val().length==0)
-                {
-                    $('#phone_no_error').removeClass('d-none')
-                    $('#phone_no_error').addClass('d-block')
-                    $('#phone_no_error1').removeClass('d-block')
-                    $('#phone_no_error1').addClass('d-none')
-                }
-                else{
-                    $('#phone_no_error').removeClass('d-block')
-                    $('#phone_no_error').addClass('d-none')
-                    $('#phone_no_error1').removeClass('d-none')
-                    $('#phone_no_error1').addClass('d-block')
-                }
-            }
-        })
+        // $('#phone_no').keyup(function () {
+        //     // ^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$
+        //     var reg = /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/;
+        //     if (reg.test($('#phone_no').val())) {
+        //         $('#phone_no_error').removeClass('d-block')
+        //         $('#phone_no_error').addClass('d-none')
+        //         $('#phone_no_error1').removeClass('d-block')
+        //         $('#phone_no_error1').addClass('d-none')
+        //     } else {
+        //         if($('#phone_no').val().length==0)
+        //         {
+        //             $('#phone_no_error').removeClass('d-none')
+        //             $('#phone_no_error').addClass('d-block')
+        //             $('#phone_no_error1').removeClass('d-block')
+        //             $('#phone_no_error1').addClass('d-none')
+        //         }
+        //         else{
+        //             $('#phone_no_error').removeClass('d-block')
+        //             $('#phone_no_error').addClass('d-none')
+        //             $('#phone_no_error1').removeClass('d-none')
+        //             $('#phone_no_error1').addClass('d-block')
+        //         }
+        //     }
+        // })
 
         $('#one-tab,#one-back').click(function () {
             $('#one-tab').addClass("active");
@@ -869,7 +873,7 @@
             }
         })
         $('#password').keyup(function () {
-            if ($('#password').val().length > 6) {
+            if ($('#password').val().length >= 6) {
                 $('#password_error').removeClass('d-block');
                 $('#password_error').addClass('d-none');
             } else {
@@ -878,7 +882,7 @@
             }
         })
         $('#confirm_password').keyup(function () {
-            if ($('#confirm_password').val().length > 6) {
+            if ($('#confirm_password').val().length >= 6) {
                 $('#confirm_password_error').removeClass('d-block');
                 $('#confirm_password_error').addClass('d-none');
                 if ($('#confirm_password').val()===$('#password').val()){
@@ -922,6 +926,9 @@
             else if(($('#password').val() !== $('#confirm_password').val())){
                 $('#both_password_error').removeClass('d-none');
                 $('#both_password_error').addClass('d-block');
+            }
+            else if($('#password').val().length<6 || $('#confirm_password').val().length<6){
+
             }
             else {
                 $('#two-tab').addClass("active");
@@ -1046,10 +1053,10 @@
                 $('#state_error').removeClass('d-none');
                 $('#state_error').addClass('d-block');
             } else if ($('#phone_no').val() == '' || !reg.test($('#phone_no').val())) {
-                $('#phone_no_error').removeClass('d-none');
-                $('#phone_no_error').addClass('d-block');
-                $('#phone_no_error1').removeClass('d-block');
-                $('#phone_no_error1').addClass('d-none');
+                $('#phone_no_error').removeClass('d-block');
+                $('#phone_no_error').addClass('d-none');
+                $('#phone_no_error1').removeClass('d-none');
+                $('#phone_no_error1').addClass('d-block');
             } else if ($('#month').val() == '') {
                 $('#month_error').removeClass('d-none');
                 $('#month_error').addClass('d-block');

@@ -19,6 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="done with changes in single user add section changes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
     <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="done with the implementation of player one checkout process and email will be send to both players..">
       <change afterPath="$PROJECT_DIR$/app/Jobs/SendPlayer2Confirmation2.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/emails/site/teams_player/player_2_confirmation_email_single.blade.php" afterDir="false" />
@@ -403,7 +406,9 @@
     <MESSAGE value="saturday morning we have test playerone checkout and work on that live,red button work in progress.." />
     <MESSAGE value="implementation of remove player one done and player two is adjusted accordingly.." />
     <MESSAGE value="done with the implementation of player one checkout process and email will be send to both players.." />
+
     <option name="LAST_COMMIT_MESSAGE" value="done with the implementation of player one checkout process and email will be send to both players.." />
+
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -440,6 +445,7 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
+
     <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659199175241">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -457,10 +463,10 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="288" y="160" width="1140" height="707" key="dock-window-1/0.0.1366.720@0.0.1366.720" timestamp="1658561021474" />
-    <state x="390" y="93" width="585" height="558" key="find.popup" timestamp="1659076747573">
+    <state x="390" y="93" width="585" height="592" key="find.popup" timestamp="1659436093532">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="390" y="93" width="585" height="558" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659076747573" />
+    <state x="390" y="93" width="585" height="592" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659436093532" />
     <state x="390" y="93" width="585" height="624" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1658941017186" />
     <state x="339" y="160" key="run.anything.popup" timestamp="1659256082411">
       <screen x="0" y="0" width="1366" height="720" />

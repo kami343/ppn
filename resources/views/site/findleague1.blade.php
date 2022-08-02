@@ -107,7 +107,7 @@
         <div class="row">
             <div class="col-lg-2"></div>
             <div class="col-lg-10">
-                <div class="row mt-0 align-items-center">
+                <div class="row mt-0 align-items-center ">
                     <div class="col-lg-10 col-md-8">
                         <div class="find-legsearch">
                             <input type="text" class="form-control" id="textSearch" placeholder="Search for leagues">
@@ -192,13 +192,13 @@
                                         </div>
                                         <div class="cont checkbox">
                                             <label class="customcheck font-weight-text">Singles
-                                          <input type="checkbox" value="doubles">
+                                          <input type="checkbox" value="singles">
                                           <span class="checkmark"></span>
                                         </label>
                                         </div>
                                         <div class="cont checkbox" >
                                             <label class="customcheck font-weight-text">Doubles
-                                          <input type="checkbox" value="singles">
+                                          <input type="checkbox" value="doubles">
                                           <span class="checkmark"></span>
                                         </label>
                                         </div>
@@ -396,8 +396,8 @@
             </div>
             <div class="col-lg-10">
                 <div class="row mt-0 align-items-center findright">
-                    <div class="col-lg-12">
-                        <div class="table-responsive finflgtbl findleaguetbl">
+                    <div class="col-lg-12 ">
+                        <div class="table-responsive finflgtbl findleaguetbl ">
                             <table class="table" id="example">
                                 <thead>
                                     <tr>
@@ -703,6 +703,13 @@
 
 // $('.availability').tooltip('show')
 // })
+ $(document).ready(function () {
+        $(".panel-collapse").addClass("show");
+  });
+  
+  
+
+  
 </script>
 
 
