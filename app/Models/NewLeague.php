@@ -11,5 +11,4 @@ class NewLeague extends Model
     protected $table='newleague';
     protected $primaryKey='leagueid';
     public $timestamps=false;
-
 }

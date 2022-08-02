@@ -4,10 +4,12 @@ namespace App\Http\Controllers\site;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SendConfirmationToPlayerTwo;
+use App\Jobs\SendPlayer2Confirmation2;
 use App\Jobs\SendRefundToAdmin;
 use App\Jobs\SendToPlayerTwoCancel;
 use App\Models\Cms;
 use App\Models\NewLeague;
+use App\Models\PlayersList;
 use App\Models\StoreSession;
 use App\Models\TeamPlayers;
 use App\Models\TeamsModel;
@@ -56,11 +58,10 @@ class PlayersController extends Controller
     {
         $email1 = Auth::user()->email;
         $email2 = User::where('id', $id)->value('email');
-        $selfExistence = TeamPlayers::where('player1_email', $email1)->exists();
 
-        $playertwoLeague = DB::table('teams')
-            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-            ->where('team_players.pending_status', 0)->where('teams.leagueid', $leagueid)->where('team_players.player1_email', $email2)->get();
+
+        $selfExistence = TeamPlayers::where('player1_email', $email1)->exists();
+         $playertwoLeague=User::where('id',$id)->get();
         return $playertwoLeague;
     }
 
@@ -68,30 +69,13 @@ class PlayersController extends Controller
     {
         $email = Auth::user()->email;
         $id = Auth::user()->id;
-        $selfExistence = DB::table('teams')
-            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-            ->where('teams.leagueid', $request['leagueid'])->where('team_players.pending_status', 0)->where('team_players.player1_email', $email)->exists();
-        if (!empty($selfExistence)) {
-            $record_to_edit = DB::table('teams')
-                ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-                ->where('teams.leagueid', $request['leagueid'])->where('team_players.pending_status', 0)->where('team_players.player1_email', $email)->get();
+        $userid=User::where('email',$request['player_2_email'])->value('id');
 
-
-            $teamaffectedRow = TeamsModel::where("id", $record_to_edit[0]->team_id)->update(["title" => $request['team_name']]);
-            $toSave = TeamPlayers::find($record_to_edit[0]->id);
-            $toSave->player2_name = $request['player_2_name'];
-            $toSave->player2_email = $request['player_2_email'];
-            if ($toSave->save()) {
-                $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
-                $leagueDetails = NewLeague::where('leagueid', $request['leagueid'])->first();
-                dispatch(new SendConfirmationToPlayerTwo($request->all(), $leagueDetails, $siteSettings));
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['failed' => true]);
-            }
-
-        } else {
-
+        $player2Existence = PlayersList::where('league_id',$request['leagueid'])->where('player_id',$userid)->exists();
+        $player1Existence = PlayersList::where('league_id',$request['leagueid'])->where('player_id',$id)->exists();
+        if (!empty($player2Existence) && !empty($player1Existence)) {
+            $player2Existence = PlayersList::where('league_id',$request['leagueid'])->where('player_id',$userid)->value('id');
+            $player1Existence = PlayersList::where('league_id',$request['leagueid'])->where('player_id',$id)->value('id');
             TeamsModel::create([
                 'leagueid' => $request['leagueid'],
                 'title' => $request['team_name'],
@@ -109,7 +93,7 @@ class PlayersController extends Controller
             ]);
             $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
             $leagueDetails = NewLeague::where('leagueid', $request['leagueid'])->first();
-            dispatch(new SendConfirmationToPlayerTwo($request->all(), $leagueDetails, $siteSettings));
+            dispatch(new SendPlayer2Confirmation2($request->all(),$userid,$team_id,$leagueDetails, $siteSettings));
             return response()->json(['success' => true]);
         }
 
@@ -120,12 +104,15 @@ class PlayersController extends Controller
     {
         $id = Auth::user()->id;
 
-        $teamPlayers = TeamPlayers::where('player1_id', $id)->first();
-        $player2_id = User::where('email', $teamPlayers->player2_email)->value('id');
-        $sessionFlag = StoreSession::where('team_id', $teamPlayers->team_id)->where('leagueid', $leagueid)->exists();
+        $team_id=TeamsModel::where("player_type_id",$id)->where('leagueid',$leagueid)->value('id');
+        $teamPlayers = TeamPlayers::where('player1_id', $id)->where('team_id',$team_id)->first();
 
-        $leagueDetails = TeamsModel::where('id', $teamPlayers->team_id)->first();
-        $recordToupdate = TeamPlayers::where('player1_id', $id)->value('id');
+        $player2_id = User::where('email', $teamPlayers->player2_email)->value('id');
+        $sessionFlag = StoreSession::where('team_id', $teamPlayers->team_id)->where('leagueid', $leagueid)->where('playerid',$player2_id)->exists();
+
+        $teamDetails = TeamsModel::where('player_type_id', $id)->where('id',$teamPlayers->team_id)->first();
+
+        $recordToupdate = TeamPlayers::where('player2_email', $teamPlayers->player2_email)->where('player1_email', Auth::user()->email)->where('team_id',$teamPlayers->team_id)->value('id');
         $toSave = TeamPlayers::find($recordToupdate);
         $toSave->player1_name = null;
         $toSave->player1_id = 0;
@@ -133,14 +120,19 @@ class PlayersController extends Controller
         $toSave->save();
 
         if (empty($sessionFlag)) {
+            PlayersList::where('player_id',$id)->where('league_id',$leagueid)->delete();
+            TeamPlayers::where('player1_id',$id)->where('player1_email',Auth::user()->email)->delete();
+            TeamPlayers::where('player1_id',$player2_id)->where('player1_email',$teamPlayers->player2_email)->delete();
+            TeamsModel::where('leagueid',$teamDetails->id)->where('player_type_id',$id)->delete();
+
             $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
-            dispatch(new SendToPlayerTwoCancel($teamPlayers, $leagueDetails, $siteSettings));
+            dispatch(new SendToPlayerTwoCancel($teamPlayers, $teamDetails, $siteSettings));
             return response()->json(['success' => 200]);
         } else {
             StoreSession::where('playerid', $player2_id)->where('leagueid', $leagueid)->delete();
             $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
-            dispatch(new SendRefundToAdmin($teamPlayers, $leagueDetails, $siteSettings));
-            dispatch(new SendToPlayerTwoCancel($teamPlayers, $leagueDetails, $siteSettings));
+            dispatch(new SendRefundToAdmin($teamPlayers, $teamDetails, $siteSettings));
+            dispatch(new SendToPlayerTwoCancel($teamPlayers, $teamDetails, $siteSettings));
             return response()->json(['success' => 200]);
         }
     }
@@ -150,5 +142,33 @@ class PlayersController extends Controller
         $id = Auth::user()->id;
         $teamPlayersFlag = StoreSession::where('playerid', $id)->where('leagueid', $leagueid)->exists();
         return $teamPlayersFlag;
+    }
+
+    public function addSinglePlayer(Request $request)
+    {
+        TeamsModel::create([
+            'leagueid' => $request['leagueid'],
+            'title' => $request['team_name'],
+        ]);
+        $teamid = TeamsModel::where('leagueid', $request['leagueid'])->where('title', $request['team_name'])->value('id');
+
+        TeamPlayers::create([
+            'team_id' => $teamid,
+            'player1_id' => Auth::user()->id,
+            'player1_name' => $request['player_1_name'],
+            'player1_email' => Auth::user()->email,
+            'player1_payment_status' => "pending",
+            'player2_payment_status' => "pending",
+            'pending_status' => 0,
+        ]);
+
+        PlayersList::create([
+            'player_id'=>Auth::user()->id,
+            'league_id'=>$request['leagueid'],
+            'status'=>0,
+        ]);
+
+
+        return response()->json(['success' => 200]);
     }
 }

@@ -112,7 +112,6 @@ class UsersController extends Controller
         $message = trans('custom.error_something_went_wrong');
         $type = 'error';
         $loginId = '';
-
         try {
             $checkUserExist = $this->userModel->where(['email' => $request->email])->count();
             if ($checkUserExist == 0) {
@@ -184,7 +183,6 @@ class UsersController extends Controller
                     } else {
                         $playingDetails['how_did_you_find_us'] = 'NA';
                     }
-
                     $userAvailabilities = '';
                     if (count($availabilityIds)) {
                         asort($availabilityIds);
@@ -202,6 +200,7 @@ class UsersController extends Controller
                     $playingDetails['availability'] = $userAvailabilities;
 
                     $siteSettings = getSiteSettingsWithSelectFields(['from_email', 'to_email', 'website_title', 'copyright_text', 'tag_line', 'facebook_link', 'instagram_link']);
+
 
                     // Mail to user
                     dispatch(new SendRegistrationToUser($lastInsertedUser->toArray(), $lastInsertedUser->userDetails->toArray(), $playingDetails, $password, $siteSettings));
@@ -230,6 +229,7 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
+
         $checkUserId = $this->userModel->where(['email' => $request->email])->value('id');
 
         return view('site.account.email')->with('email', $request->email)->with('id', $checkUserId);
@@ -1194,7 +1194,7 @@ class UsersController extends Controller
     {
         $homeCourts = DB::table('pickleball_courts')
             ->join('states', 'states.id', '=', 'pickleball_courts.state_id')
-            ->where('status', '1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title', 'states.code as code', 'states.title as state')->get();
+            ->where('status', '1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title','pickleball_courts.id as id', 'states.code as code', 'states.title as state')->get();
         return $homeCourts;
     }
 

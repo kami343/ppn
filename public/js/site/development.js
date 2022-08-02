@@ -20,7 +20,7 @@ $.validator.addMethod("valid_number", function (value, element) {
 $.validator.addMethod("valid_site_number", function (value, element) {
     if (/^(?:[+]9)?[0-9]+$/.test(value)) {
 
-        if ($("#phone_no").val().charAt(0) == '0') {
+        if ($("#phone_no").val().charAt(leagueSignupForm0) == '0') {
             return false;
         }
         if ($("#phone_no").val().substring(0, 3) == '966') {
@@ -135,7 +135,7 @@ function checkUserAuth(ele)
     }
     else{
         $.get('/check-partner/'+leagueid, function (data) {
-            if (data!=1)
+            if (data==1)
             {
                 alert("Looks like you have already added another partner. Please wait for your partner to decline your request or wait for the 5 day window to expire before adding another partner.");
             }
@@ -147,9 +147,9 @@ function checkUserAuth(ele)
                     $("#checkoutBtn").removeClass('d-block');
                     $("#checkoutBtn").addClass('d-none');
                     // $("#team_name").val(data[0].title);
-                    $("#player_2_name").val(data[0].player1_name);
-                    $("#player_2_email").val(data[0].player1_email);
-                    $("#selected-player-flag").val(data[0].team_id);
+                    $("#player_2_name").val(data[0].full_name);
+                    $("#player_2_email").val(data[0].email);
+                    // $("#selected-player-flag").val(data[0].team_id);
                     $("#leagueSignupModal").modal('show');
                 })
             }
@@ -166,6 +166,30 @@ function checkUserAuth(ele)
 //     })
 // })
 
+$(document).ready(function () {
+    $("#need-partner").click(function () {
+
+        var websiteLink = $('#website_link').val();
+        var addSingleteamsUrl = websiteLink + '/add-single-player';
+        $.ajax({
+            url: addSingleteamsUrl,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: $('#leagueSignupForm').serialize(),
+            dataType: 'json',
+            success: function (response) {
+
+                $("#leagueSignupModal").modal('hide');
+                $('#leagueSignupForm')[0].reset();
+                location.reload(true);
+
+            }
+        });
+
+    })
+})
 $(document).ready(function () {
     $("#player-one-red-minus").click(function () {
         const leagueid=$("#league_id").text();
@@ -185,6 +209,7 @@ $(document).ready(function () {
                     } else {
                         Swal.fire('there is some error in processing..', '', 'info')
                     }
+                    location.reload(true);
                 });
             }else{
                 Swal.fire({
@@ -201,6 +226,7 @@ $(document).ready(function () {
                     } else{
                         Swal.fire('there is some error in processing..', '', 'info')
                     }
+                    location.reload(true);
                 });
             }
         })

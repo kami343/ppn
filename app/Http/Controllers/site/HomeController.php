@@ -476,10 +476,13 @@ class HomeController extends Controller
         $cmsPage        = $this->cmsModel->where('id', 1)->first();
         $leagueRow=NewLeague::where('leagueid',$id)->first();
 
-        $teams=DB::table('teams')
-            ->join('team_players', 'team_players.team_id', '=', 'teams.id')
-            ->where('teams.leagueid',$id)->where('team_players.pending_status',0)->get();
-//        Log::info($teams);
+        $teams=DB::table('league_player_list')
+            ->join('users', 'users.id', '=', 'league_player_list.player_id')->where('league_player_list.status',0)->get();
+
+        $loggedInPlayer=DB::table('league_player_list')
+            ->join('users', 'users.id', '=', 'league_player_list.player_id')->where('league_player_list.status',0)->where('users.id',Auth::user()->id)->get();
+
+        //        Log::info($teams);
         return view('site.league_registration', [
             'title'             => $getMetaDetails['title'],
             'metaKeywords'      => $getMetaDetails['metaKeywords'],
@@ -487,7 +490,8 @@ class HomeController extends Controller
             'cmsDetails'        => $cmsPage,
             'leagueRow'=>$leagueRow,
             'teamsPending'=>$teams,
-            'playertwo_id'=>$userid
+            'playertwo_id'=>$userid,
+            'loggedInPlayer'=>$loggedInPlayer
         ]);
     }
 
@@ -539,6 +543,7 @@ class HomeController extends Controller
         $user=Auth::user();
         $teams = new TeamsModel();
         $teams->leagueid = $request->leagueid;
+        $teams->player_type_id = Auth::user()->id;
         $teams->title = $request->team_name;
         $tosendid=0;
         if($teams->save()){

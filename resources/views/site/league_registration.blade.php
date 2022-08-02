@@ -40,7 +40,8 @@
                 <div class="row pt-3">
                     <div class="col-3">
                         <label>
-                            Register Until <span class="p-1 ms-2 border-2 borderClr rounded-1">{{date("m/d/y",strtotime($leagueRow->todate))}}</span>
+                            Register Until <span
+                                class="p-1 ms-2 border-2 borderClr rounded-1">{{date("m/d/y",strtotime($leagueRow->todate))}}</span>
                         </label>
                     </div>
                     <div class="col-6">
@@ -51,7 +52,8 @@
                     </div>
                     <div class="col-3">
                         <label>
-                            Cost <span class="p-1 ms-2 border-2 borderClr rounded-1">${{$leagueRow->amount}} per player</span>
+                            Cost <span
+                                class="p-1 ms-2 border-2 borderClr rounded-1">${{$leagueRow->amount}} per player</span>
                         </label>
                         <label class="d-none">age <span id="label_age">{{$leagueRow->age}}</span></label>
                         <label class="d-none">league <span id="league_id">{{$leagueRow->leagueid}}</span></label>
@@ -67,8 +69,10 @@
                         <th scope="col">Player 1</th>
                         <th scope="col">Player 2</th>
                         <th scope="col">Home Courts</th>
-                        <th scope="col">Availability <span title="WE=Weekends,WM=Weekend Mornings,WF=Weekend afternoon,WEV=Weekend Evening" data-toggle="tooltip" data-placement="bottom"
-                                                                  ><i
+                        <th scope="col">Availability <span
+                                title="WE=Weekends,WM=Weekend Mornings,WF=Weekend afternoon,WEV=Weekend Evening"
+                                data-toggle="tooltip" data-placement="bottom"
+                            ><i
                                     class="fa-solid pl-5 fa-circle-question"></i></span></th>
                     </tr>
                     </thead>
@@ -125,34 +129,41 @@
                 <input type="hidden" id="user-login-check" value="{{Auth::check() }}" class="d-none">
                 <input type="hidden" id="selected-player-flag" value="" class="d-none">
                 <ul>
+                    @if(!empty($loggedInPlayer[0]))
+                        <li>
+                            <span class="name">{{$loggedInPlayer[0]->full_name}}</span>
+                            <span class="minus" id="player-one-red-minus"><a href="javscript:void(0);"><i
+                                        class="fa fa-minus-circle"
+                                        aria-hidden="true"></i></a></span>
+                            <span class="user"><a href="/player-profile/{{$loggedInPlayer[0]->player_id}}"><i
+                                        class="fa fa-user"
+                                        aria-hidden="true"></i></a></span>
+                            <span class="mail"><a href="mailto:{{$loggedInPlayer[0]->email}}"><i
+                                        class="fa fa-envelope-open"
+                                        aria-hidden="true"
+                                        data-toggle="tooltip"
+                                        title="{{$loggedInPlayer[0]->email}}"></i></a></span>
+                        </li>
+                    @endif
+
                     @foreach($teamsPending as $key=>$teamsPending)
 
-
-                        @if(Auth::check()==1 && $teamsPending->player1_email==auth()->user()->email)
-                            <li>
-                                <span class="name">{{$teamsPending->player1_name}}</span>
-                                <span class="minus" id="player-one-red-minus"><a href="javscript:void(0);"><i class="fa fa-minus-circle"
-                                                                                    aria-hidden="true"></i></a></span>
-                                <span class="user"><a href="/player-profile/{{$teamsPending->player1_id}}"><i class="fa fa-user"
-                                                                                   aria-hidden="true"></i></a></span>
-                                <span class="mail"><a href="mailto:{{$teamsPending->player1_email}}"><i class="fa fa-envelope-open"
-                                                                                         aria-hidden="true"
-                                                                                         data-toggle="tooltip"
-                                                                                         title="{{$teamsPending->player1_email}}"></i></a></span>
-                            </li>
-                        @else
-
+                        @if($teamsPending->player_id!=auth()->user()->id)
 
                             <li>
 
-                                <span class="name">{{$teamsPending->player1_name}}</span>
-                                <span class="plus" data-id="playertwo_{{$key}}" value="{{$teamsPending->player1_id}}" onclick="checkUserAuth(this)"><a><i class="fa fa-plus-circle"
-                                                                                   aria-hidden="true"></i></a></span>
-                                <span class="user" onclick="checkUserAuth()"><a href="/player-profile/{{$teamsPending->player1_id}}"><i class="fa fa-user"
-                                                                                   aria-hidden="true"></i></a></span>
-                                <span class="mail" onclick="checkUserAuth()"><a href="mailto:{{$teamsPending->player1_email}}"><i class="fa fa-envelope-open"
-                                                                                        aria-hidden="true" data-toggle="tooltip"
-                                                                                        title="{{$teamsPending->player1_email}}"></i></a></span>
+                                <span class="name">{{$teamsPending->full_name}}</span>
+                                <span class="plus" data-id="playertwo_{{$key}}" value="{{$teamsPending->player_id}}"
+                                      onclick="checkUserAuth(this)"><a><i class="fa fa-plus-circle"
+                                                                          aria-hidden="true"></i></a></span>
+                                <span class="user" onclick="checkUserAuth()"><a
+                                        href="/player-profile/{{$teamsPending->player_id}}"><i class="fa fa-user"
+                                                                                               aria-hidden="true"></i></a></span>
+                                <span class="mail" onclick="checkUserAuth()"><a
+                                        href="mailto:{{$teamsPending->email}}"><i class="fa fa-envelope-open"
+                                                                                  aria-hidden="true"
+                                                                                  data-toggle="tooltip"
+                                                                                  title="{{$teamsPending->email}}"></i></a></span>
                             </li>
                         @endif
                     @endforeach
@@ -182,7 +193,8 @@
                                                    placeholder="League id hiden">
                                         </div>
                                         <div class="form-group">
-                                            <label>player 2 id passed from request-from-user/23<span style="color: red;">*</span></label>
+                                            <label>player 2 id passed from request-from-user/23<span
+                                                    style="color: red;">*</span></label>
                                             <input type="text" id="player2id" name="player2id"
                                                    class="form-control" value="{{$playertwo_id}}"
                                                    placeholder="player2 hidden">
@@ -202,7 +214,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Player 1 Name <span style="color: red;">*</span></label>
-                                            <input type="text" id="player_1_name" value="{{empty(auth()->user()->full_name)?"":auth()->user()->full_name}}"
+                                            <input type="text" id="player_1_name"
+                                                   value="{{empty(auth()->user()->full_name)?"":auth()->user()->full_name}}"
                                                    name="player_1_name"
                                                    class="form-control" placeholder="Player 1 Name">
                                         </div>
@@ -219,30 +232,30 @@
                                         <input type="text" id="player_2_email" name="player_2_email"
                                                class="form-control" placeholder="Player 2 Email">
 
-                                      <div class="d-block" id="need-partner-hide">
-                                          <label class="league-signup-message">Don't have a partner?<br/>
-                                              <a href="javascript: void(0);" id="need-partner"><u>Click here to add
-                                                      yourself to
-                                                      the players who need a partner list</u></a>
-                                          </label>
-                                      </div>
+                                        <div class="d-block" id="need-partner-hide">
+                                            <label class="league-signup-message">Don't have a partner?<br/>
+                                                <a href="javascript: void(0);" id="need-partner"><u>Click here to add
+                                                        yourself to
+                                                        the players who need a partner list</u></a>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-{{--                                <div class="row mt-2">--}}
-{{--                                    <div class="col-lg-12">--}}
-{{--                                        <input type="text" id="promo_code" name="promo_code"--}}
-{{--                                               class="form-control" placeholder="Enter Promo Code">--}}
-{{--                                    </div>--}}
-{{--                                    <div class="d-flex justify-content-between">--}}
+                                {{--                                <div class="row mt-2">--}}
+                                {{--                                    <div class="col-lg-12">--}}
+                                {{--                                        <input type="text" id="promo_code" name="promo_code"--}}
+                                {{--                                               class="form-control" placeholder="Enter Promo Code">--}}
+                                {{--                                    </div>--}}
+                                {{--                                    <div class="d-flex justify-content-between">--}}
 
-{{--                                        <div class="col-lg-3 col-4 form-group">--}}
-{{--                                            <button type="button" class="apply-promo-code">Apply</button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-lg-2 form-group">--}}
-{{--                                            <span class="text-red registration-amount"><strong>$39.99</strong></span>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                        <div class="col-lg-3 col-4 form-group">--}}
+                                {{--                                            <button type="button" class="apply-promo-code">Apply</button>--}}
+                                {{--                                        </div>--}}
+                                {{--                                        <div class="col-lg-2 form-group">--}}
+                                {{--                                            <span class="text-red registration-amount"><strong>$39.99</strong></span>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">

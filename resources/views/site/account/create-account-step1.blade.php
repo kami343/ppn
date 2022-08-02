@@ -194,7 +194,7 @@
                                             </div>
                                             <small id="confirm_password_error" class="d-none text-danger">Password must
                                                 be at least 6 characters</small>
-                                            <small id="both_password_error" class="d-none text-danger">Both passwords must be same</small>
+                                            <small id="both_password_error" class="d-none text-danger">Both passwords must be the same</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">

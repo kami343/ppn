@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/green.css')}}">
     <link rel="stylesheet" href="{{asset('assets/fonts/stylesheet.css')}}">
     <link href="{{ asset('assets/css/stylemodal.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset("assets_new/css/all.css")}}">
+    <link rel="stylesheet" href="{{asset("assets_new/css/style.css")}}">
 </head>
 <body style="background-color: #f7f7f7;">
 

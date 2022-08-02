@@ -30,6 +30,9 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/rate-your-game', 'HomeController@rateYourGame')->name('rate-your-game');
     Route::get('/local-court', 'HomeController@localCourt')->name('local-court');
 
+
+    Route::get('/player-one-checkout/{id}', 'HomeController@playerOneCheckout')->name('player-one-checkout');
+
     Route::POST('/checkout', 'UsersController@userCheckout')->name('user-checkout');
     Route::POST('/playerone-checkout', 'UsersController@userOneCheckout')->name('playerone-checkout');
     Route::get('/both-players-page/{id?}/{leagueid?}', 'DisplayPageController@playerTwoCheckout')->name('both-players-page');
@@ -83,6 +86,8 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
 
     //    playerone red button beforecheckout
     Route::get('/before-player-two-checkout/{leagueid}', 'PlayersController@BeforePlayerTwoCheckout')->name('before-player-two-checkout');
+//    Store single player
+    Route::post('/add-single-player', 'PlayersController@addSinglePlayer')->name('add-single-player');
 
     /* User */
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {

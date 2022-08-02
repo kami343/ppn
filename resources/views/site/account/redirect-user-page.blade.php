@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/green.css">
     <link rel="stylesheet" href="assets/fonts/stylesheet.css">
+    <link rel="stylesheet" href="{{asset('assets_new/css/all.css')}}">
+    <link rel="stylesheet" href="{{asset('assets_new/css/style.css')}}">
     <title>Create Account</title>
 </head>
 

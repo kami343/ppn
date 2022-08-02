@@ -47,7 +47,7 @@
 
                         <tr>
                             <td class="league-title"><b>Name</b></td>
-                            <td class="league-desc"><a href="{{url('/league-registration/'.$league->leagueid)}}" class="lnklogin">  {{$league->league_name}}</a></td>
+                            <td class="league-desc"><a href="{{url('/league-registration/'.$league->leagueid.'/'.$userid)}}" class="lnklogin">  {{$league->league_name}}</a></td>
                         </tr>
                         <tr>
                             <td class="league-title"><b>Start Date</b></td>
@@ -61,9 +61,7 @@
                     </table>
                 </td>
             </tr>
-            <tr>
-                <td><a href="{{url('/league-registration/'.$league->leagueid)}}" class="btn-reg">Register</a></td>
-            </tr>
+
             <tr>
                 <td><p style="margin-bottom: 5px;">You have <u>5 days</u> to register and secure your spot.</p></td>
             </tr>
