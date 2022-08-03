@@ -26,7 +26,8 @@
             <nav class="navbar navbar-expand-lg center-nav transparent navbar-dark">
                 <div class="container flex-lg-row flex-nowrap align-items-center">
                     <div class="navbar-brand w-100">
-                        <a href="index.html">
+                        <a href="{{url('/')}}">
+
                             <img class="logo-dark" src="assets_new/img/logo-white.png" srcset="./assets_new/img/logo-dark@2x.png 2x" alt="">
                             <img class="logo-light" src="assets_new/img/logo-white.png" srcset="./assets_new/img/logo-light@2x.png 2x" alt="">
                         </a>
@@ -119,7 +120,8 @@
                         <span><i class="fa-6x fa-solid fa-circle-check" style="color:green"></i></span>
                         <p class="txtmail mt-2">Your email has been verified and your account has been created.</p>
                         <p class="txtmail">Log in to register for leagues</p>
-                        <a href="{{url('/login-new')}}" class="btn btn-next-step">Log in</a>
+                        <a href="{{url('/login-new')}}" class="btn btn-next-step">Log In</a>
+
                     </div>
                 </div>
             </div>

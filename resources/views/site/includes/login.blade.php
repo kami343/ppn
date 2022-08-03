@@ -25,7 +25,7 @@
 
     <style>
 
-        div.error {
+        label.error {
             color: red;
         }
     </style>
@@ -44,8 +44,8 @@
 
                 <div class="text-center" style="margin-top: 30%">
                     <h1 style="color: #fff;font-family: 'Poppins', sans-serif;font-weight: 900;">New Here?</h1>
-                    <p class="py-4" style="font-size: 15px;font-family: 'Poppins';font-weight:bold;"><b>Sign up and
-                            register for Pickleball leagues in your area!</b></p>
+                    <h1 class="py-4 text-white" style="font-family: 'Poppins';font-weight:bold;">Sign up and
+                            register for Pickleball leagues in your area!</h1>
 
 
                     <a href="{{ route('site.registration') }}" class="btn btn-signacc">Sign Up</a>
@@ -277,6 +277,16 @@
         }
     });
 
+    $(document).ready(function () {
+        $('#forgotPasswordModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+        $('#resetPasswordModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+    })
 
     $(document).ready(function ($) {
 

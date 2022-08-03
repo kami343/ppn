@@ -36,19 +36,14 @@
                 <td><b>Dear {{ $userDetails['first_name'] }},</b></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 0px;">Ready to enjoy faster paying and new tools to track and manage your payment requests?</p></td>
-            </tr>
-            <tr>
-                <td><p style="margin-bottom: 5px;margin-top: 5px;">Just verify your email address and you're in. After verifying, <b>sign in</b> with the username <a href="#" class="lnklogin">{{$userDetails['email']}}</a>.</p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 0px;">Please use the OTP below in your web browser to reset your password.</p></td>
             </tr>
             <tr>
                 <td><a href="#" class="btn-reg">{{ $rememberToken }}</a></td>
             </tr>
+
             <tr>
-                <td><p style="margin-bottom: 5px;">Need answers to your questions? Please read our <a href="{{url('/faqs')}}" class="lnklogin">FAQs</a>.</p></td>
-            </tr>
-            <tr>
-                <td><p style="margin: 0px 0px;">If you were not expecting this email, or you think you received it in error, <a href="#" class="lnklogin">contact us</a>.</p></td>
+                <td><p style="margin: 0px 0px;">If you need additional help, please <a href="#" class="lnklogin">contact us</a>.</p></td>
             </tr>
             <tr>
                 <td><p style="margin-top: 65px;margin-bottom: 5px;">Thank you,</p></td>

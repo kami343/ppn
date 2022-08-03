@@ -46,19 +46,20 @@
                 <td><b>Dear {{ $user['first_name'] }},</b></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 0px;margin-top: 0px;">Ready to enjoy faster paying and new tools to track and manage your payment requests?</p></td>
+                <td><p style="margin-bottom: 0px;margin-top: 0px;">Thank you for creating an account on https://pickleballplayersnetwork.com.</p></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 5px;margin-top: 5px;">Just verify your email address and you're in. After verifying, <b>sign in</b> with the username <a href="#" class="lnklogin">{{ $user['email'] }}</a>.</p></td>
+{{--                <td><p style="margin-bottom: 5px;margin-top: 5px;">Please verify your email address below and you’re all set! <b>sign in</b> with the username <a href="#" class="lnklogin">{{ $user['email'] }}</a>.</p></td>--}}
+                <td><p style="margin-bottom: 5px;margin-top: 5px;">Please verify your email address below and you’re all set!</p></td>
             </tr>
             <tr>
                 <td><a href="{{url('/request-from-user')}}/{{$userDetails['user_id']}}" class="btn-reg">Verify My Email</a></td>
             </tr>
             <tr>
-                <td><p style="margin-bottom: 5px;">Need answers to your questions? Please read our <a href="{{url('/faqs')}}" class="lnklogin">FAQs</a>.</p></td>
+                <td><p style="margin-bottom: 5px;">Have questions about how our leagues work? Check out our  <a href="{{url('/faqs')}}" class="lnklogin">FAQs</a>.</p></td>
             </tr>
             <tr>
-                <td><p style="margin: 0px 0px;">If you were not expecting this email, or you think you received it in error, <a href="#" class="lnklogin">contact us</a>.</p></td>
+                <td><p style="margin: 0px 0px;">If you were not expecting this email, or you think you received it in error, <a href="{{url('/contact-us')}}" class="lnklogin">contact us</a>.</p></td>
             </tr>
             <tr>
                 <td><p style="margin-top: 65px;margin-bottom: 5px;">Thank you,</p></td>

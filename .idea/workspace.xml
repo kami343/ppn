@@ -19,9 +19,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="done with changes in single user add section changes">
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="this has create-account-step1.blade.php file css all changes along login page and success message page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/otp-email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/otp-email.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/site/verify-email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/site/verify-email.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/create-account-step1.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +51,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="bsr-complete-player-checkout-process" />
+        <entry key="$PROJECT_DIR$" value="bsr-css-changes-registration" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -201,21 +206,21 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/storage/logs/laravel.log" />
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/emails/site/teams_player" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/routes" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\baseerx\ppn\routes" />
+      <recent name="D:\baseerx\ppn\resources\views\site" />
       <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
       <recent name="D:\baseerx\ppn\app\Http\Controllers\site" />
       <recent name="D:\baseerx\ppn\app\Jobs" />
-      <recent name="D:\baseerx\ppn\routes" />
-      <recent name="D:\baseerx\ppn\public\js\site" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\baseerx\ppn\resources\views\emails\site\teams_player" />
     </key>
   </component>
   <component name="RunManager">
@@ -286,7 +291,9 @@
       <workItem from="1659334719532" duration="859000" />
       <workItem from="1659338868834" duration="11862000" />
       <workItem from="1659411907784" duration="21195000" />
-      <workItem from="1659450177692" duration="674000" />
+      <workItem from="1659450177692" duration="12619000" />
+      <workItem from="1659499589302" duration="22368000" />
+      <workItem from="1659540490383" duration="4096000" />
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -365,7 +372,28 @@
       <option name="project" value="LOCAL" />
       <updated>1659433303756</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="find league updated..">
+      <created>1659451078465</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1659451078465</updated>
+    </task>
+    <task id="LOCAL-00013" summary="find league route">
+      <created>1659455596756</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1659455596756</updated>
+    </task>
+    <task id="LOCAL-00014" summary="this has create-account-step1.blade.php file css all changes along login page and success message page">
+      <created>1659463161425</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1659463161425</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -395,7 +423,10 @@
     <MESSAGE value="implementation of remove player one done and player two is adjusted accordingly.." />
     <MESSAGE value="done with the implementation of player one checkout process and email will be send to both players.." />
     <MESSAGE value="done with changes in single user add section changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="done with changes in single user add section changes" />
+    <MESSAGE value="find league updated.." />
+    <MESSAGE value="find league route" />
+    <MESSAGE value="this has create-account-step1.blade.php file css all changes along login page and success message page" />
+    <option name="LAST_COMMIT_MESSAGE" value="this has create-account-step1.blade.php file css all changes along login page and success message page" />
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -415,6 +446,14 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="92" y="92" width="1182" height="536" key="DiffContextDialog/0.0.1366.720@0.0.1366.720" timestamp="1659024601261" />
+    <state x="129" y="54" key="MergeDialog" timestamp="1659451805246">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="129" y="54" key="MergeDialog/0.0.1366.720@0.0.1366.720" timestamp="1659451805246" />
+    <state x="321" y="121" key="MultipleFileMergeDialog" timestamp="1659451805253">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="321" y="121" key="MultipleFileMergeDialog/0.0.1366.720@0.0.1366.720" timestamp="1659451805253" />
     <state x="513" y="83" key="NewPhpClassDialog" timestamp="1659263333595">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -432,19 +471,23 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state width="507" height="446" key="SwitcherDM/0.0.1366.720@0.0.1366.720" timestamp="1657220669355" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659433313200">
+    <state x="470" y="76" key="VCS.ChangeListViewerDialog" timestamp="1659451733860">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="470" y="76" key="VCS.ChangeListViewerDialog/0.0.1366.720@0.0.1366.720" timestamp="1659451733860" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659463169263">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659433313200" />
-    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659199175241" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659463169263" />
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.720@0.0.1366.720" timestamp="1657796827894" />
-    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1659184452692">
+    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1659456135276">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.720@0.0.1366.720" timestamp="1659184452692" />
+    <state x="500" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.720@0.0.1366.720" timestamp="1659456135276" />
     <state x="288" y="160" width="1140" height="707" key="dock-window-1" timestamp="1658561021474">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -454,15 +497,19 @@
     </state>
     <state x="390" y="93" width="585" height="592" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659436093532" />
     <state x="390" y="93" width="585" height="624" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1658941017186" />
-    <state x="339" y="160" key="run.anything.popup" timestamp="1659256082411">
+    <state x="463" y="73" key="git4idea.branch.GitSmartOperationDialog" timestamp="1659456118181">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="463" y="73" key="git4idea.branch.GitSmartOperationDialog/0.0.1366.720@0.0.1366.720" timestamp="1659456118181" />
+    <state x="339" y="160" key="run.anything.popup" timestamp="1659527479590">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
-    <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1659256082411" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659431853953">
+    <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1659527479590" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659543785567">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659431853953" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659373796915" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659508214697" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659543785567" />
   </component>
 </project>

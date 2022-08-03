@@ -276,7 +276,8 @@ class UsersController extends Controller
         $messageError = "Credential is not valid";
         $redirectTo = "join-a-league";
         $type = "error";
-        $flag=0;
+        $flag = 0;
+
         try {
             if ($request->ajax()) {
                 if (Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password, 'status' => '1'], true)) {
@@ -294,13 +295,14 @@ class UsersController extends Controller
                     $type = "success";
                 } else {
                     $redirectTo = 'login-new';
+
                     $flagCheck=User::where('email',$request->email)->exists();
-                    Log::info($flagCheck);
                     if (!empty($flagCheck)){
                         $flag=1;
                     }
                     else{
                         $flag=0;
+
                     }
                     $message = trans('custom.error_invalid_credentials_inactive_user');
                 }
@@ -310,6 +312,7 @@ class UsersController extends Controller
         } catch (\Throwable $e) {
             $message = $e->getMessage();
         }
+
 
         return response()->json(['message' => $message,'flag'=>$flag,'type' => $type, 'redirectTo' => $redirectTo]);
     }
@@ -361,7 +364,6 @@ class UsersController extends Controller
 
         ], compact('leaguesData'));
     }
-
 
 
     /*
@@ -1202,9 +1204,11 @@ class UsersController extends Controller
     {
         $homeCourts = DB::table('pickleball_courts')
             ->join('states', 'states.id', '=', 'pickleball_courts.state_id')
-            ->where('status', '1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title','pickleball_courts.id as id', 'states.code as code', 'states.title as state')->get();
+            ->where('status', '1')->whereNull('deleted_at')->orderBy('pickleball_courts.title', 'ASC')->select('pickleball_courts.title as title', 'pickleball_courts.id as id', 'states.code as code', 'states.title as state')->get();
         return $homeCourts;
     }
+
+
 
     public function checkUserExistence($id)
     {
@@ -1235,11 +1239,10 @@ class UsersController extends Controller
         } else {
             $userLoggedIn = Auth::user()->id;
             $asPlayerExistenceEmail = Auth::user()->email;
-            $asPlayerExists = DB::table('teams')->join('team_players', 'team_players.team_id', '=', 'teams.id')->where('team_players.player1_email',$asPlayerExistenceEmail)->where('teams.leagueid', $id)->exists();
-            if (!empty($asPlayerExists)){
+            $asPlayerExists = DB::table('teams')->join('team_players', 'team_players.team_id', '=', 'teams.id')->where('team_players.player1_email', $asPlayerExistenceEmail)->where('teams.leagueid', $id)->exists();
+            if (!empty($asPlayerExists)) {
                 return 3;
-            }
-            else{
+            } else {
                 $usersDetail = DB::table('users')
                     ->join('user_details', 'users.id', '=', 'user_details.user_id')
                     ->where('users.id', $userLoggedIn)
@@ -1252,12 +1255,11 @@ class UsersController extends Controller
 
     public function userCheckout(Request $request)
     {
-        $data = explode("&",$request->data);
+        $data = explode("&", $request->data);
 
 
-        $playerid = str_replace("player2id=","",$data[1]);
-        $leagueId = str_replace("leagueid=","",$data[0]);
-
+        $playerid = str_replace("player2id=", "", $data[1]);
+        $leagueId = str_replace("leagueid=", "", $data[0]);
 
 
         \Stripe\Stripe::setApiKey('sk_test_51L1CSDB0DWwA7fx5BxP5kBvTeFl1CVIeP4Fy8ANcNAzTpVIq0DgRyyWqviGNoUFu5ocInFxeLihoYzw1P1XqchxH00SbJpJAPG');
@@ -1302,7 +1304,7 @@ class UsersController extends Controller
                         'description' => "Leagu Registration Details",
                     ]],
                     'mode' => 'payment',
-                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/'.$playerid.'/'.$leagueId,
+                    'success_url' => 'https://demosite.usapickleballnetwork.com/both-players-page/' . $playerid . '/' . $leagueId,
                     'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
                 ]);
             } catch (Exception $e) {
@@ -1332,25 +1334,24 @@ class UsersController extends Controller
             ->where('teams.leagueid', $leagueId)->value('teams.id');
 
 
-        $flag=StoreSession::create([
+        $flag = StoreSession::create([
             'leagueid' => $leagueId,
             'team_id' => $teamid,
-            'sessionid' =>$response['sessionId'],
+            'sessionid' => $response['sessionId'],
             'playerid' => $playerid,
         ]);
 
 
         echo json_encode($response);
     }
+
     public function userOneCheckout(Request $request)
     {
 
         $teamid = $request['data'];
-        $teams = TeamPlayers::where('team_id',$teamid)->first();
+        $teams = TeamPlayers::where('team_id', $teamid)->first();
 
         $playerid = $teams->player1_id;
-
-
 
 
         $leagueId = DB::table('teams')
@@ -1400,7 +1401,7 @@ class UsersController extends Controller
                         'description' => "Leagu Registration Details",
                     ]],
                     'mode' => 'payment',
-                    'success_url' => 'https://demosite.usapickleballnetwork.com/after-playerone-checkout/'.$teamid,
+                    'success_url' => 'https://demosite.usapickleballnetwork.com/after-playerone-checkout/' . $teamid,
                     'cancel_url' => 'https://demosite.usapickleballnetwork.com/error/',
                 ]);
             } catch (Exception $e) {
@@ -1426,11 +1427,10 @@ class UsersController extends Controller
 //Payment status for player2 will be updated here as i added new colum
 
 
-
-        $flag=StoreSession::create([
+        $flag = StoreSession::create([
             'leagueid' => $leagueId,
             'team_id' => $teamid,
-            'sessionid' =>$response['sessionId'],
+            'sessionid' => $response['sessionId'],
             'playerid' => $playerid,
         ]);
 

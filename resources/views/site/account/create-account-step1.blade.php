@@ -43,7 +43,19 @@
             cursor: pointer;
 
         }
-
+        .btn-back-circle{
+            background-image: linear-gradient(to right,#B0E500,#C3FA02,#B5EB01);
+            height: 55px;
+            width: 55px;
+            border-radius: 50%;
+            color: #000;
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            font-size: 35px;
+            line-height: 60px;
+        }
+        .btn-back-circle:hover {color: #000;opacity: 0.8;}
 
     </style>
     <title>Create Account</title>
@@ -119,7 +131,7 @@
 
                         <h1 class="loginttl">Create your PPN account</h1>
                         <p>Already have an account? <a href="{{url('/login-new')}}"
-                                                                              class="lnklogin">Log in <i
+                                                       class="lnklogin">Log in <i
                                     class="fa-solid fa-chevron-right"></i></a></p>
                         {{ Form::open([
                              'method'=> 'POST',
@@ -200,7 +212,8 @@
                                             </div>
                                             <small id="confirm_password_error" class="d-none text-danger">Password must
                                                 be at least 6 characters</small>
-                                            <small id="both_password_error" class="d-none text-danger">Both passwords must be the same</small>
+                                            <small id="both_password_error" class="d-none text-danger">Both passwords
+                                                must be the same</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -261,8 +274,10 @@
                                             <label>Phone <span style="color: red;">*</span></label>
                                             <input type="text" class="form-control" id="phone_no" name="phone_no"
                                                    placeholder="Enter Phone">
-                                            <small id="phone_no_error" class="d-none text-danger">Phone is required</small>
-                                            <small id="phone_no_error1" class="d-none text-danger">Format is not valid</small>
+                                            <small id="phone_no_error" class="d-none text-danger">Phone is
+                                                required</small>
+                                            <small id="phone_no_error1" class="d-none text-danger">Format is not
+                                                valid</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -361,9 +376,13 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between mt-1">
-                                               <a id="one-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
-                                                   <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
-                                               </a>
+{{--                                            <a id="one-back" class="btn mt-5"--}}
+{{--                                               style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">--}}
+{{--                                                <i class="fa-3x fa-solid fa-circle-arrow-left"--}}
+{{--                                                   style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>--}}
+{{--                                            </a>--}}
+                                            <a id="one-back"class="btn-back-circle"><i class="fa-solid fa-arrow-left-long"></i></a>
+
                                             <a id="btn-3" class="btn btn-next-step">Next Step</a>
                                         </div>
                                     </div>
@@ -396,21 +415,22 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group">
+
+
                                             <div id="home-court-div-up">
-                                                <div class="holder-inner">
+                                                <div class="holder-inner" style="border-bottom: 3px solid #87DF10;">
 
                                                     <label class="placeholder-label-selectpicker" id="pref-home-court">Preferred
                                                         Home Court<span class="text-red">*</span></label>
-                                                   <div id="home_court_div">
-                                                       <select name="home_court" id="home_court"
-                                                               class="selectpicker text-dark form-control"
-                                                               data-live-search="true"
-                                                               {{--                                                            data-live-search-placeholder="Search"--}}
-                                                               data-actions-box="true" data-placeholder="Search">
+                                                    <div id="home_court_div">
+                                                        <select name="home_court" id="home_court"
+                                                                data-placeholder="Search" class="selectpicker w-100"
+                                                                data-live-search="true">
 
+                                                        </select>
 
-                                                       </select>
-                                                   </div>
+                                                    </div>
+
 
                                                     <small id="home_court_error" class="d-none text-danger">home court
                                                         is required</small>
@@ -433,13 +453,14 @@
                                         <div class="form-group">
                                             @if ($availabilities && $availabilities->count())
                                                 <div class="col-lg-12 form-group">
-                                                    <label class="tooltip_cls pb-0 mb-0"><strong>Playing Time Availability<span
+                                                    <label class="tooltip_cls pb-0 mb-0"><strong>Playing Time
+                                                            Availability<span
                                                                 class="text-red">*</span></strong> <i
                                                             id="question_mark_tooltip"
                                                             class="fa-2xs fa fa-question-circle cursor-pointer"
                                                             aria-hidden="true" data-toggle="tooltip"
                                                             title="To best facilitate league play, please specify your playing time availability. You will have the opportunity to change this as needed"></i>
-                                                        </label>
+                                                    </label>
                                                     <small class="text-small"><i>(Select all that apply)</i></small>
 
                                                     <div class="row mt-3" id="availability">
@@ -485,9 +506,11 @@
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between mt-1">
 
+
                                             <a id="two-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
                                                 <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
                                             </a>
+
                                             <a id="btn-4" class="btn btn-next-step">Proceed
                                                 to Waiver</a>
                                         </div>
@@ -541,12 +564,15 @@
                                                 >
                                                 <span class="checkmark"></span>
                                             </label>
+
                                             <small id="agree_error" class="text-danger d-none">Please scroll to the bottom of the waiver before clicking this checkbox</small>
                                             <small id="agree_error1" class="text-danger d-none">Please click on the checkbox</small>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between">
+
+
                                             <a id="three-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
                                                 <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
                                             </a>
@@ -744,8 +770,9 @@
 
     });
     $(document).ready(function () {
+
         $('#checkbox-id').click(function () {
-            if($('#checkbox-id').hasClass('text-muted')){
+            if ($('#checkbox-id').hasClass('text-muted')) {
                 $('#agree_error').removeClass('d-none');
                 $('#agree_error').addClass('d-block');
                 $('#agree_error1').removeClass('d-block');
@@ -754,6 +781,7 @@
         })
 
         $('#submit').click(function (e) {
+
             const active = $('#agree').prop("checked") ? 1 : 0 ;
 
             if (active==0 && !$('#checkbox-id').hasClass('text-muted')){
@@ -772,7 +800,7 @@
         $('#home_court').change(function () {
             const modalShow = $('#home_court').val();
             if (modalShow == 'modal')
-            $('#pickleballCourtModal').modal({backdrop: 'static', keyboard: false}, 'show');
+                $('#pickleballCourtModal').modal({backdrop: 'static', keyboard: false}, 'show');
         });
 
 
@@ -897,7 +925,7 @@
             if ($('#confirm_password').val().length >= 6) {
                 $('#confirm_password_error').removeClass('d-block');
                 $('#confirm_password_error').addClass('d-none');
-                if ($('#confirm_password').val()===$('#password').val()){
+                if ($('#confirm_password').val() === $('#password').val()) {
                     $('#both_password_error').removeClass('d-block');
                     $('#both_password_error').addClass('d-none');
                 }
@@ -934,15 +962,12 @@
             } else if ($('#confirm_password').val() == '') {
                 $('#confirm_password_error').removeClass('d-none');
                 $('#confirm_password_error').addClass('d-block');
-            }
-            else if(($('#password').val() !== $('#confirm_password').val())){
+            } else if (($('#password').val() !== $('#confirm_password').val())) {
                 $('#both_password_error').removeClass('d-none');
                 $('#both_password_error').addClass('d-block');
-            }
-            else if($('#password').val().length<6 || $('#confirm_password').val().length<6){
+            } else if ($('#password').val().length < 6 || $('#confirm_password').val().length < 6) {
 
-            }
-            else {
+            } else {
                 $('#two-tab').addClass("active");
                 $('#one-tab').removeClass("active");
                 $('#three-tab').removeClass("active");
@@ -1069,8 +1094,8 @@
                 $('#phone_no_error').addClass('d-block');
                 $('#phone_no_error1').removeClass('d-block');
                 $('#phone_no_error1').addClass('d-none');
-            }
-            else if (!reg.test($('#phone_no').val())){
+            } else if (!reg.test($('#phone_no').val())) {
+
                 $('#phone_no_error').removeClass('d-block');
                 $('#phone_no_error').addClass('d-none');
                 $('#phone_no_error1').removeClass('d-none');
@@ -1224,6 +1249,7 @@
             submitHandler: function (form) {
                 var websiteLink = $('#website_link').val();
                 var pickleballCourtSubmitUrl = websiteLink + '/ajax-pickleball-court-submit';
+                const data=$('#modal-form').serialize();
 
                 $.ajax({
                     url: pickleballCourtSubmitUrl,
@@ -1234,10 +1260,9 @@
                     data: $('#modal-form').serialize(),
                     dataType: 'json',
                     success: function (response) {
-                        populateNewHomeCourt();
-                        // $('#modal-alert').removeClass('d-none');
-                        // $('#modal-alert').addClass('d-block');
-                        // $('#pickleballCourtModal').modal('hide');
+
+                        populateNewHomeCourtAfter(data);
+
                     }
                 });
             }
@@ -1247,17 +1272,18 @@
         function populateNewHomeCourt(){
             // $("#bs-select-1").empty()
             $.get( "/getcourts", function( data ) {
-
+                $('#pickleballCourtModal').modal('hide');
                 $('.selectpicker').html('');
                 $('.selectpicker').empty();
                 console.log(data)
                 $.each(data , function (key, value) {
                     if (value.title!=="Private Residence / At Home Court")
-                    $('.selectpicker').append(`<option value="${value.id}">${value.title} (${value.state},${value.code})</option>`);
+                        $('.selectpicker').append(`<option value="${value.id}">${value.title} (${value.state},${value.code})</option>`);
+
                 });
                 $.each(data , function (key, value) {
                     if (value.title=="Private Residence / At Home Court")
-                    $('.selectpicker').append(`<option style="color:black; border: 2px solid lightslategray;border-radius: 5px;--hover-color: #B0E500;background-color: #E7E6E1" value="${value.id}">${value.title}</option>`);
+                        $('.selectpicker').append(`<option style="color:black; border: 2px solid lightslategray;border-radius: 5px;--hover-color: #B0E500;background-color: #E7E6E1" value="${value.id}">${value.title}</option>`);
                 });
                 $('#bs-select-1').append('<div style="color:black;padding:2px;margin-top:2px;border: 2px solid lightslategray;border-radius: 5px;--hover-color: #B0E500;background-color: #E7E6E1"><i class="fa-1x fa fa-plus-circle" style="color:#B0E500;border-radius: 55%;margin-left: 3.5%;--hover-color: #B0E500;background-color: black"></i><strong><a style="color: black" \n' +
                     '        href="javascript:void(0);"\n' +
@@ -1267,7 +1293,7 @@
                     '            Can’t find your court, click\n' +
                     '        here to\n' +
                     '        add it</a></strong><div>');
-                 $('.selectpicker').selectpicker('refresh');
+                $('#home_court').selectpicker('refresh');
 
                 $('#modal-form')[0].reset();
 
@@ -1275,16 +1301,21 @@
 
             });
         }
-        function populateNewHomeCourtAfter(){
+
+        function populateNewHomeCourtAfter(data) {
+
             // $("#bs-select-1").empty()
-            $.get( "/getcourts", function( data ) {
+            const compare=data.toString().split('&')[0];
+            const toCompare=compare.split('=')[1];
+            $.get("/getcourts", function (data) {
+                // $('.selectpicker').empty();
                 $.each(data , function (key, value) {
-                    var groupFilter = $('#home_court');
-                    groupFilter.selectpicker('val', value.id);
-                    groupFilter.find('option').remove();
-                    groupFilter.selectpicker("refresh");
-                });
-                // teamPositionFilter.selectpicker('refresh');
+                    if(value.title==compare.split('=')[1]){
+                        $('.selectpicker').append(`<option value="${value.id}">${value.title} (${value.state},${value.code})</option>`);
+                         $('.selectpicker option[value='+value.id+']').prop('selected', true);
+                        $('.selectpicker').selectpicker('refresh');
+                    }
+                })
 
                 $('#modal-form')[0].reset();
 
