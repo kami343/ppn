@@ -55,7 +55,9 @@
             font-size: 35px;
             line-height: 60px;
         }
-        .btn-back-circle:hover {color: #000;opacity: 0.8;}
+
+        .btn-back-circle:hover {color: #000;opacity: 0.8;transform: translateY(-0.15rem);box-shadow: 0 0.25rem 0.75rem rgb(30 34 40 / 15%);cursor: pointer;}
+
 
     </style>
     <title>Create Account</title>
@@ -427,7 +429,9 @@
                                                                 data-placeholder="Search" class="selectpicker w-100"
                                                                 data-live-search="true">
 
+
                                                         </select>
+
 
                                                     </div>
 
@@ -506,10 +510,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between mt-1">
 
+                                                <a id="two-back"class="btn-back-circle"><i class="fa-solid fa-arrow-left-long"></i></a>
 
-                                            <a id="two-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
-                                                <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
-                                            </a>
 
                                             <a id="btn-4" class="btn btn-next-step">Proceed
                                                 to Waiver</a>
@@ -565,17 +567,24 @@
                                                 <span class="checkmark"></span>
                                             </label>
 
-                                            <small id="agree_error" class="text-danger d-none">Please scroll to the bottom of the waiver before clicking this checkbox</small>
-                                            <small id="agree_error1" class="text-danger d-none">Please click on the checkbox</small>
+                                            <small id="agree_error" class="text-danger d-none">Please scroll to the
+                                                bottom of the waiver before clicking this checkbox</small>
+                                            <small id="agree_error1" class="text-danger d-none">Please click on the
+                                                checkbox</small>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group d-flex justify-content-between">
 
+{{--                                            <a id="three-back" class="btn mt-5"--}}
+{{--                                               style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">--}}
+{{--                                                <i class="fa-3x fa-solid fa-circle-arrow-left"--}}
+{{--                                                   style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>--}}
+{{--                                            </a>--}}
+                                            <a id="three-back"class="btn-back-circle"><i class="fa-solid fa-arrow-left-long"></i></a>
 
-                                            <a id="three-back" class="btn mt-5" style="width: 0.5px;height: 0.2px;border: 1px solid #B0E500;">
-                                                <i class="fa-3x fa-solid fa-circle-arrow-left" style="background-color:black;border-radius: 80%;border: 1px solid #B0E500;"></i>
-                                            </a>
+
                                             <button type="submit" id="submit" name="submit" class="btn btn-next-step">
                                                 Complete Registration
                                             </button>
@@ -782,9 +791,10 @@
 
         $('#submit').click(function (e) {
 
-            const active = $('#agree').prop("checked") ? 1 : 0 ;
+            const active = $('#agree').prop("checked") ? 1 : 0;
 
-            if (active==0 && !$('#checkbox-id').hasClass('text-muted')){
+            if (active == 0 && !$('#checkbox-id').hasClass('text-muted')) {
+
                 e.preventDefault()
                 $('#agree_error').removeClass('d-block');
                 $('#agree_error').addClass('d-none');

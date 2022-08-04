@@ -295,13 +295,13 @@ class UsersController extends Controller
                     $type = "success";
                 } else {
                     $redirectTo = 'login-new';
+                    $flagCheck = User::where('email', $request->email)->exists();
 
-                    $flagCheck=User::where('email',$request->email)->exists();
-                    if (!empty($flagCheck)){
-                        $flag=1;
-                    }
-                    else{
-                        $flag=0;
+
+                    if (!empty($flagCheck)) {
+                        $flag = 1;
+                    } else {
+                        $flag = 0;
 
                     }
                     $message = trans('custom.error_invalid_credentials_inactive_user');
@@ -314,7 +314,8 @@ class UsersController extends Controller
         }
 
 
-        return response()->json(['message' => $message,'flag'=>$flag,'type' => $type, 'redirectTo' => $redirectTo]);
+        return response()->json(['message' => $message, 'flag' => $flag, 'type' => $type, 'redirectTo' => $redirectTo]);
+
     }
 
     /*
@@ -1256,7 +1257,6 @@ class UsersController extends Controller
     public function userCheckout(Request $request)
     {
         $data = explode("&", $request->data);
-
 
         $playerid = str_replace("player2id=", "", $data[1]);
         $leagueId = str_replace("leagueid=", "", $data[0]);

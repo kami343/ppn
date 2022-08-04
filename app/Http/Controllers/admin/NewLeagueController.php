@@ -194,19 +194,6 @@ class NewLeagueController extends Controller
      */
     public function store(Request $request)
     {
-        //        $validateDate = $request->validate([
-        //            'league_name' => 'required',
-        //            'zip_code' => 'required',
-        //            'play_type' => 'required',
-        //            'gender' => 'required',
-        //            'rating' => 'required',
-        //            'date' => 'required',
-        //            'max_team' => 'required',
-        //            'status' => 'required',
-        //            'amount' => 'required',
-        //            'city' => 'required',
-        //            'state' => 'required',
-        //        ]);
         NewLeague::create([
             'league_name' => $request['league_name'],
             'zip_code' => $request['zip_code'],

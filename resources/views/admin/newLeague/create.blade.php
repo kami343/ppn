@@ -8,16 +8,16 @@
                 <div class="card-body">
                     <h4 class="card-title">{{ $pageTitle }}</h4>
                     <div class="container mt-4">
-                        {{ Form::open([
-                                'method'=> 'POST',
-                                'class' => '',
-                                'route' => ['admin.newLeague.storedata'],
-                                'name'  => 'createNewLeagueForm',
-                                'id'    => 'createNewLeagueForm',
-                                'files' => true,
-                                'novalidate' => true ]) }}
+{{--                        {{ Form::open([--}}
+{{--                                'method'=> 'POST',--}}
+{{--                                'class' => '',--}}
+{{--                                'route' => ['admin.newLeague.storedata'],--}}
+{{--                                'name'  => 'createNewLeagueForm',--}}
+{{--                                'id'    => 'createNewLeagueForm',--}}
+{{--                                'files' => true,--}}
+{{--                                'novalidate' => true ]) }}--}}
+                        <form id="createNewLeagueForm" name="createNewLeagueForm">
                         <div class="form-body">
-                            @csrf
 
                             @if (session('message'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -98,14 +98,14 @@
                                     <div class="form-group">
                                         <label for="fromdate">From date</label>
 
-                                        <input type="date" name="fromdate" class="form-control"
+                                        <input type="date" id="fromdate" name="fromdate" class="form-control"
                                                value="<?= date('Y-m-d') ?>" id="fromdate">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="todate">To date</label>
-                                        <input type="date" name="todate" class="form-control"
+                                        <input type="date" id="todate" name="todate" class="form-control"
                                                value="<?= date('Y-m-d') ?>" id="todate">
 
                                         <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
@@ -179,7 +179,8 @@
                                 </button>
                             </div>
                         </div>
-                        {{ Form::close() }}
+                        </form>
+{{--                        {{ Form::close() }}--}}
                     </div>
 
                 </div>

@@ -137,24 +137,24 @@ $.validator.addMethod("valid_5_digit_number", function(value, element) {
 });
 
 // Ckeditor
-$.validator.addMethod("ckrequired", function (value, element) {  
-    var idname = $(element).attr('id');  
-    var editor = CKEDITOR.instances[idname];  
-    var ckValue = GetTextFromHtml(editor.getData()).replace(/<[^>]*>/gi, '').trim();  
-    if (ckValue.length === 0) {  
-        //if empty or trimmed value then remove extra spacing to current control  
+$.validator.addMethod("ckrequired", function (value, element) {
+    var idname = $(element).attr('id');
+    var editor = CKEDITOR.instances[idname];
+    var ckValue = GetTextFromHtml(editor.getData()).replace(/<[^>]*>/gi, '').trim();
+    if (ckValue.length === 0) {
+        //if empty or trimmed value then remove extra spacing to current control
         $(element).val(ckValue);
-    } else {  
-        //If not empty then leave the value as it is  
-        $(element).val(editor.getData());  
-    }  
-    return $(element).val().length > 0;  
+    } else {
+        //If not empty then leave the value as it is
+        $(element).val(editor.getData());
+    }
+    return $(element).val().length > 0;
 }, "Please enter description.");
-  
-function GetTextFromHtml(html) {  
+
+function GetTextFromHtml(html) {
     var dv = document.createElement("DIV");
-    dv.innerHTML = html;  
-    return dv.textContent || dv.innerText || "";  
+    dv.innerHTML = html;
+    return dv.textContent || dv.innerText || "";
 }
 
 
@@ -166,7 +166,7 @@ $(document).ready(function() {
     // Password checker
     $('.password-checker').on('keyup', function () {
         var getVal = $(this).val();
-        var dataAttrId = $(this).data('pcid');        
+        var dataAttrId = $(this).data('pcid');
         if (getVal != '') {
             if (/^[a-zA-Z_\-]+$/.test(getVal)) {  // weak
                 $('#'+dataAttrId).html('<div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%"></div>');
@@ -185,6 +185,123 @@ $(document).ready(function() {
         }
     });
 
+    // $(document).ready(function () {
+    //     $("#fromdate").change(function(){
+    //         const fromDate=$("#fromdate").val().split('-');
+    //         const toDate=$("#todate").val().split('-');
+    //         const newFromDate=[fromDate[1], fromDate[0], fromDate[2]].join('/');
+    //         const newToDate=[toDate[1],toDate[0],toDate[2]].join('/');
+    //         console.log(newFromDate)
+    //         console.log(newToDate)
+    //     })
+    // })
+    // Create League form
+    $("#createNewLeagueForm").validate({
+        ignore: ":hidden",
+        debug: false,
+        rules: {
+            league_name: {
+                required: true,
+            },
+            state: {
+                required: true,
+            },
+            city: {
+                required: true,
+            },
+            zip_code: {
+                required: true,
+            },
+            play_type: {
+                required: true,
+            },
+            gender: {
+                required: true,
+            },
+            fromdate: {
+                required: true,
+            },
+            todate: {
+                required: true,
+            },
+            max_team: {
+                required: true,
+            },
+            amount: {
+                required: true,
+            },
+            status: {
+                required: true,
+            },
+            age: {
+                required: true,
+            },
+            rating: {
+                required: true,
+            }
+        },
+        messages: {
+            league_name: {
+                required: "Please enter league name.",
+            },
+            state: {
+                required: "Please select state.",
+            },
+            city: {
+                required: "Please enter city.",
+            },
+            zip_code: {
+                required: "Please enter valid 5 digit zip code.",
+            },
+            play_type: {
+                required: "Please enter Play type.",
+            },
+            gender: {
+                required: "Please enter gender.",
+            },
+            fromdate: {
+                required: "Please enter from date.",
+            },
+            todate: {
+                required: "Please enter to date.",
+            },
+            max_team: {
+                required: "Please enter maximum teams",
+            },
+            amount: {
+                required: "Please enter amount",
+            },
+            status: {
+                required: "Please enter status",
+            },
+            age: {
+                required: "Please enter age",
+            },
+            rating: {
+                required: "Please enter rating",
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element);
+        },
+        submitHandler: function (form) {
+            $('.preloader').show();
+            var pickleballCourtSubmitUrl = websiteLink + '/admin/newLeague/storedata';
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: pickleballCourtSubmitUrl,
+                method: 'POST',
+                data: $('#createNewLeagueForm').serialize(),
+                dataType: 'json',
+                success: function (response) {
+                    console.log(response.data);
+                }
+            });
+        }
+    });
     // Start :: Admin Login Form //
     $("#adminLoginForm").validate({
         ignore: [],
@@ -234,7 +351,7 @@ $(document).ready(function() {
         }
     });
     // End :: Admin Login Form //
-    
+
     // Start :: Forgot Password Form //
     $("#forgotPasswordForm").validate({
         ignore: [],
@@ -857,7 +974,7 @@ $(document).ready(function() {
                 error.insertAfter($(element).parents('div.form-group'));
             } else {
                 error.insertAfter(element);
-            }            
+            }
         },
         submitHandler: function(form) {
             $('#btn-processing').html(btnSavingPreloader);
@@ -866,7 +983,7 @@ $(document).ready(function() {
         }
     });
     // End :: CMS Form //
-    
+
     // Start :: Pickleball Court Form //
     $("#createPickleballCourtForm").validate({
         ignore: ":hidden",
@@ -1511,7 +1628,7 @@ $(document).ready(function() {
                 error.insertAfter($(element).parents('div.form-group'));
             } else {
                 error.insertAfter(element);
-            }            
+            }
         },
         submitHandler: function(form) {
             $('#btn-processing').html(btnSavingPreloader);
@@ -1520,7 +1637,7 @@ $(document).ready(function() {
         }
     });
     // End :: Banner Form //
-    
+
 
     /***************************** Start :: Data table and Common Functionalities ****************************/
     // Start :: Check / Un-check all for Admin Bulk Action (DO NOT EDIT / DELETE) //
@@ -1729,7 +1846,7 @@ $(document).ready(function() {
     // Player Edit Profile on changes
     $(document).on('change', '.registrationCity', function() {
 		var city = $(this).val();
-        
+
         if (city != '') {
             $('#playing_region').html('<option value="">--Select--</option>');
             $('#preferred_home_court').html('<option value="">--Select--</option>');
@@ -1807,7 +1924,7 @@ function listActions(routePrefix, actionRoute, id, actionType, dTable) {
     } else {
         message = somethingWrongMessage;
     }
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -1851,7 +1968,7 @@ function listActions(routePrefix, actionRoute, id, actionType, dTable) {
 // Start :: Admin List Bulk Actions //
 function bulkActions(routePrefix, actionRoute, selectedIds, actionType, dTable) {
     var message = actionUrl = '';
-    
+
     if (actionRoute != '') {
         actionUrl = adminPanelUrl+'/'+routePrefix+'/'+actionRoute;
     }
@@ -1869,7 +1986,7 @@ function bulkActions(routePrefix, actionRoute, selectedIds, actionType, dTable) 
     } else {
         message = somethingWrongMessage;
     }
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -1937,7 +2054,7 @@ function listActionsWithFilter(routePrefix, actionRoute, id, actionType) {
     } else {
         message = somethingWrongMessage;
     }
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -1981,7 +2098,7 @@ function listActionsWithFilter(routePrefix, actionRoute, id, actionType) {
 // Start :: Admin List Bulk Actions With Filter //
 function bulkActionsWithFilter(routePrefix, actionRoute, selectedIds, actionType) {
     var message = actionUrl = '';
-    
+
     if (actionRoute != '') {
         actionUrl = adminPanelUrl+'/'+routePrefix+'/'+actionRoute;
     }
@@ -1999,7 +2116,7 @@ function bulkActionsWithFilter(routePrefix, actionRoute, selectedIds, actionType
     } else {
         message = somethingWrongMessage;
     }
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -2061,7 +2178,7 @@ function galleryAction(routePrefix, actionRoute, id, albumId, rowId, actionType,
     } else {
         message = somethingWrongMessage;
     }
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -2095,7 +2212,7 @@ function galleryAction(routePrefix, actionRoute, id, albumId, rowId, actionType,
                             } else if (actionType == 'set-default') {
                                 $('.delete_block_'+rowId).remove();
                                 window.location.reload();
-                            }                            
+                            }
                         } else {
                             toastr.error(response.message, response.title+'!');
                         }
@@ -2124,7 +2241,7 @@ $(document).on('click', '.delete-uploaded-preview-image', function() {
     }
 
     message = confirmDeleteMessage;
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -2180,9 +2297,9 @@ $(document).on('click', '.delete-uploaded-cropped-image', function() {
     if (primaryId != '' && routePrefix != '') {
         actionUrl = adminPanelUrl+'/'+routePrefix+'/'+'delete-uploaded-image';
     }
-    
+
     message = confirmDeleteMessage;
-    
+
     if (actionUrl != '') {
         swal.fire({
             text: message,
@@ -2234,7 +2351,7 @@ $(document).on('click', '.delete-uploaded-cropped-image', function() {
 // Start :: Slug generation on key up event //
 $('.slug-generation').focusout(function () {
     var modelName   = $(this).data('model');
-    var getTitle    = $(this).val();    
+    var getTitle    = $(this).val();
     var id          = '';
     if ($('#id').length) {
         var id = $('#id').val();
@@ -2274,7 +2391,7 @@ function sweetalertMessageRender(target, message, type, confirm = false) {
         icon: type,
         title: 'warning!',
         text: message,
-        
+
     };
     if (confirm) {
         options['showCancelButton'] = true;
@@ -2284,7 +2401,7 @@ function sweetalertMessageRender(target, message, type, confirm = false) {
     return Swal.fire(options)
     .then((result) => {
         if (confirm == true && result.value) {
-            window.location.href = target.getAttribute('data-href'); 
+            window.location.href = target.getAttribute('data-href');
         } else {
             return (false);
         }
@@ -2296,12 +2413,12 @@ $(document).on('click', '.clickToCopy', function(e) {
     e.preventDefault();
     var type        = $(this).data('type');
     var copyText    = $(this).data('values');
-    
+
     document.addEventListener('copy', function(e) {
         e.clipboardData.setData('text/plain', copyText);
         e.preventDefault();
     }, true);
-  
+
     document.execCommand('copy');
 
     $(".copied").html('<div id="toast-container" class="toast-top-right"><div class="toast toast-success" aria-live="assertive" style=""><button class="toast-close-button" role="button"><i class="fa fa-times" aria-hidden="true"></i></button><div class="toast-message">'+copiedToClipBoard+'</div></div></div>').show().fadeOut(2000);

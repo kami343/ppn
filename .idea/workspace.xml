@@ -19,6 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
+
+    <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="almost all the minor fixes has done.." />
+
     <list default="true" id="b6dca3f3-1828-44bd-b062-c52f654a575a" name="Default Changelist" comment="this has create-account-step1.blade.php file css all changes along login page and success message page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/site/UsersController.php" afterDir="false" />
@@ -28,6 +31,7 @@
       <change beforePath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/account/redirect-user-page.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/site/includes/login.blade.php" afterDir="false" />
     </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,6 +213,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/routes" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -293,7 +298,12 @@
       <workItem from="1659411907784" duration="21195000" />
       <workItem from="1659450177692" duration="12619000" />
       <workItem from="1659499589302" duration="22368000" />
+
+      <workItem from="1659540490383" duration="4729000" />
+      <workItem from="1659586679067" duration="6844000" />
+
       <workItem from="1659540490383" duration="4096000" />
+
     </task>
     <task id="LOCAL-00001" summary="registration plus login finalised,leagues list for users is displayed">
       <created>1657036547685</created>
@@ -393,7 +403,18 @@
       <option name="project" value="LOCAL" />
       <updated>1659463161425</updated>
     </task>
+
+    <task id="LOCAL-00015" summary="almost all the minor fixes has done..">
+      <created>1659547720783</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1659547720783</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+
     <option name="localTasksCounter" value="15" />
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -426,7 +447,12 @@
     <MESSAGE value="find league updated.." />
     <MESSAGE value="find league route" />
     <MESSAGE value="this has create-account-step1.blade.php file css all changes along login page and success message page" />
+
+    <MESSAGE value="almost all the minor fixes has done.." />
+    <option name="LAST_COMMIT_MESSAGE" value="almost all the minor fixes has done.." />
+
     <option name="LAST_COMMIT_MESSAGE" value="this has create-account-step1.blade.php file css all changes along login page and success message page" />
+
   </component>
   <component name="WindowStateProjectService">
     <state x="460" y="162" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1658558041152">
@@ -467,6 +493,10 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="515" y="62" key="RollbackChangesDialog/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659414444477" />
+    <state x="184" y="5" key="SettingsEditor" timestamp="1659596774748">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="184" y="5" key="SettingsEditor/0.0.1366.720@0.0.1366.720" timestamp="1659596774748" />
     <state width="507" height="446" key="SwitcherDM" timestamp="1657220669355">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -475,11 +505,19 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="470" y="76" key="VCS.ChangeListViewerDialog/0.0.1366.720@0.0.1366.720" timestamp="1659451733860" />
+
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659547724722">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659433313200" />
+    <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659547724722" />
+
     <state x="275" y="93" key="Vcs.Push.Dialog.v2" timestamp="1659463169263">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659433313200" />
     <state x="275" y="93" key="Vcs.Push.Dialog.v2/0.0.1366.720@0.0.1366.720" timestamp="1659463169263" />
+
     <state x="288" y="0" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1657796827894">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
@@ -492,10 +530,10 @@
       <screen x="0" y="0" width="1366" height="720" />
     </state>
     <state x="288" y="160" width="1140" height="707" key="dock-window-1/0.0.1366.720@0.0.1366.720" timestamp="1658561021474" />
-    <state x="390" y="93" width="585" height="592" key="find.popup" timestamp="1659436093532">
+    <state x="390" y="93" width="585" height="592" key="find.popup" timestamp="1659593651354">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="390" y="93" width="585" height="592" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659436093532" />
+    <state x="390" y="93" width="585" height="592" key="find.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659593651354" />
     <state x="390" y="93" width="585" height="624" key="find.popup/0.0.1366.720@0.0.1366.720" timestamp="1658941017186" />
     <state x="463" y="73" key="git4idea.branch.GitSmartOperationDialog" timestamp="1659456118181">
       <screen x="0" y="0" width="1366" height="720" />
@@ -506,10 +544,12 @@
     </state>
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1656996854305" />
     <state x="339" y="160" key="run.anything.popup/0.0.1366.720@0.0.1366.720" timestamp="1659527479590" />
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659543785567">
+
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1659591745569">
       <screen x="0" y="0" width="1366" height="720" />
     </state>
-    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659508214697" />
+    <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720/1366.0.1920.1032@0.0.1366.720" timestamp="1659591745569" />
+
     <state x="346" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1366.720@0.0.1366.720" timestamp="1659543785567" />
   </component>
 </project>
