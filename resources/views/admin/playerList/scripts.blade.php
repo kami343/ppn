@@ -1,12 +1,3 @@
-
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         @if (Route::currentRouteName() == $routePrefix.'.'.$listUrl)
@@ -19,12 +10,6 @@
             destroy: true,
             autoWidth: false,
             responsive: true,
-            dom: 'Blfrtip',
-            buttons: [
-             'excel'
-        ],
-         select: true,
-           
             processing: true,
             language: {
                 processing: '<img src="{{asset("images/admin/".config("global.TABLE_LIST_LOADER"))}}">',

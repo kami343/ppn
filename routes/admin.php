@@ -100,13 +100,31 @@ Route::group(['namespace' => 'admin', 'prefix' => 'adminpanel', 'as' => 'admin.'
                 Route::get('/delete/{id}', 'NewLeagueController@destroy')->name('delete');
 
                 Route::get('/list', 'NewLeagueController@leagueList')->name('list');
+
+                Route::get('/leauge-status/{id}', 'NewLeagueController@status')->name('leauge-status');
+
+
             });
             Route::group(['prefix' => 'teams', 'as' => 'teams.'], function () {
 
-                Route::get('/list', 'TeamsController@teamsList')->name('list');
+                Route::get('/list/{id?}', 'TeamsController@teamsList')->name('list');
                 Route::post('/ajax-list-request', 'TeamsController@ajaxListRequest')->name('ajax-list-request');
+                Route::get('/edit/{id}', 'TeamsController@edit')->name('edit');
+                Route::post('/update/{id}', 'TeamsController@update')->name('update');
+                
+                 Route::get('/team-status/{id}', 'TeamsController@status')->name('team-status');
 
             });
+
+
+
+            Route::group(['prefix' => 'playerList', 'as' => 'playerList.'], function () {
+
+              Route::get('/list/{id?}', 'PlayerListController@list')->name('list');
+              Route::post('/ajax-list-request', 'PlayerListController@ajaxListRequest')->name('ajax-list-request');
+               
+            });
+
 
             Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {
                 Route::get('/', 'BannersController@list')->name('list');

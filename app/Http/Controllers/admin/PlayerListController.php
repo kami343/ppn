@@ -3,7 +3,7 @@
 # Company Name      :
 # Author            :
 # Created Date      :
-# Page/Class name   : PlayersController
+# Page/Class name   : PlayerListController
 # Purpose           : Player League Assignment Management
 /*****************************************************/
 
@@ -20,25 +20,26 @@ use App\Models\PickleballCourt;
 use App\Models\Availability;
 use App\Models\UserAvailability;
 use App\Models\State;
+use App\Models\PlayersList;
 use DataTables;
 
-class PlayersController extends Controller
+class PlayerListController extends Controller
 {
     use GeneralMethods;
     public $controllerName  = 'Players';
     public $management;
-    public $modelName       = 'User';
+    public $modelName       = 'PlayersList';
     public $breadcrumb;
     public $routePrefix     = 'admin';
-    public $pageRoute       = 'player';
-    public $listUrl         = 'player.list';
-    public $listRequestUrl  = 'player.ajax-list-request';
-    public $addUrl          = 'player.add';
-    public $editUrl         = 'player.edit';
-    public $viewUrl         = 'player.view';
-    public $statusUrl       = 'player.change-status';
-    public $deleteUrl       = 'player.delete';
-    public $viewFolderPath  = 'admin.player';
+    public $pageRoute       = 'playerList';
+    public $listUrl         = 'playerList.list';
+    public $listRequestUrl  = 'playerList.ajax-list-request';
+    public $addUrl          = 'playerList.add';
+    public $editUrl         = 'playerList.edit';
+    public $viewUrl         = 'playerList.view';
+    public $statusUrl       = 'playerList.change-status';
+    public $deleteUrl       = 'playerList.delete';
+    public $viewFolderPath  = 'admin.playerList';
     public $model           = 'User';
 
     /*
@@ -73,7 +74,7 @@ class PlayersController extends Controller
         * Input Params  : Request $request
         * Return Value  : Returns to the list page
     */
-    public function list(Request $request) {
+    public function list($id) {
         $data = [
             'pageTitle'     => trans('custom_admin.label_player'),
             'panelTitle'    => trans('custom_admin.label_player'),
@@ -90,6 +91,7 @@ class PlayersController extends Controller
             $data['allowedRoutes']  = $restrictions['allow_routes'];
             // End :: Manage restriction
             $data['pickleballCourts']   = PickleballCourt::select('id','title','city','state_id')->where(['status' => '1'])->whereNull('deleted_at')->orderBy('title', 'ASC')->get();
+            $data['id'] = $id;
 
             return view($this->viewFolderPath.'.list', $data);
         } catch (Exception $e) {
@@ -110,116 +112,65 @@ class PlayersController extends Controller
         * Input Params  : Request $request
         * Return Value  : Returns news data
     */
-    public function ajaxListRequest(Request $request) {
-        $data['pageTitle'] = trans('custom_admin.label_player');
-        $data['panelTitle']= trans('custom_admin.label_player');
+    public function ajaxListRequest(Request $request)
+    {
+        $data['pageTitle'] = trans('custom_admin.label_league_team');
+        $data['panelTitle'] = trans('custom_admin.label_league_team');
+
+        $id = $request['columns'][0]['data'];
+
+
 
         try {
             if ($request->ajax()) {
-                // Preferred Rating
-                $playerRating           = $request->player_rating;
-                $filterByPlayerRating   = false;
-                if ($playerRating != '') {
-                    $filterByPlayerRating = true;
-                    $filter['player_rating'] = $playerRating;
-                }
-                // Preferred Home Court
-                $homeCourtId        = $request->home_court;
-                $filterByHomeCourt  = false;
-                if ($homeCourtId != '') {
-                    $filterByHomeCourt = true;
-                    $filter['home_court'] = $homeCourtId;
-                }
+                //$data = $this->model->where('leagueid',$id)->get();
 
-                // Main query
-                $data = $this->model->where('id', '<>', 1)->where(['type' => 'U'])->whereNull(['deleted_at']);
-
-                // Based on player rating filter
-                if ($filterByPlayerRating) {
-                    $data = $data->where('player_rating', $playerRating);
-                }
-                // Based on preferred home court filter
-                if ($filterByHomeCourt) {
-                    $data->whereHas(
-                            'userDetails', function ($queryPreferredHomeCourt) use ($homeCourtId) {
-                                $queryPreferredHomeCourt->where('home_court', $homeCourtId);
-                            });
-                }
-
-                $data = $data->orderBy('full_name','ASC')->get();
+                $data =  $this->model->join('users', 'users.id', '=', 'league_player_list.id')
+                ->select('users.*', 'league_player_list.*',  'users.id as user_id')
+                ->where('league_id',$id)->get();
+               
 
                 // Start :: Manage restriction
-                $isAllow = false;
-                $restrictions   = checkingAllowRouteToUser($this->pageRoute.'.');
+                 $isAllow = false;
+                $restrictions = checkingAllowRouteToUser($this->pageRoute . '.');
                 if ($restrictions['is_super_admin']) {
                     $isAllow = true;
                 }
-                $allowedRoutes  = $restrictions['allow_routes'];
-                // End :: Manage restriction
+                $allowedRoutes = $restrictions['allow_routes'];
+
 
                 return Datatables::of($data, $isAllow, $allowedRoutes)
-                        ->addIndexColumn()
-                        ->addColumn('player_rating', function ($row) {
-                            if ($row->player_rating) {
-                                return formatToTwoDecimalPlaces($row->player_rating);
-                            } else {
-                                return 'NA';
-                            }
-                        })
-                        ->addColumn('home_court', function ($row) {
-                            if ($row->userDetails->pickleballCourtDetails) {
-                                return $row->userDetails->pickleballCourtDetails->title.' ('.$row->userDetails->pickleballCourtDetails->city.', '.$row->userDetails->pickleballCourtDetails->stateDetails->code.')';
-                            } else {
-                                return 'NA';
-                            }
-                        })
-                        ->addColumn('city', function ($row) {
-                            if ($row->userDetails->city) {
-                                return $row->userDetails->city;
-                            } else {
-                                return 'NA';
-                            }
-                        })
-                        ->addColumn('created_at', function ($row) {
-                            return memberSince($row->created_at, 'F jS, Y');
-                        })
-                        ->addColumn('status', function ($row) use ($isAllow, $allowedRoutes) {
-                            if ($isAllow || in_array($this->statusUrl, $allowedRoutes)) {
+                    ->addIndexColumn()
+                    ->addColumn('full_name', function ($row) {
+                        return $row->full_name;
+                    })
+                    ->addColumn('email', function ($row) {
+                        return $row->email;
+                    })
+
+                    ->addColumn('status',  function ($row) use ($isAllow, $allowedRoutes) {
+
+                         if ($isAllow || in_array($this->statusUrl, $allowedRoutes)) {
                                 if ($row->status == '1') {
-                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" data-id="'.customEncryptionDecryption($row->id).'" data-action-type="active" class="custom_font status"><span class="badge badge-pill badge-success">'.trans('custom_admin.label_active').'</span></a>';
+                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('Active').'" data-id="'.customEncryptionDecryption($row->id).'" data-action-type="inactive" class="custom_font team_status"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
                                 } else {
-                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('inactive').'" data-id="'.customEncryptionDecryption($row->id).'" data-action-type="inactive" class="custom_font status"><span class="badge badge-pill badge-danger">'.trans('nactive').'</span></a>';
+                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('inactive').'" data-id="'.customEncryptionDecryption($row->id).'" data-action-type="active" class="custom_font team_status"><span class="badge badge-pill badge-danger">'.trans('inactive').'</span></a>';
                                 }
                             } else {
                                 if ($row->status == '1') {
-                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" class="custom_font"><span class="badge badge-pill badge-success">'.trans('custom_admin.label_active').'</span></a>';
+                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('active').'" class="custom_font"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
                                 } else {
-                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" class="custom_font"><span class="badge badge-pill badge-danger">'.trans('custom_admin.label_inactive').'</span></a>';
+                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" class="custom_font"><span class="badge badge-pill badge-danger">'.trans('Deactive').'</span></a>';
                                 }
                             }
                             return $status;
-                        })
-                        ->addColumn('action', function ($row) use ($isAllow, $allowedRoutes) {
-                            $btn = '';
-                            if ($isAllow || in_array($this->editUrl, $allowedRoutes)) {
-                                $editLink = route($this->routePrefix.'.'.$this->editUrl, customEncryptionDecryption($row->id));
+                    })
 
-                                $btn .= '<a href="'.$editLink.'" data-microtip-position="top" role="tooltip" class="btn btn-info btn-circle btn-circle-sm" aria-label="'.trans('custom_admin.label_edit').'"><i class="fa fa-edit"></i></a>';
-                            }
-                            if ($isAllow || in_array($this->editUrl, $allowedRoutes)) {
-                                $viewLink = route($this->routePrefix.'.'.$this->viewUrl, customEncryptionDecryption($row->id));
 
-                                $btn .= ' <a href="'.$viewLink.'" data-microtip-position="top" role="tooltip" class="btn btn-warning btn-circle btn-circle-sm-eye" aria-label="'.trans('custom_admin.label_view').'"><i class="fa fa-eye"></i></a>';
-                            }
-                            if ($isAllow || in_array($this->deleteUrl, $allowedRoutes)) {
-                                $btn .= ' <a href="javascript: void(0);" data-microtip-position="top" role="tooltip" class="btn btn-danger btn-circle btn-circle-sm delete" aria-label="'.trans('custom_admin.label_delete').'" data-action-type="delete" data-id="'.customEncryptionDecryption($row->id).'"><i class="fa fa-trash"></i></a>';
-                            }
-                            return $btn;
-                        })
-                        ->rawColumns(['status','action'])
-                        ->make(true);
+                    ->rawColumns(['status'])
+                    ->make(true);
             }
-            return view($this->viewFolderPath.'.list');
+            return view($this->viewFolderPath . '.list');
         } catch (Exception $e) {
             $this->generateToastMessage('error', $e->getMessage(), false);
             return '';
@@ -228,7 +179,6 @@ class PlayersController extends Controller
             return '';
         }
     }
-
     /*
         * Function name : edit
         * Purpose       : This function is to update form

@@ -12,6 +12,7 @@ use App\Traits\GeneralMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DataTables;
+use DB;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 class TeamsController extends Controller
@@ -62,8 +63,10 @@ class TeamsController extends Controller
     }
 
 
-    public function teamsList()
+    public function teamsList($id)
     {
+     
+
         $data = [
             'pageTitle' => trans('custom_admin.label_league_team'),
             'panelTitle' => trans('custom_admin.label_league_team'),
@@ -79,6 +82,7 @@ class TeamsController extends Controller
             }
 
             $data['allowedRoutes'] = $restrictions['allow_routes'];
+            $data['id'] = $id;
             // End :: Manage restriction
             return view($this->viewFolderPath . '.list', $data);
         } catch (Exception $e) {
@@ -97,29 +101,79 @@ class TeamsController extends Controller
         $data['pageTitle'] = trans('custom_admin.label_league_team');
         $data['panelTitle'] = trans('custom_admin.label_league_team');
 
+        $id = $request['columns'][0]['data'];
+
+
+
         try {
             if ($request->ajax()) {
-                $data = $this->model->get();
+                //$data = $this->model->where('leagueid',$id)->get();
+
+                $data =  $this->model->join('team_players', 'team_players.team_id', '=', 'teams.id')
+                ->select('teams.*', 'team_players.*',  'teams.id as team_id')
+                ->where('leagueid',$id)->get();
+               
+
                 // Start :: Manage restriction
-                $isAllow = false;
+                 $isAllow = false;
                 $restrictions = checkingAllowRouteToUser($this->pageRoute . '.');
                 if ($restrictions['is_super_admin']) {
                     $isAllow = true;
                 }
                 $allowedRoutes = $restrictions['allow_routes'];
-                // End :: Manage restriction
 
 
                 return Datatables::of($data, $isAllow, $allowedRoutes)
                     ->addIndexColumn()
                     ->addColumn('title', function ($row) {
                         return $row->title;
+                    })
+                    ->addColumn('player1_name', function ($row) {
+                        return $row->player1_name;
+                    })
+                     ->addColumn('player1_email', function ($row) {
+                        return $row->player1_email;
+                    })
 
+                    ->addColumn('player2_name', function ($row) {
+                        return $row->player2_name;
                     })
-                    ->addColumn('status', function ($row) {
-                        return $row->status;
+                     ->addColumn('player2_email', function ($row) {
+                        return $row->player2_email;
                     })
-                    ->rawColumns(['status'])
+
+                    ->addColumn('status',  function ($row) use ($isAllow, $allowedRoutes) {
+
+                         if ($isAllow || in_array($this->statusUrl, $allowedRoutes)) {
+                                if ($row->status == '1') {
+                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('Active').'" data-id="'.customEncryptionDecryption($row->team_id).'" data-action-type="inactive" class="custom_font team_status"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
+                                } else {
+                                    $status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('inactive').'" data-id="'.customEncryptionDecryption($row->team_id).'" data-action-type="active" class="custom_font team_status"><span class="badge badge-pill badge-danger">'.trans('inactive').'</span></a>';
+                                }
+                            } else {
+                                if ($row->status == '1') {
+                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('active').'" class="custom_font"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
+                                } else {
+                                    $status = ' <a data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" class="custom_font"><span class="badge badge-pill badge-danger">'.trans('Deactive').'</span></a>';
+                                }
+                            }
+                            return $status;
+                    })
+
+                     ->addColumn('action', function ($row) use ($isAllow, $allowedRoutes) {
+                        $btn = '';
+                       
+                        if ($isAllow || in_array($this->editUrl, $allowedRoutes)) {
+                            $editLink = route($this->routePrefix . '.' . $this->editUrl, $row->team_id);
+                            $btn .= '<a href="' . $editLink . '" data-microtip-position="top" role="tooltip" class="btn btn-success btn-circle btn-circle-sm" aria-label="' . trans('Edit') . '"><i class="fa fa-edit"></i></a>';
+
+                        }
+                     
+                      
+                        return $btn;
+                    })
+
+                    ->rawColumns(['status','action'])
                     ->make(true);
             }
             return view($this->viewFolderPath . '.list');
@@ -184,9 +238,40 @@ class TeamsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+ public function edit($id)
     {
-        //
+        $fetchedRow = $this->model->where('id', $id)->first();
+
+       $fetchedRow = $this->model->join('team_players', 'team_players.team_id', '=', 'teams.id')
+                ->select('teams.*', 'team_players.*',  'teams.id as team_id')
+                ->where('teams.id',$id)->first();
+
+    
+
+        $data = [
+            'pageTitle' => trans('Edit Team Record'),
+            'panelTitle' => trans('Edit Team Record'),
+            'pageType' => 'EditPage'
+        ];
+
+        try {
+            // Start :: Manage restriction
+            $data['isAllow'] = false;
+            $restrictions = checkingAllowRouteToUser($this->pageRoute . '.');
+            if ($restrictions['is_super_admin']) {
+                $data['isAllow'] = true;
+            }
+            $data['allowedRoutes'] = $restrictions['allow_routes'];
+            // End :: Manage restriction
+
+            return view($this->viewFolderPath . '.edit', $data, compact('fetchedRow'));
+        } catch (Exception $e) {
+            $this->generateToastMessage('error', trans('custom_admin.error_something_went_wrong'), false);
+            return redirect()->route($this->routePrefix . '.dashboard');
+        } catch (\Throwable $e) {
+            $this->generateToastMessage('error', $e->getMessage(), false);
+            return redirect()->route($this->routePrefix . '.dashboard');
+        }
     }
 
     /**
@@ -198,7 +283,43 @@ class TeamsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+      
+
+        $player1 = explode("(",$request['player1_name']);
+        $player2 = explode("(",$request['player2_name']);
+
+
+       $update = DB::table('teams')
+        ->where('id', $request['team_id'])  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('title' => $request['team_name']));  // update the record in the DB. 
+
+          $update = DB::table('team_players')
+        ->where('id', $request['team_playerid'])  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('player1_name' => $player1[0],'player1_email' => str_replace(")","",$player1[1]),'player2_name' => $player2[0],'player2_email' => str_replace(")","",$player2[1]),));  // update the record in the DB. 
+
+        //   $toSave = NewLeague::find($id);
+        // $toSave->league_name = $request['league_name'];
+        // $toSave->zip_code = $request['zip_code'];
+        // $toSave->play_type = $request['play_type'];
+        // $toSave->gender = $request['gender'];
+        // $toSave->rating = $request['rating'];
+        // $toSave->fromdate = $request['fromdate'];
+        // $toSave->todate = $request['todate'];
+        // $toSave->age = $request['age'];
+        // $toSave->max_team = $request['max_team'];
+        // $toSave->status = $request['status'];
+        // $toSave->amount = $request['amount'];
+        // $toSave->city = $request['city'];
+        // $toSave->state = $request['state'];
+        // $toSave->save();
+        // $this->generateToastMessage('success', trans('custom_admin.success_data_updated_successfully'), false);
+
+       
+         return redirect()->route($this->routePrefix . '.' . $this->listUrl,$request['leagueid']);
+
     }
 
     /**
@@ -211,4 +332,51 @@ class TeamsController extends Controller
     {
         //
     }
+
+
+     public function status(Request $request, $id = null) {
+        $title      = trans('custom_admin.message_error');
+        $message    = trans('custom_admin.error_something_went_wrong');
+        $type       = 'error';
+
+   
+        try {
+            if ($request->ajax()) {
+          
+                 $id = customEncryptionDecryption($id, 'decrypt');
+                  
+                if ($id != null) {
+                    $details = $this->model->where('id', $id)->first();
+                    if ($details != null) {
+                        if ($details->status == '1') {
+                            $details->status = '0';
+                            $details->save();
+
+                            $title      = trans('custom_admin.message_success');
+                            $message    = trans('custom_admin.success_status_updated_successfully');
+                            $type       = 'success';
+                        } else if ($details->status == '0') {
+                            $details->status = '1';
+
+                            $details->save();
+
+                            $title      = trans('custom_admin.message_success');
+                            $message    = trans('custom_admin.success_status_updated_successfully');
+                            $type       = 'success';
+                        }
+                    } else {
+                        $message = trans('custom_admin.error_invalid');
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+        } catch (\Throwable $e) {
+            $message = $e->getMessage();
+        }        
+        return response()->json(['title' => $title, 'message' => $message, 'type' => $type]);
+    }
+
+
+
 }

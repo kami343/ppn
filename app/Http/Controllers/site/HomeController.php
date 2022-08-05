@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+
 use Auth;
 use App\Traits\GeneralMethods;
 use App\Models\Cms;
@@ -460,6 +462,23 @@ class HomeController extends Controller
     }
 
 
+
+public function getzipcode($id) {
+
+    $data = explode("-",$id);
+    $lat  = $data[0];
+    $long = $data[1];
+
+    $url = "http://api.geonames.org/findNearbyPostalCodesJSON?lat=$lat&lng=$long&username=kami23432";
+
+        $response = Http::accept('application/json')->get($url);
+        //$data = $this->client->get($url);
+        Log::info($response);
+
+        $response = $response['postalCodes'][0]['postalCode'];
+         return($response);
+
+}
 
 
     /*

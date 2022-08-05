@@ -40,6 +40,7 @@ Route::group(['namespace' => 'site', 'as' => 'site.'], function () {
     Route::get('/playertwo-checkout-status/{leagueid}', 'PlayersController@PlayerTwoCheckOutstatus')->name('playertwo-checkout-status');
 
     Route::get('/findleague1/{id?}', 'HomeController@findALeague2')->name('findleague1');
+    Route::get('/get-zipcode/{id?}', 'HomeController@getzipcode')->name('get-zipcode');
 
     Route::get('/verify-email-new', 'UsersController@verifyEmailNew')->name('verify-email-new');
     Route::get('/checkpage', 'HomeController@checkPage')->name('checkpage');

@@ -164,7 +164,7 @@
                                   </div>
                                   <div class="row frmgen mt-2 align-items-center">
                                     <div class="col-lg-8">
-                                        <input type="text" class="form-control" placeholder="91316">
+                                        <input type="text" class="form-control" id="zipcode" placeholder="91316">
                                     </div>
                                     <div class="col-lg-2"><a href="#" class="btn-rightarrow"><i class="fas fa-long-arrow-right"></i></a></div>
                                   </div>
@@ -279,7 +279,7 @@
                                         </div>
                                         <div class="cont checkbox">
                                             <label class="customcheck font-weight-text">18+
-                                            <input type="checkbox" value="18+">
+                                            <input type="checkbox" value="18">
                                             <span class="checkmark"></span>
                                         </label>
                                         </div>
@@ -291,7 +291,7 @@
                                         </div>
                                         <div class="cont checkbox">
                                             <label class="customcheck font-weight-text">50+
-                                            <input type="checkbox" value="50+">
+                                            <input type="checkbox" value="50">
                                             <span class="checkmark"></span>
                                         </label>
                                         </div>
@@ -423,7 +423,15 @@
                                                 <td>{{$leaguelist->play_type}} </td>
                                                 <td>{{$leaguelist->gender}}</td>
                                                 <td>{{$leaguelist->age}}</td>
-                                                <td>{{$leaguelist->rating}}</td>
+                                                @if($leaguelist->rating > 2 || $leaguelist->rating <= 4)
+                                                
+                                                <td>2.0-3.0</td>
+                                                
+                                                @elseif($leaguelist->rating > 3 || $leaguelist->rating <= 4)
+                                                <<td>3.0-4.0</td>
+                                                @elseif($leaguelist->rating > 4 || $leaguelist->rating <= 5)
+                                                <td>4.0-5.0</td>
+                                                 @endif
                                                 <td>{{ date("m/d/y",strtotime($leaguelist->fromdate))}}-{{ date("m/d/y",strtotime($leaguelist->todate))}}</td>
                                                 <td>{{$leaguelist->max_team}}</td>
                                                 <td id="league-status-text">{{$leaguelist->status}}</td>
@@ -707,9 +715,35 @@
         $(".panel-collapse").addClass("show");
   });
   
-  
 
   
+function showPosition(position) {
+    console.log(position['latitude']+"<>"+position['longitude'])
+    var lat = position['latitude'];
+    var long = position['longitude'];
+    var url = "/get-zipcode/"+lat+"-"+long// //"https://api.geonames.org/findNearbyPostalCodesJSON?lat="+lat+"&lng="+long+"&username=kami23432";
+    $.get(url,  function (data) {
+        $("#zipcode").val(data);
+});
+}
+    
+  
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(a) {
+        var i = 1
+        for (var t in a)
+        {
+            if(i == 1){
+             showPosition(a[t]);
+            }
+            i++;
+        }
+        
+       
+  });
+ }
+else
+{alert('navigator.geolocation not supported.');}
 </script>
 
 

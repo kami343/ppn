@@ -8,7 +8,7 @@
         }).DataTable({
             destroy: true,
             autoWidth: false,
-            responsive: true,
+       
             processing: true,
             language: {
                 processing: '<img src="{{asset("images/admin/".config("global.TABLE_LIST_LOADER"))}}">',
@@ -31,6 +31,7 @@
                 url: getListDataUrl,
                 type: 'POST',
                 data: function (data) {
+                    console.log(data);
                 },
             },
             columns: [
@@ -53,7 +54,13 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'league_name', name: 'league_name'},
                 {data: 'zip_code', name: 'zip_code'},
+                 {data: 'city', name: 'city'},
+                  {data: 'state', name: 'state'},
+                {data: 'gender', name: 'gender'},
+                {data: 'rating', name: 'rating'},
+
                 {data: 'status', name: 'status'},
+                {data: 'league_status', name: 'league_status'},
                     @if ($isAllow || in_array($editUrl, $allowedRoutes))
                 {
                     data: 'action', name: 'action', orderable: false, searchable: false
@@ -104,12 +111,36 @@
             listActions('{{ $pageRoute }}', 'status', id, actionType, dTable);
         });
 
+
+
+        $(document).on('click', '.leauge_status', function() {
+        var id          = $(this).data('id');
+        var actionType  = $(this).data('action-type');
+        listActionsWithFilter('{{ $pageRoute }}', 'leauge-status', id, actionType);
+    });
+
         // Delete section
         $(document).on('click', '.delete', function () {
             var id = $(this).data('id');
             var actionType = $(this).data('action-type');
             listActions('{{ $pageRoute }}', 'delete', id, actionType, dTable);
         });
+
+
+
+ $('input.toggle-vis').on('click', function (e) {
+       // e.preventDefault();
+ 
+  var table = $('#list-table').DataTable({
+      
+    });
+        // Get the column API object
+        var column = table.column($(this).attr('data-column'));
+ 
+        // Toggle the visibility
+        column.visible(!column.visible());
+    });
+
 
         // Bulk Action
         $('.bulkAction').on('click', function () {
@@ -128,4 +159,97 @@
         @endif
 
     });
+
+
+function getList() {
+    var getListDataUrl = "{{route($routePrefix.'.'.$listRequestUrl)}}";
+        var dTable = $('#list-table').on('init.dt', function () {
+            $('#dataTableLoading').hide();
+        }).DataTable({
+            destroy: true,
+            autoWidth: false,
+            responsive: true,
+            processing: true,
+            language: {
+                processing: '<img src="{{asset("images/admin/".config("global.TABLE_LIST_LOADER"))}}">',
+                search: "_INPUT_",
+                searchPlaceholder: '{{ trans("custom_admin.btn_search") }}',
+                emptyTable: '{{ trans("custom_admin.message_no_records_found") }}',
+                zeroRecords: '{{ trans("custom_admin.message_no_records_found") }}',
+                paginate: {
+                    first: '{{trans("custom_admin.label_first")}}',
+                    previous: '{{trans("custom_admin.label_previous")}}',
+                    next: '{{trans("custom_admin.label_next")}}',
+                    last: '{{trans("custom_admin.label_last")}}',
+                }
+            },
+            serverSide: true,
+            ajax: {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: getListDataUrl,
+                type: 'POST',
+                data: function (data) {
+                    console.log(data);
+                },
+            },
+            columns: [
+                    @if ($isAllow || in_array($statusUrl, $allowedRoutes) || in_array($deleteUrl, $allowedRoutes))
+                {
+                    data: 'leagueid',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        if (type === 'display') {
+                            return '<div class="custom-control custom-checkbox"><input type="checkbox" class="delete_checkbox" id="customCheck2_' + row.id + '" value="' + row.id + '"><label class="" for="customCheck2_' + row.id + '"></label></div>';
+                        }
+                        return data;
+                    },
+                },
+                    @endif
+                {
+                    data: 'leagueid', name: 'leagueid'
+                },
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'league_name', name: 'league_name'},
+                {data: 'zip_code', name: 'zip_code'},
+                {data: 'status', name: 'status'},
+                {data: 'league_status', name: 'league_status'},
+                    @if ($isAllow || in_array($editUrl, $allowedRoutes))
+                {
+                    data: 'action', name: 'action', orderable: false, searchable: false
+                },
+                @endif
+            ],
+            columnDefs: [
+                {
+                    @if ($isAllow || in_array($statusUrl, $allowedRoutes) || in_array($deleteUrl, $allowedRoutes))
+                    targets: [1],
+                    @else
+                    targets: [0],
+                    @endif
+                    visible: false,
+                    searchable: false,
+                },
+            ],
+            order: [
+                    @if ($isAllow || in_array($statusUrl, $allowedRoutes) || in_array($deleteUrl, $allowedRoutes))
+                [1, 'desc']
+                    @else
+                    [0, 'desc']
+                @endif
+            ],
+            pageLength: 10,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, '{{trans("custom_admin.label_all")}}']],
+            fnDrawCallback: function (settings) {
+                if (settings._iDisplayLength == -1 || settings._iDisplayLength > settings.fnRecordsDisplay()) {
+                    $('#list-table_paginate').hide();
+                } else {
+                    $('#list-table_paginate').show();
+                }
+            },
+        });
+
+}
 </script>

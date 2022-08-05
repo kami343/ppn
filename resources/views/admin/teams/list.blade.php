@@ -49,8 +49,12 @@
                                 <th class="zeroColumn table-th-display-none"></th>
                                 <th class="firstColumn">@lang('custom_admin.label_hash')</th>
                                 <th>@lang('custom_admin.label_league_team')</th>
+                                <th>Player1 Name</th>
+                                <th>Player1 Email</th>
+                                <th>Player2 Name</th>
+                                <th>Player2 Email</th>
                                 <th class="row_status">@lang('custom_admin.label_status')</th>
-{{--                                <th class="actions">@lang('custom_admin.label_action')</th>--}}
+                                <th class="actions">@lang('Action')</th>
                             </tr>
                             </thead>
                         </table>

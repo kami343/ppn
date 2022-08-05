@@ -39,6 +39,9 @@ class NewLeagueController extends Controller
     public $statusUrl = 'newLeague.change-status';
     public $deleteUrl = 'newLeague.delete';
     public $viewFolderPath = 'admin.newLeague';
+    public $playerUrl = 'playerList.list';
+
+
 
     //    public $model           = 'Video';
 
@@ -140,13 +143,45 @@ class NewLeagueController extends Controller
 
                     })->addColumn('zip_code', function ($row) {
                         return $row->zip_code;
-                    })
-                    ->addColumn('status', function ($row) {
+
+                    })->addColumn('city', function ($row) {
+                        return $row->city;
+
+
+                    })->addColumn('state', function ($row) {
+                        return $row->state;
+                     })->addColumn('gender', function ($row) {
+                        return $row->gender;
+                
+                      })->addColumn('rating', function ($row) {
+                        return $row->rating;
+                
+
+                    })->addColumn('status', function ($row) {
                         return $row->status;
                     })
+                    ->addColumn('league_status', function ($row) use ($isAllow, $allowedRoutes) {
+                       
+                            if ($isAllow || in_array($this->statusUrl, $allowedRoutes)) {
+                                if ($row->league_status == '1') {
+                                    $league_status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('Active').'" data-id="'.customEncryptionDecryption($row->leagueid).'" data-action-type="inactive" class="custom_font leauge_status"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
+                                } else {
+                                    $league_status = ' <a href="javascript:void(0)" data-microtip-position="top" role="" aria-label="'.trans('inactive').'" data-id="'.customEncryptionDecryption($row->leagueid).'" data-action-type="active" class="custom_font leauge_status"><span class="badge badge-pill badge-danger">'.trans('inactive').'</span></a>';
+                                }
+                            } else {
+                                if ($row->league_status == '1') {
+                                    $league_status = ' <a data-microtip-position="top" role="" aria-label="'.trans('cust').'" class="custom_font"><span class="badge badge-pill badge-success">'.trans('Active').'</span></a>';
+                                } else {
+                                    $league_status = ' <a data-microtip-position="top" role="" aria-label="'.trans('custom_admin.label_active').'" class="custom_font"><span class="badge badge-pill badge-danger">'.trans('Deactive').'</span></a>';
+                                }
+                            }
+                            return $league_status;
+                        })
                     ->addColumn('action', function ($row) use ($isAllow, $allowedRoutes) {
                         $btn = '';
                         $teamsLink = route($this->routePrefix . '.' . $this->teamsUrl);
+
+                        $playerLink = route($this->routePrefix . '.' . $this->playerUrl);
 
                         if ($isAllow || in_array($this->editUrl, $allowedRoutes)) {
                             $editLink = route($this->routePrefix . '.' . $this->editUrl, $row->leagueid);
@@ -157,13 +192,18 @@ class NewLeagueController extends Controller
                             $btn .= ' <a href="javascript: void(0);" data-microtip-position="top" role="tooltip" class="btn btn-danger delete btn-circle btn-circle-sm" aria-label="' . trans('custom_admin.label_league_team') . '"  data-id="' . $row->leagueid . '"><i class="fa fa-trash"></i></a>';
 
                         }
-                        $btn .= ' <a href="' . $teamsLink . '" data-microtip-position="top" role="tooltip" class="badge badge-pill badge-info" aria-label="' . trans('custom_admin.label_league_team') . '"  data-id="' . $row->leagueid . '">Teams</a>';
+                        $btn .= ' <a href="' . $teamsLink."/".$row->leagueid . '" data-microtip-position="top" role="tooltip" class="badge badge-pill badge-info" aria-label="' . trans('custom_admin.label_league_team') . '"  data-id="' . $row->leagueid . '">Teams</a>';
+
+                        $btn .= ' <a href="' . $playerLink."/".$row->leagueid . '" data-microtip-position="top" role="tooltip" class="badge badge-pill badge-info" aria-label="' . trans('custom_admin.label_league_team') . '"  data-id="' . $row->leagueid . '">Players List</a>';
 
                         return $btn;
                     })
-                    ->rawColumns(['status', 'action'])
+                    ->rawColumns(['status', 'league_status','action'])
                     ->make(true);
             }
+
+
+
             return view($this->viewFolderPath . '.list');
         } catch (Exception $e) {
             $this->generateToastMessage('error', $e->getMessage(), false);
@@ -314,4 +354,49 @@ class NewLeagueController extends Controller
         }
         return response()->json(['title' => $title, 'message' => $message, 'type' => $type]);
     }
+
+
+     public function status(Request $request, $id = null) {
+        $title      = trans('custom_admin.message_error');
+        $message    = trans('custom_admin.error_something_went_wrong');
+        $type       = 'error';
+
+   
+        try {
+            if ($request->ajax()) {
+          
+                 $id = customEncryptionDecryption($id, 'decrypt');
+
+                if ($id != null) {
+                    $details = $this->model->where('leagueid', $id)->first();
+                    if ($details != null) {
+                        if ($details->league_status == '1') {
+                            $details->league_status = '0';
+                            $details->save();
+
+                            $title      = trans('custom_admin.message_success');
+                            $message    = trans('custom_admin.success_status_updated_successfully');
+                            $type       = 'success';
+                        } else if ($details->league_status == '0') {
+                            $details->league_status = '1';
+
+                            $details->save();
+
+                            $title      = trans('custom_admin.message_success');
+                            $message    = trans('custom_admin.success_status_updated_successfully');
+                            $type       = 'success';
+                        }
+                    } else {
+                        $message = trans('custom_admin.error_invalid');
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+        } catch (\Throwable $e) {
+            $message = $e->getMessage();
+        }        
+        return response()->json(['title' => $title, 'message' => $message, 'type' => $type]);
+    }
+
 }
